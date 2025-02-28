@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IUserProduce
+    public interface IProduceLineRepository
     {
-        public void AddProduce(Produce newProduce);
-
-        public void DeleteProduce(Produce produce);
+        public IEnumerable<ProduceLine> GetAllProduceLineByRecipeID(int recipeID);
     }
 }

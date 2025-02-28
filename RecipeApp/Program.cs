@@ -14,6 +14,7 @@ namespace RecipeApp
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
+            builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepository>();
 
             var app = builder.Build();
 
