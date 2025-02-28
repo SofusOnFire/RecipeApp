@@ -9,7 +9,7 @@ namespace Domain.Interfaces
 {
     public interface IProduceService
     {
-        public IEnumerable<Produce> GetAll();
+        public IEnumerable<Produce> GetAllProduce();
 
         public Produce GetByProduceID(Produce produce);
 
