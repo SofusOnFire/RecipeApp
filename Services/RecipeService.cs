@@ -12,6 +12,11 @@ namespace Services
 	{
 		private readonly IUserProduce _userProduce; // DI for FindRecipe method.
 
+		public RecipeService(IUserProduce userProduce)
+		{
+			_userProduce = userProduce;
+		}
+
 		public IEnumerable<Recipe> FindRecipes(IEnumerable<string> userProduce, IEnumerable<Recipe> recipes)
 		{
 			throw new NotImplementedException();
