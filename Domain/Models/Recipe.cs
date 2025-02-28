@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    internal class Recipe
+    public class Recipe
     {
         public int? RecipeID { get; private set; }
         public string? Name { get; private set; }
