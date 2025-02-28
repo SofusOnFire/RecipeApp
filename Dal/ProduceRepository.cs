@@ -27,8 +27,8 @@ namespace DAL
 			SqlDataReader reader = command.ExecuteReader();
 
 			var produce = new Produce(
-			Convert.ToInt32(reader["ProduceLineID"]),
-			Convert.ToString(reader["Name"]));
+			Convert.ToInt32(reader["ProduceID"]),
+			Convert.ToString(reader["ProduceName"]));
 
 			_connectionString.Close();
 
