@@ -1,3 +1,4 @@
+using Services;
 using Domain.Interfaces;
 using RecipeApp.Components;
 using DAL;
@@ -16,6 +17,9 @@ namespace RecipeApp
             builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
             builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
+            builder.Services.AddSingleton<IProduceService, ProduceService>();
+            builder.Services.AddSingleton<IRecipeService, RecipeService>();
+            builder.Services.AddSingleton<IUserProduceService, UserProduceService>();
 
 			var app = builder.Build();
 
