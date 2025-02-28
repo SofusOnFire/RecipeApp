@@ -11,7 +11,7 @@ namespace Domain.Models
 		public int ProduceID { get; private set; }
         public string? Name { get; private set; }
 
-		public Produce(int produceID, string name)
+		public Produce(int produceID, string? name)
 		{
 			ProduceID = produceID;
 			Name = name;
