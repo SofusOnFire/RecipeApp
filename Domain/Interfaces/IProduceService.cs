@@ -11,7 +11,7 @@ namespace Domain.Interfaces
     {
         public IEnumerable<Produce> GetAllProduce();
 
-        public Produce GetByProduceID(Produce produce);
+        public Produce GetProduceByID(Produce produce);
 
         public IEnumerable<Produce> GetMatchesByName(string input);
 
