@@ -12,7 +12,5 @@ namespace Domain.Interfaces
         public void AddProduce(Produce newProduce);
 
         public void DeleteProduce(Produce produce);
-
-        public void FindRecipes(List<string> UserProduce);
     }
 }

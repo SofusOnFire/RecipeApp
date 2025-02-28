@@ -19,10 +19,5 @@ namespace Services
 		{
 			throw new NotImplementedException();
 		}
-
-		public void FindRecipes(List<string> UserProduce)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }
