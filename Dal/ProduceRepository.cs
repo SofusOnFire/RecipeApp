@@ -13,6 +13,8 @@ namespace DAL
     {
         public Produce GetProduceByID(int produceID)
         {
+			Produce produce = new Produce(0, "Ingrediens ikke fundet");
+			
 			_connectionString.Open();
 
 			string query =
@@ -26,9 +28,12 @@ namespace DAL
 
 			SqlDataReader reader = command.ExecuteReader();
 
-			var produce = new Produce(
-			Convert.ToInt32(reader["ProduceID"]),
-			Convert.ToString(reader["ProduceName"]));
+			while (reader.Read())
+			{
+				produce = new Produce(
+				Convert.ToInt32(reader["ProduceID"]),
+				Convert.ToString(reader["ProduceName"]));
+			}
 
 			_connectionString.Close();
 
