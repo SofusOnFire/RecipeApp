@@ -22,7 +22,7 @@ namespace Services
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<ProduceLine> GetAllRecipeProduceLines(int recipeID)
+		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int recipeID)
 		{
 			throw new NotImplementedException();
 		}
@@ -32,7 +32,7 @@ namespace Services
 			throw new NotImplementedException();
 		}
 
-		public void SetProduce(IEnumerable<ProduceLine> produceLines)
+		public void SetProduceLineList(IEnumerable<ProduceLine> produceLines)
 		{
 			throw new NotImplementedException();
 		}
