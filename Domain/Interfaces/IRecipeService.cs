@@ -27,7 +27,7 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="produceList"></param>
         /// <returns>Returns a list with matching recipes</returns>
-        public IEnumerable<Recipe> GetAllByProduce(IUserProduceService produceList);
+        public IEnumerable<Recipe> GetAllByProduce(IUserProduce produceList);
 
         /// <summary>
         /// 

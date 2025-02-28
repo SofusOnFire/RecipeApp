@@ -10,14 +10,14 @@ namespace Services
 {
 	class RecipeService : IRecipeService
 	{
-		private readonly IUserProduceService _userProduceService; // DI for FindRecipe method.
+		private readonly IUserProduce _userProduce; // DI for FindRecipe method.
 
 		public IEnumerable<Recipe> FindRecipes(IEnumerable<string> userProduce, IEnumerable<Recipe> recipes)
 		{
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Recipe> GetAllByProduce(IUserProduceService produceList)
+		public IEnumerable<Recipe> GetAllByProduce(IUserProduce produceList)
 		{
 			throw new NotImplementedException();
 		}
