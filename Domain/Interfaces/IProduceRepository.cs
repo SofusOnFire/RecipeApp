@@ -7,7 +7,7 @@ using Domain.Models;
 
 namespace Domain.Interfaces
 {
-    interface IProduceRepository
+    public interface IProduceRepository
     {
         public IEnumerable<Produce> GetProduceByID(int produceID);
     }

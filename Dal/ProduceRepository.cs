@@ -9,7 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace DAL
 {
-    public class ProduceRepository : DatabaseManager
+    public class ProduceRepository : DatabaseManager, IProduceRepository
     {
         public IEnumerable<Produce> GetProduceByID(int produceID)
         {
