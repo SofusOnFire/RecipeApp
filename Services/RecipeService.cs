@@ -8,8 +8,13 @@ using Domain.Models;
 
 namespace Services
 {
-	class RecipeService : IRecipeService
+	public class RecipeService : IRecipeService
 	{
-		private readonly IUserProduce _userProduce; // DI for FindRecipe method.
+		private readonly IUserProduceService _userProduceService; // DI for FindRecipe method.
+
+		public RecipeService(IUserProduceService userProduceService)
+		{
+			_userProduceService = userProduceService;
+		}
 	}
 }
