@@ -8,7 +8,7 @@ using Domain.Models;
 
 namespace Services
 {
-	internal class UserProduce : IUserProduceService
+	public class UserProduceService : IUserProduceService
 	{
 		public void AddProduce(Produce newProduce)
 		{
