@@ -1,4 +1,6 @@
+using Domain.Interfaces;
 using RecipeApp.Components;
+using DAL;
 
 namespace RecipeApp
 {
@@ -11,6 +13,7 @@ namespace RecipeApp
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+            builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
 
             var app = builder.Build();
 
