@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    internal class Recipe
+    public class Recipe
     {
         public int? RecipeID { get; private set; }
-        public string? Name { get; private set; }
+        public string? RecipeName { get; private set; }
         public int? CookTime { get; private set; }
         public string? URL { get; private set; }
         public List<ProduceLine>? ProduceLines { get; private set; }
+
+        public Recipe(int? recipeID, string? name, int? cookTime, string? uRL)
+        {
+            RecipeID = recipeID;
+            RecipeName = name;
+            CookTime = cookTime;
+            URL = uRL;
+            ProduceLines = new List<ProduceLine>();
+        }
     }
 }
