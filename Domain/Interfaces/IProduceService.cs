@@ -9,11 +9,5 @@ namespace Domain.Interfaces
 {
     public interface IProduceService
     {
-        public IEnumerable<Produce> GetAllProduce();
-
-        public Produce GetProduceByID(int produceID);
-
-        public IEnumerable<Produce> GetMatchesByName(string input);
-
     }
 }

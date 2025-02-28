@@ -10,14 +10,5 @@ namespace Services
 {
 	internal class UserProduce : IUserProduce
 	{
-		public void AddProduce(Produce newProduce)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void DeleteProduce(Produce produce)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

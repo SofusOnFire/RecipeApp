@@ -9,8 +9,5 @@ namespace Domain.Interfaces
 {
     public interface IUserProduce
     {
-        public void AddProduce(Produce newProduce);
-
-        public void DeleteProduce(Produce produce);
     }
 }

@@ -10,19 +10,5 @@ namespace Services
 {
 	internal class ProduceService : IProduceService
 	{
-		public IEnumerable<Produce> GetAllProduce()
-		{
-			throw new NotImplementedException();
-		}
-
-		public IEnumerable<Produce> GetMatchesByName(string input)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Produce GetProduceByID(int produceID)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }
