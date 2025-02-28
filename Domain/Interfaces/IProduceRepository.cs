@@ -9,6 +9,6 @@ namespace Domain.Interfaces
 {
     public interface IProduceRepository
     {
-        public IEnumerable<Produce> GetProduceByID(int produceID);
+        public Produce GetProduceByID(int produceID);
     }
 }

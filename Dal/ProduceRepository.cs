@@ -11,10 +11,8 @@ namespace DAL
 {
     public class ProduceRepository : DatabaseManager, IProduceRepository
     {
-        public IEnumerable<Produce> GetProduceByID(int produceID)
+        public Produce GetProduceByID(int produceID)
         {
-			List<Produce> list = new List<Produce>();
-
 			_connectionString.Open();
 
 			string query =
@@ -28,18 +26,13 @@ namespace DAL
 
 			SqlDataReader reader = command.ExecuteReader();
 
-			while (reader.Read())
-			{
-				var produce = new Produce(
-				Convert.ToInt32(reader["ProduceLineID"]),
-				Convert.ToString(reader["Name"]));
-
-				list.Add(produce);
-			}
+			var produce = new Produce(
+			Convert.ToInt32(reader["ProduceLineID"]),
+			Convert.ToString(reader["Name"]));
 
 			_connectionString.Close();
 
-			return list;
+			return produce;
 		}
     }
 }
