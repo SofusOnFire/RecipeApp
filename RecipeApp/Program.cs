@@ -16,11 +16,12 @@ namespace RecipeApp
                 .AddInteractiveServerComponents();
             builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
             builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepository>();
+			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
             builder.Services.AddSingleton<IProduceService, ProduceService>();
             builder.Services.AddSingleton<IRecipeService, RecipeService>();
             builder.Services.AddSingleton<IUserProduceService, UserProduceService>();
 
-            var app = builder.Build();
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
