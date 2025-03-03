@@ -23,10 +23,5 @@ namespace Services
 		{
 			return _produceLineRepository.GetAllProduceLineByRecipeID(recipeID);
 		}
-
-		public Produce GetProduceByID(ProduceLine produceLine)
-		{
-			return _produceService.GetProduceByID(produceLine.ProduceID);
-		}
 	}
 }
