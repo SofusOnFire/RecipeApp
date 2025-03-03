@@ -9,12 +9,12 @@ namespace Domain.Models
     public class Produce
     {
 		public int ProduceID { get; private set; }
-        public string? Name { get; private set; }
+        public string? ProduceName { get; private set; }
 
 		public Produce(int produceID, string? name)
 		{
 			ProduceID = produceID;
-			Name = name;
+			ProduceName = name;
 		}
     }
 }

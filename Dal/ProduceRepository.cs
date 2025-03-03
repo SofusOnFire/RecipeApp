@@ -39,7 +39,7 @@ namespace DAL
 
 			return produce;
 		}
-		public IEnumerable<Produce> GetAllProduce()
+		public List<Produce> GetAllProduce()
 		{
 			List<Produce> list = new List<Produce>();
             _connectionString.Open();

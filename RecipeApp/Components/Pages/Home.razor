@@ -1,7 +1,28 @@
 ﻿@page "/"
+@inject IProduceRepository _iProduceRepository
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+	Welcome to your new app.
+<ul>
+	@foreach (var produce in listOfProduce)
+	{
+		<li>@produce.ProduceName</li>
+	}
+</ul>
+
+
+@code {
+
+	private List<Produce> listOfProduce;
+
+	protected override void OnInitialized()
+	{
+		listOfProduce = _iProduceRepository.GetAllProduce();
+	}
+
+
+
+}

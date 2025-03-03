@@ -11,6 +11,6 @@ namespace Domain.Interfaces
     {
         public Produce GetProduceByID(int produceID);
 
-        public IEnumerable<Produce> GetAllProduce();
+        public List<Produce> GetAllProduce();
     }
 }
