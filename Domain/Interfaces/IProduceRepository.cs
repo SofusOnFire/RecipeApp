@@ -10,5 +10,7 @@ namespace Domain.Interfaces
     public interface IProduceRepository
     {
         public Produce GetProduceByID(int produceID);
+
+        public IEnumerable<Produce> GetAllProduce();
     }
 }
