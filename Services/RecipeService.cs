@@ -46,7 +46,7 @@ namespace Services
 				}
 			}
 
-			return recipes;
+			return matchingRecipes;
 		}
 
 		public IEnumerable<Recipe> GetAllRecipeFromDatabase()
