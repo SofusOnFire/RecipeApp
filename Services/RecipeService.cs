@@ -21,7 +21,7 @@ namespace Services
 			_recipeRepository = recipeRepository;
 		}
 
-		public IEnumerable<Recipe> GetAllRecipeFromDatabase()
+		public IEnumerable<Recipe> GetAllRecipesFromDatabase()
 		{
 			IEnumerable<Recipe> recipes = _recipeRepository.GetAllRecipesFromDatabase();
 
