@@ -13,9 +13,10 @@ namespace Services
 		private readonly IProduceLineRepository _produceLineRepository;
 		private readonly IProduceService _produceService;
 
-		public ProduceLineService(IProduceLineRepository produceLineRepository)
+		public ProduceLineService(IProduceLineRepository produceLineRepository, IProduceService produceService)
 		{
 			_produceLineRepository = produceLineRepository;
+			_produceService = produceService;
 		}
 
 		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int recipeID)
@@ -25,7 +26,7 @@ namespace Services
 
 		public Produce GetProduceByID(ProduceLine produceLine)
 		{
-			throw new NotImplementedException();
+			return _produceService.GetProduceByID(produceLine.ProduceID);
 		}
 	}
 }
