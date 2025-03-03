@@ -16,9 +16,5 @@ namespace Services
         {
             _produceRepository = produceRepository;
         }
-        public IEnumerable<Produce> DisplayAllProduce()
-        {
-            return _produceRepository.GetProduceByID();
-        }
     }
 }

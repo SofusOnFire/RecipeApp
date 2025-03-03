@@ -9,6 +9,5 @@ namespace Domain.Interfaces
 {
     public interface IProduceService
     {
-        public IEnumerable<Produce> GetAllProduce();
     }
 }
