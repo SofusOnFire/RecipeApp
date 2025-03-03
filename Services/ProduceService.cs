@@ -10,9 +10,11 @@ namespace Services
 {
 	public class ProduceService : IProduceService
 	{
-		public IEnumerable<Produce> GetAllProduce()
-		{
-			throw new NotImplementedException();
-		}
-	}
+		public IProduceRepository _produceRepository;
+
+        public ProduceService(IProduceRepository produceRepository)
+        {
+            _produceRepository = produceRepository;
+        }
+    }
 }
