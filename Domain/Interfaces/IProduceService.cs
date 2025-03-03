@@ -9,5 +9,11 @@ namespace Domain.Interfaces
 {
     public interface IProduceService
     {
+        /// <summary>
+        /// Gets the produce by produceID
+        /// </summary>
+        /// <param name="produceID"></param>
+        /// <returns></returns>
+        public Produce GetProduceByID(int produceID);
     }
 }
