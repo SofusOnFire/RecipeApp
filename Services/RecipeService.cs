@@ -21,6 +21,34 @@ namespace Services
 			_recipeRepository = recipeRepository;
 		}
 
+		public IEnumerable<Recipe> FindRecipes(List<string> userProduce)
+		{
+			var recipes = GetAllRecipeFromDatabase(); // Gets all recipes
+
+			List<Recipe> matchingRecipes = new List<Recipe>(); // Creates new list to contain possible matching recipes
+
+			bool userContainsAllRecipeProduce = true; // Bool which represents succes or failure of checking matches
+
+			foreach (Recipe recipe in recipes)
+			{
+				foreach (ProduceLine produceLine in recipe.ProduceLines)
+				{
+					if (!userProduce.Contains(produceLine.Produce.Name)) // If the user doesn't have the produce the operation breaks and continue with the next recipe
+					{
+						userContainsAllRecipeProduce = false;
+						break;
+					}
+				}
+
+				if (userContainsAllRecipeProduce)
+				{
+					matchingRecipes.Add(recipe);
+				}
+			}
+
+			return recipes;
+		}
+
 		public IEnumerable<Recipe> GetAllRecipeFromDatabase()
 		{
 			IEnumerable<Recipe> recipes = _recipeRepository.GetAllRecipesFromDatabase();
@@ -34,5 +62,6 @@ namespace Services
 
 			return recipes;
 		}
+
 	}
 }
