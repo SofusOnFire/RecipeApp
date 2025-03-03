@@ -10,5 +10,15 @@ namespace Services
 {
 	public class ProduceService : IProduceService
 	{
-	}
+		public IProduceRepository _produceRepository;
+
+        public ProduceService(IProduceRepository produceRepository)
+        {
+            _produceRepository = produceRepository;
+        }
+        public IEnumerable<Produce> DisplayAllProduce()
+        {
+            return _produceRepository.GetProduceByID();
+        }
+    }
 }
