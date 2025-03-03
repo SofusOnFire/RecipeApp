@@ -11,12 +11,18 @@ namespace Domain.Models
         public int ProduceLineID { get; private set; }
         public int RecipeID { get; private set; }
         public int ProduceID { get; private set; }
+        public Produce Produce { get; private set; }
 
         public ProduceLine(int produceLineID, int recipeID, int produceID)
         {
             ProduceLineID = produceLineID;
             RecipeID = recipeID;
             ProduceID = produceID;
+        }
+
+        public void SetProduce(Produce produce)
+        {
+            Produce = produce;
         }
     }
 }

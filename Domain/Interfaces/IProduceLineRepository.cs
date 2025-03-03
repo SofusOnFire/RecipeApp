@@ -9,6 +9,6 @@ namespace Domain.Interfaces
 {
     public interface IProduceLineRepository
     {
-        public IEnumerable<ProduceLine> GetAllProduceLineByRecipeID(int recipeID);
+        public IEnumerable<ProduceLine> GetAllProduceLineByRecipeID(int? recipeID);
     }
 }

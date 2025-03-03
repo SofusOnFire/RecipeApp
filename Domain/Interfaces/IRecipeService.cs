@@ -9,5 +9,10 @@ namespace Domain.Interfaces
 {
     public interface IRecipeService
     {
-    }
+		/// <summary>
+		/// Gets all recipes from database.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Recipe> GetAllRecipesFromDatabase();
+	}
 }
