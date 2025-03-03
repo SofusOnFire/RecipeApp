@@ -8,7 +8,7 @@ using Domain.Models;
 
 namespace Services
 {
-	class ProduceLineService : IProduceLineService
+	public class ProduceLineService : IProduceLineService
 	{
 		private readonly IProduceLineRepository _produceLineRepository;
 
