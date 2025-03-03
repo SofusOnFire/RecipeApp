@@ -14,6 +14,6 @@ namespace Domain.Interfaces
 		/// </summary>
 		/// <param name="recipeID"></param>
 		/// <returns></returns>
-		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int recipeID);
+		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int? recipeID);
     }
 }

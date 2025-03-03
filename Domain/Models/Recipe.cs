@@ -12,7 +12,7 @@ namespace Domain.Models
         public string? RecipeName { get; private set; }
         public int? CookTime { get; private set; }
         public string? URL { get; private set; }
-        public List<ProduceLine>? ProduceLines { get; private set; }
+        public IEnumerable<ProduceLine>? ProduceLines { get; private set; }
 
         public Recipe(int? recipeID, string? name, int? cookTime, string? uRL)
         {
@@ -21,6 +21,11 @@ namespace Domain.Models
             CookTime = cookTime;
             URL = uRL;
             ProduceLines = new List<ProduceLine>();
+        }
+
+        public void SetProduceLineList(IEnumerable<ProduceLine> produceLines)
+        {
+            ProduceLines = produceLines;
         }
     }
 }

@@ -10,11 +10,9 @@ namespace Domain.Interfaces
     public interface IRecipeService
     {
 		/// <summary>
-		/// Gets all recipe producelines from the database based on recipeID.
+		/// Gets all recipes from database.
 		/// </summary>
-		/// <param name="recipeID"></param>
 		/// <returns></returns>
-		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int recipeID);
-
+		public IEnumerable<Recipe> GetAllRecipeFromDatabase();
 	}
 }
