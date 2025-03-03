@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    interface IProduceLineService
+    public interface IProduceLineService
     {
 		/// <summary>
 		/// Gets all recipe producelines from the database based on recipeID.
