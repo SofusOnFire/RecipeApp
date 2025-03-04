@@ -9,5 +9,6 @@ namespace Domain.Interfaces
 {
     public interface IUserProduceService
     {
+        public List<string> UserProduceList { get; }
     }
 }

@@ -34,5 +34,38 @@ namespace Services
 
 			return recipes;
 		}
+
+		public IEnumerable<Recipe> FindRecipes()
+		{
+			IEnumerable<Recipe> recipes = GetAllRecipesFromDatabase();
+			List<Recipe> matchedRecipes = new List<Recipe>();
+
+			foreach (Recipe recipe in recipes)
+			{
+				bool AllRecipeMatches = true;
+
+				if (recipe.ProduceLines == null)
+					continue;
+
+				foreach (ProduceLine produceLine in recipe.ProduceLines)
+				{
+					if (produceLine._Produce.Name == null)
+						continue;
+
+					if (_userProduceService.UserProduceList.Contains(produceLine._Produce.Name) == false)
+					{
+						AllRecipeMatches = false;
+						break;
+					}
+				}
+
+				if (AllRecipeMatches == true)
+				{
+					matchedRecipes.Add(recipe);
+				}
+			}
+
+			return matchedRecipes;
+		}
 	}
 }
