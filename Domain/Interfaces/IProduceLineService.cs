@@ -14,13 +14,6 @@ namespace Domain.Interfaces
 		/// </summary>
 		/// <param name="recipeID"></param>
 		/// <returns></returns>
-		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int recipeID);
-
-		/// <summary>
-		/// Gets the linked produce that is linked to the produceline
-		/// </summary>
-		/// <param name="produceLine"></param>
-		/// <returns></returns>
-		public Produce GetProduceByID(ProduceLine produceLine);
+		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int? recipeID);
     }
 }

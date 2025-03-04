@@ -12,16 +12,27 @@ namespace Services
 	{
 		private readonly IUserProduceService _userProduceService; // DI for FindRecipe method.
 		private readonly IProduceLineService _produceLineService; // DI for GetAllRecipeProduceLinesByRecipeID
+		private readonly IRecipeRepository _recipeRepository; // DI for GetAllRecipeFromDataBase
 
-		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService)
+		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService, IRecipeRepository recipeRepository)
 		{
 			_userProduceService = userProduceService;
 			_produceLineService = produceLineService;
+			_recipeRepository = recipeRepository;
 		}
 
-		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int recipeID)
+		public IEnumerable<Recipe> GetAllRecipesFromDatabase()
 		{
-			return _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipeID);
+			IEnumerable<Recipe> recipes = _recipeRepository.GetAllRecipesFromDatabase();
+
+			foreach (Recipe recipe in recipes)
+			{
+				IEnumerable<ProduceLine> produceLines = _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipe.RecipeID);
+
+				recipe.SetProduceLineList(produceLines);
+			}
+
+			return recipes;
 		}
 	}
 }
