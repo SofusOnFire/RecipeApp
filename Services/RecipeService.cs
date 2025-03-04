@@ -40,18 +40,21 @@ namespace Services
 			IEnumerable<Recipe> recipes = GetAllRecipesFromDatabase();
 			List<Recipe> matchedRecipes = new List<Recipe>();
 
-			foreach (Recipe recipe in recipes)
+			// Iterates through all recipes in the database
+			foreach (Recipe recipe in recipes) 
 			{
-				bool AllRecipeMatches = true;
+				bool AllRecipeMatches = true; // Assumes the user have all needed produce
 
-				if (recipe.ProduceLines == null)
+				if (recipe.ProduceLines == null) // If the recipe doesn't have any produce, get the next recipe
 					continue;
 
+				// Iterates through all producelines in the current recipe
 				foreach (ProduceLine produceLine in recipe.ProduceLines)
 				{
-					if (produceLine._Produce.Name == null)
+					if (produceLine._Produce.Name == null) // Checks that the produce isn't null
 						continue;
 
+					// If the user doesn't have a produce, break and mark the recipe as non-fulfilled
 					if (_userProduceService.UserProduceList.Contains(produceLine._Produce.Name) == false)
 					{
 						AllRecipeMatches = false;
@@ -59,7 +62,7 @@ namespace Services
 					}
 				}
 
-				if (AllRecipeMatches == true)
+				if (AllRecipeMatches == true) // Adds the recipe to the succesful matched list, if every produce is available
 				{
 					matchedRecipes.Add(recipe);
 				}
