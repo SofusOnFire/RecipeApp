@@ -45,7 +45,7 @@ namespace Services
 			{
 				bool AllRecipeMatches = true; // Assumes the user have all needed produce
 
-				if (recipe.ProduceLines == null) // If the recipe doesn't have any produce, get the next recipe
+				if (recipe.ProduceLines == null || _userProduceService.UserProduceList == null) // If the recipe doesn't have any produce, get the next recipe
 					continue;
 
 				// Iterates through all producelines in the current recipe
