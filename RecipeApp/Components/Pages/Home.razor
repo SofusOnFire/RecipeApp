@@ -1,7 +1,70 @@
 ﻿@page "/"
+@inject IProduceRepository _iProduceRepository
+@inject IUserProduceService userProduceService
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="lists-container">
+	<div>
+		<h4>Your Produce</h4>
+		<ul>
+			@foreach (var produce in yourProduce)
+			{
+				<li @onclick=" () => MoveProduceBetweenLists(produce)">@produce.Name</li>
+			}
+		</ul>
+	</div>
+	<div>
+		<h4>All Produce</h4>
+		<ul>
+			@foreach (var produce in listOfProduce)
+			{
+				<li @onclick=" () => MoveProduceBetweenLists(produce)">@produce.Name</li>
+			}
+		</ul>
+	</div>
+</div>
 
-Welcome to your new app.
+<style>
+	.lists-container {
+	display: flex;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+	}
+
+	.lists-container div {
+	flex: 1;
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	}
+
+	li {
+	cursor: pointer;
+	padding: 5px;
+	list-style: none;
+	}
+
+	li:hover {
+	background-color: #ddd;
+	}
+</style>
+
+@code {
+
+	List<Produce>? listOfProduce;
+	List<Produce>? yourProduce;
+
+	protected override void OnInitialized()
+	{
+		listOfProduce = _iProduceRepository.GetAllProduce();
+		yourProduce = userProduceService.UserProduceList;
+	}
+
+	private void MoveProduceBetweenLists(Produce produce)
+	{
+		userProduceService.MoveBetweenList(produce, listOfProduce);
+	}
+}
