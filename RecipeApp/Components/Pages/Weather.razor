@@ -1,6 +1,6 @@
 ﻿@page "/weather"
 @inject IRecipeService _iRecipeService
-@attribute [StreamRendering]
+@rendermode InteractiveServer
 
 <PageTitle>Weather</PageTitle>
 
@@ -11,19 +11,31 @@
 <button type="button" id="allRecipes" @onclick="showAllRecipes">Alle opskrifter</button>
 <button type="button" id="userProduceRecipes" @onclick="showUserProduceRecipes">Opskrifter jeg kan lave</button>
 
-<div hidden="@ShowList" id="recipeList">
-    <ul><li id="recipe"></li></ul>
+<div hidden=@hideList id="recipeList">
+    <ul>
+        @foreach (var recipe in listOfRecipes)
+        {
+            <li><a href="@recipe.URL">@recipe.RecipeName | tilbedringstid: @recipe.CookTime minutter</a></li>
+        }
+    </ul>
 </div>
 
 @code {
-    private List<Recipe> listOfRecipes;
-    private bool ShowList { get; set; } = false;
 
-    protected void showAllRecipes(){
-        ShowList = !ShowList;
+    private IEnumerable<Recipe> listOfRecipes;
+
+    bool hideList = true;
+
+    protected override void OnInitialized()
+    {
+        listOfRecipes = _iRecipeService.GetAllRecipesFromDatabase();
     }
 
-    protected void showUserProduceRecipes(){
+    private void showAllRecipes(){
+        hideList = !hideList;
+    }
+
+    private void showUserProduceRecipes(){
         // in progress
     }
 }
