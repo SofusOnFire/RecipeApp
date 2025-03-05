@@ -1,4 +1,5 @@
 ﻿@page "/weather"
+@inject IRecipeService _iRecipeService
 @attribute [StreamRendering]
 
 <PageTitle>Weather</PageTitle>
@@ -7,36 +8,23 @@
 
 <p>Hvilke slags opskrifter vil du se?</p>
 
-<button type="button" id="allRecipes" onclick="showAllRecipes">Alle opskrifter</button>
-<button type="button" id="userProduceRecipes" onclick="showUserProduceRecipes">Opskrifter jeg kan lave</button>
+<button type="button" id="allRecipes" @onclick="showAllRecipes">Alle opskrifter</button>
+<button type="button" id="userProduceRecipes" @onclick="showUserProduceRecipes">Opskrifter jeg kan lave</button>
 
-<div id="recipeList">
-    <p>test</p>
+<div hidden="@ShowList" id="recipeList">
+    <p>hello!</p>
+    <ul><li id="recipe"></li></ul>
 </div>
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private List<Recipe> listOfRecipes;
+    private bool ShowList { get; set; } = false;
 
-    protected override async Task OnInitializedAsync()
-    {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
-
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+    protected void showAllRecipes(){
+        ShowList = !ShowList;
     }
 
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    protected void showUserProduceRecipes(){
+        // in progress
     }
 }
