@@ -58,7 +58,7 @@ namespace Services
 
 					foreach (Produce userProduce in _userProduceService.UserProduceList)
 					{
-						// If the user doesn't have a produce, break and mark the produce as not found
+						// If the user have the produce, break and mark the produce as found
 						if (userProduce.Name == produceLine._Produce.Name)
 						{
 							foundMatch = true;
