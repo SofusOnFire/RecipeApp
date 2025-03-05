@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IProduceRepository _iProduceRepository
+@inject IUserProduceService userProduceService
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -27,39 +28,39 @@
 
 <style>
 	.lists-container {
-	display: flex;
-	grid-template-columns: 1fr 1fr;
-	gap: 10px;
+		display: flex;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
 	}
 
-	.lists-container div {
-	flex: 1;
-	border: 1px solid #ccc;
-	padding: 10px;
-	border-radius: 5px;
-	background-color: #f9f9f9;
-	}
+		.lists-container div {
+			flex: 1;
+			border: 1px solid #ccc;
+			padding: 10px;
+			border-radius: 5px;
+			background-color: #f9f9f9;
+		}
 
 	li {
-	cursor: pointer;
-	padding: 5px;
-	list-style: none;
+		cursor: pointer;
+		padding: 5px;
+		list-style: none;
 	}
 
-	li:hover {
-	background-color: #ddd;
-	}
+		li:hover {
+			background-color: #ddd;
+		}
 </style>
 
 @code {
 
-	List<Produce> listOfProduce;
+	List<Produce>? listOfProduce;
 	List<Produce>? yourProduce;
 
 	protected override void OnInitialized()
 	{
 		listOfProduce = _iProduceRepository.GetAllProduce();
-		yourProduce ??= new List<Produce>();
+		yourProduce = userProduceService.UserProduceList;
 	}
 
 	void MoveProduceBetweenLists(Produce produce)
