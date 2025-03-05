@@ -10,5 +10,8 @@ namespace Domain.Interfaces
     public interface IUserProduceService
     {
         public List<Produce> UserProduceList { get; }
-    }
+
+        public void MoveBetweenList(Produce produce, List<Produce> listOfProduce);
+
+	}
 }
