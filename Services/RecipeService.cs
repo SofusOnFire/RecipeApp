@@ -41,7 +41,7 @@ namespace Services
 			List<Recipe> matchedRecipes = new List<Recipe>();
 
 			// Iterates through all recipes in the database
-			foreach (Recipe recipe in recipes) 
+			foreach (Recipe recipe in recipes)
 			{
 				bool AllRecipeMatches = true; // Assumes the user have all needed produce
 
@@ -54,8 +54,19 @@ namespace Services
 					if (produceLine._Produce.Name == null) // Checks that the produce isn't null
 						continue;
 
-					// If the user doesn't have a produce, break and mark the recipe as non-fulfilled
-					if (_userProduceService.UserProduceList.Contains(produceLine._Produce.Name) == false)
+					bool foundMatch = false; // Assumes the user doesn't have the produce
+
+					foreach (Produce userProduce in _userProduceService.UserProduceList)
+					{
+						// If the user doesn't have a produce, break and mark the produce as not found
+						if (userProduce.Name == produceLine._Produce.Name)
+						{
+							foundMatch = true;
+							break;
+						}
+					}
+
+					if (foundMatch == false) // If the user doesn't have a produce, break and mark the recipe as non-fulfilled
 					{
 						AllRecipeMatches = false;
 						break;
