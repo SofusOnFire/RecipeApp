@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Produce
+    public class Produce : IComparable<Produce>
     {
 		public int ProduceID { get; private set; }
-        public string? ProduceName { get; private set; }
+        public string? Name { get; private set; }
 
-		public Produce(int produceID, string? name)
+		public int CompareTo(Produce produce)
+		{
+			if (produce == null) return 1;
+			return Name.CompareTo(produce.Name);
+		}
+		public Produce(int produceID, string? name) 
 		{
 			ProduceID = produceID;
-			ProduceName = name;
+			Name = name;
 		}
+
     }
 }
