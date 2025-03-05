@@ -10,5 +10,7 @@ namespace Services
 {
 	public class UserProduceService : IUserProduceService
 	{
+		public List<string> UserProduceList { get; private set; }
+		
 	}
 }

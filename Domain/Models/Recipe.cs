@@ -22,5 +22,11 @@ namespace Domain.Models
             URL = uRL;
             ProduceLines = new List<ProduceLine>();
         }
+
+        public void SetProduceLineList(IEnumerable<ProduceLine> produceLines)
+        {
+            var list = produceLines.ToList<ProduceLine>();
+            ProduceLines = list;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace DAL
 {
     public class ProduceLineRepository : DatabaseManager, IProduceLineRepository
     {
-        public IEnumerable<ProduceLine> GetAllProduceLineByRecipeID(int recipeID)
+        public IEnumerable<ProduceLine> GetAllProduceLineByRecipeID(int? recipeID)
         {
             List<ProduceLine> list = new List<ProduceLine>();
             _connectionString.Open();
