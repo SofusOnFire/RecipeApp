@@ -11,9 +11,18 @@
 <button type="button" id="allRecipes" @onclick="showAllRecipes">Alle opskrifter</button>
 <button type="button" id="userProduceRecipes" @onclick="showUserProduceRecipes">Opskrifter jeg kan lave</button>
 
-<div hidden=@hideList id="recipeList">
+<div hidden=@hideRecipeList id="recipeList">
     <ul>
         @foreach (var recipe in listOfRecipes)
+        {
+            <li><Tooltip Title="@getRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilberedningstid: @recipe.CookTime minutter</a></Tooltip></li>
+        }
+    </ul>
+</div>
+
+<div hidden=@hideMatchedRecipeList id="matchedRecipeList">
+    <ul>
+        @foreach (var recipe in listOfMatchedRecipes)
         {
             <li><Tooltip Title="@getRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilberedningstid: @recipe.CookTime minutter</a></Tooltip></li>
         }
@@ -23,20 +32,25 @@
 @code {
 
     private IEnumerable<Recipe> listOfRecipes;
+    private IEnumerable<Recipe> listOfMatchedRecipes;
 
-    bool hideList = true;
+    bool hideRecipeList = true;
+    bool hideMatchedRecipeList = true;
 
     protected override void OnInitialized()
     {
         listOfRecipes = _iRecipeService.GetAllRecipesFromDatabase();
+        listOfMatchedRecipes = _iRecipeService.FindRecipes();
     }
 
     private void showAllRecipes(){
-        hideList = !hideList;
+        hideRecipeList = !hideRecipeList;
+        hideMatchedRecipeList = true;
     }
 
     private void showUserProduceRecipes(){
-        // in progress
+        hideMatchedRecipeList = !hideMatchedRecipeList;
+        hideRecipeList = true;
     }
 
     private string getRecipeProduces(Recipe recipe){
