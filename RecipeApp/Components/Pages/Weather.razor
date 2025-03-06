@@ -6,55 +6,57 @@
 
 <h1>Opskrifter</h1>
 
-<p>Hvilke slags opskrifter vil du se?</p>
-
-<button type="button" id="allRecipes" @onclick="ShowAllRecipes">Alle opskrifter</button>
-<button type="button" id="userProduceRecipes" @onclick="ShowUserProduceRecipes">Opskrifter jeg kan lave</button>
-
-<div hidden=@hideRecipeList id="recipeList">
-    <ul>
-        @foreach (var recipe in listOfRecipes)
-        {
-            <li><Tooltip Title="@GetRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilberedningstid: @recipe.CookTime minutter</a></Tooltip></li>
-        }
-    </ul>
+<div style="display: flex; flex-direction: column; gap: 10px;">
+    @foreach (var recipe in listOfMatchedRecipes)
+    {
+        <a class="recipe-card" href="@recipe.URL">
+            <div class="recipe-card-info" style="margin-left: auto; margin-right: auto;">
+                <h1 style="font-family: Arial;">@recipe.RecipeName</h1>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <p class="produce" style="font-family: Arial; background-color: white; padding: 3px 0px 3px 0px;">Ingredienser:</p>
+                    @foreach (var recipeLine in recipe.ProduceLines)
+                    {
+                        @if (recipeLine._Produce.InStock == true)
+                        {
+                            <p style="background-color: #00ab45; font-family: Arial; border-radius: 15px; padding: 3px 10px 3px 10px;">@recipeLine._Produce.Name</p>
+                        }
+                    }
+                    @foreach (var recipeLine in recipe.ProduceLines)
+                    {
+                        @if (recipeLine._Produce.InStock == false)
+                        {
+                            <p style="background-color: #C21807; font-family: Arial; border-radius: 15px; padding: 3px 10px 3px 10px;">@recipeLine._Produce.Name</p>
+                        }
+                    }
+                </div>
+                <h2>Tilberedningstid: @recipe.CookTime minutter</h2>
+            </div>
+        </a>
+    }
 </div>
 
-<div hidden=@hideMatchedRecipeList id="matchedRecipeList">
-    <ul>
-        @foreach (var recipe in listOfMatchedRecipes)
-        {
-            <li><Tooltip Title="@GetRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilberedningstid: @recipe.CookTime minutter</a></Tooltip></li>
-        }
-    </ul>
-</div>
+<style>
+    .recipe-card {
+    all: unset;
+    cursor: pointer;
+    border: solid 1px black;
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px;
+    height: auto;
+    display: flex;
+    }
+
+    .recipe-card:hover {
+    transform: scale(1.02);
+    }
+</style>
 
 @code {
-
-    private IEnumerable<Recipe> listOfRecipes;
     private IEnumerable<Recipe> listOfMatchedRecipes;
-
-    bool hideRecipeList = true;
-    bool hideMatchedRecipeList = true;
 
     protected override void OnInitialized()
     {
-        listOfRecipes = _iRecipeService.GetAllRecipesFromDatabase();
         listOfMatchedRecipes = _iRecipeService.FindRecipes();
     }
-
-    private void ShowAllRecipes(){
-        hideRecipeList = !hideRecipeList;
-        hideMatchedRecipeList = true;
-    }
-
-    private void ShowUserProduceRecipes(){
-        hideMatchedRecipeList = !hideMatchedRecipeList;
-        hideRecipeList = true;
-    }
-
-    private string GetRecipeProduces(Recipe recipe){
-        return _iRecipeService.GetRecipeProduceLines(recipe);
-    }
-
 }
