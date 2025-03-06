@@ -84,7 +84,7 @@ namespace Services
 			return matchedRecipes;
 		}
 
-		public string getRecipeProduceLines(Recipe recipe)
+		public string GetRecipeProduceLines(Recipe recipe)
 		{
             string listOfRecipeProduce = "";
             var produceLineList = _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipe.RecipeID);
