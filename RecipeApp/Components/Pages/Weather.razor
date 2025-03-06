@@ -15,7 +15,7 @@
     <ul>
         @foreach (var recipe in listOfRecipes)
         {
-            <li><a href="@recipe.URL">@recipe.RecipeName | tilbedringstid: @recipe.CookTime minutter</a></li>
+            <li><a href="@recipe.URL" data-bs-toggle="tooltip" data-bs-title="test??">@recipe.RecipeName | tilbedringstid: @recipe.CookTime minutter</a></li>
         }
     </ul>
 </div>
@@ -38,4 +38,9 @@
     private void showUserProduceRecipes(){
         // in progress
     }
+
+    private void recipeProduceList(){
+        // in progress
+    }
+
 }
