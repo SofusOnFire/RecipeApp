@@ -15,7 +15,7 @@
     <ul>
         @foreach (var recipe in listOfRecipes)
         {
-            <li><Tooltip Title="@getRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilbedringstid: @recipe.CookTime minutter</a></Tooltip></li>
+            <li><Tooltip Title="@getRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilberedningstid: @recipe.CookTime minutter</a></Tooltip></li>
         }
     </ul>
 </div>
