@@ -21,6 +21,7 @@ namespace Domain.Models
 		{
 			ProduceID = produceID;
 			Name = name;
+			InStock = false;
 		}
 
     }
