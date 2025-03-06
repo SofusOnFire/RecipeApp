@@ -15,6 +15,13 @@ namespace Domain.Interfaces
 		/// <returns></returns>
 		public IEnumerable<Recipe> GetAllRecipesFromDatabase();
 
+		/// <summary>
+		/// Gets all recipes matched by UserProduce
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Recipe> FindRecipes();
+	}
+
 		public string getRecipeProduceLines(Recipe recipe);
 
     }
