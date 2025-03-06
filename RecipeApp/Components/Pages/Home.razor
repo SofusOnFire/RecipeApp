@@ -11,7 +11,10 @@
 		<ul>
 			@foreach (var produce in yourProduce)
 			{
-				<li @onclick=" () => MoveProduceBetweenLists(produce)">@produce.Name</li>
+				<li style="display: flex; justify-content: space-between; align-items: center;" @onclick="() => MoveProduceBetweenLists(produce)">
+					@produce.Name
+					<img src="/img/trashcan.svg" />
+				</li>
 			}
 		</ul>
 	</div>
@@ -49,6 +52,10 @@
 
 	li:hover {
 	background-color: #ddd;
+	}
+
+	li:hover img {
+		transform: scale(1.1);
 	}
 </style>
 
