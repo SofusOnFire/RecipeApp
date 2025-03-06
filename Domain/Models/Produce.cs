@@ -10,6 +10,7 @@ namespace Domain.Models
     {
 		public int ProduceID { get; private set; }
         public string? Name { get; private set; }
+		public bool InStock { get; set; }
 
 		public int CompareTo(Produce produce)
 		{
