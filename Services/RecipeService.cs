@@ -13,12 +13,14 @@ namespace Services
 		private readonly IUserProduceService _userProduceService; // DI for FindRecipe method.
 		private readonly IProduceLineService _produceLineService; // DI for GetAllRecipeProduceLinesByRecipeID
 		private readonly IRecipeRepository _recipeRepository; // DI for GetAllRecipeFromDataBase
+		private readonly IProduceRepository _produceRepository;
 
-		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService, IRecipeRepository recipeRepository)
+		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService, IRecipeRepository recipeRepository, IProduceRepository produceRepository)
 		{
 			_userProduceService = userProduceService;
 			_produceLineService = produceLineService;
 			_recipeRepository = recipeRepository;
+			_produceRepository = produceRepository;
 		}
 
 		public IEnumerable<Recipe> GetAllRecipesFromDatabase()
@@ -81,5 +83,28 @@ namespace Services
 
 			return matchedRecipes;
 		}
+
+		public string GetRecipeProduceLines(Recipe recipe)
+		{
+            string listOfRecipeProduce = "";
+            var produceLineList = _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipe.RecipeID);
+			var produceList = _produceRepository.GetAllProduce();
+
+			foreach(var line in produceLineList)
+			{
+				if(line.RecipeID == recipe.RecipeID)
+				{
+					foreach(var produces in produceList)
+					{
+						if(line.ProduceID == produces.ProduceID)
+						{
+							listOfRecipeProduce += produces.Name + ", ";
+						}
+					}
+				}
+			}
+
+            return listOfRecipeProduce;
+        }
 	}
 }
