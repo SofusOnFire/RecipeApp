@@ -14,5 +14,8 @@ namespace Domain.Interfaces
 		/// </summary>
 		/// <returns></returns>
 		public IEnumerable<Recipe> GetAllRecipesFromDatabase();
-	}
+
+		public string getRecipeProduceLines(Recipe recipe);
+
+    }
 }

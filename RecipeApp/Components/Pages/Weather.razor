@@ -15,7 +15,7 @@
     <ul>
         @foreach (var recipe in listOfRecipes)
         {
-            <li><a href="@recipe.URL" data-bs-toggle="tooltip" data-bs-title="test??">@recipe.RecipeName | tilbedringstid: @recipe.CookTime minutter</a></li>
+            <li><Tooltip Title="@getRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilbedringstid: @recipe.CookTime minutter</a></Tooltip></li>
         }
     </ul>
 </div>
@@ -39,8 +39,8 @@
         // in progress
     }
 
-    private void recipeProduceList(){
-        // in progress
+    private string getRecipeProduces(Recipe recipe){
+        return _iRecipeService.getRecipeProduceLines(recipe);
     }
 
 }
