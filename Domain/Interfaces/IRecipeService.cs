@@ -20,7 +20,6 @@ namespace Domain.Interfaces
 		/// </summary>
 		/// <returns></returns>
 		public IEnumerable<Recipe> FindRecipes();
-	}
 
 		public string getRecipeProduceLines(Recipe recipe);
 
