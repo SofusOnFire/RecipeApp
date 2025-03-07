@@ -35,7 +35,7 @@ namespace DAL
                 Convert.ToString(reader["RecipeName"]),
                 Convert.ToInt32(reader["CookTime"]),
                 Convert.ToString(reader["URL"]),
-                _produceLineRepository.GetAllProduceLineByRecipeID(Convert.ToInt32(reader["RecipeID"])));
+                _produceLineRepository.GetAllProduceLineByRecipeID(Convert.ToInt32(reader["RecipeID"]))); // Gets all ProduceLine for the specific Order as a IEnumable
 
                 list.Add(recipe);
             }

@@ -13,7 +13,7 @@ namespace DAL
     {
         public Produce GetProduceByID(int produceID)
         {
-			Produce produce = new Produce(0, "Ingrediens ikke fundet");
+			List<Produce> produces = new List<Produce>();
 			
 			_connectionString.Open();
 
@@ -30,15 +30,16 @@ namespace DAL
 
 			while (reader.Read())
 			{
-				produce = new Produce(
+				produces.Add(new Produce(
 				Convert.ToInt32(reader["ProduceID"]),
-				Convert.ToString(reader["ProduceName"]));
+				Convert.ToString(reader["ProduceName"])));
 			}
 
 			_connectionString.Close();
 
-			return produce;
+			return produces[0];
 		}
+
 		public List<Produce> GetAllProduce()
 		{
 			List<Produce> list = new List<Produce>();

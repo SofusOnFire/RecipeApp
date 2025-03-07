@@ -7,7 +7,7 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Data.SqlClient;
 
-namespace DAL
+namespace DAL.OldRepositories
 {
     public class ProduceLineRepository : DatabaseManager, IProduceLineRepository
     {
@@ -23,7 +23,7 @@ namespace DAL
             var command = new SqlCommand(query, _connectionString);
 
             // Replaces @ReipceID in the query with recipeID arguemnt, to ensure for SQL Injection
-            command.Parameters.AddWithValue("@RecipeID", recipeID); 
+            command.Parameters.AddWithValue("@RecipeID", recipeID);
 
             SqlDataReader reader = command.ExecuteReader();
 
