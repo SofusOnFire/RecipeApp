@@ -28,7 +28,7 @@ namespace Services
 
 			List<Produce> allProduces = _produceRepository.GetAllProduce();
 
-			if (userProduces != null)
+			if (userProduces.Count != 0)
 			{
 				foreach (Produce produce in allProduces)
 				{

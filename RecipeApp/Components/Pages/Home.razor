@@ -66,9 +66,8 @@
 
 	protected override void OnInitialized()
 	{
-
-		listOfProduce = _iProduceService.CompareAndGetProduceList(yourProduce);
 		yourProduce = userProduceService.UserProduceList;
+		listOfProduce = _iProduceService.CompareAndGetProduceList(yourProduce);
 	}
 
 	private void MoveProduceBetweenLists(Produce produce)
