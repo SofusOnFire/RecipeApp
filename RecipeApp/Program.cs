@@ -15,9 +15,12 @@ namespace RecipeApp
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddBlazorBootstrap();
+            // All our DAL interfaces
             builder.Services.AddSingleton<IRecipeRepository, RefactoredRecipeRepository>();
             builder.Services.AddSingleton<IProduceLineRepository, RefactoredProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
+
+            // All out BLL interfaces
             builder.Services.AddSingleton<IProduceService, ProduceService>();
             builder.Services.AddSingleton<IRecipeService, RecipeService>();
             builder.Services.AddSingleton<IUserProduceService, UserProduceService>();
