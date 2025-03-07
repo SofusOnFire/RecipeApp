@@ -7,7 +7,7 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Data.SqlClient;
 
-namespace DAL
+namespace DAL.OldRepositories
 {
     public class RecipeRepository : DatabaseManager, IRecipeRepository
     {

@@ -14,19 +14,13 @@ namespace Domain.Models
         public string? URL { get; private set; }
         public List<ProduceLine>? ProduceLines { get; private set; }
 
-        public Recipe(int? recipeID, string? name, int? cookTime, string? uRL)
+        public Recipe(int? recipeID, string? name, int? cookTime, string? uRL, IEnumerable<ProduceLine> produceLines)
         {
             RecipeID = recipeID;
             RecipeName = name;
             CookTime = cookTime;
             URL = uRL;
-            ProduceLines = new List<ProduceLine>();
-        }
-
-        public void SetProduceLineList(IEnumerable<ProduceLine> produceLines)
-        {
-            var list = produceLines.ToList<ProduceLine>();
-            ProduceLines = list;
+            ProduceLines = produceLines.ToList();
         }
     }
 }
