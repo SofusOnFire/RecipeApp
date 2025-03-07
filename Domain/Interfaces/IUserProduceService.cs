@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
+    /// <summary>
+    /// Exists to implement the user's add/remove functionality; when registering produce.
+    /// </summary>
     public interface IUserProduceService
     {
+        // Created in UserProduceService; added here because it is needed by other classes/interfaces.
         public List<Produce> UserProduceList { get; }
-
+        
+        // Used for the add/remove functionality between the user's personal list of produce and the ALL produce list.
         public void MoveBetweenList(Produce produce, List<Produce> listOfProduce);
 
 	}
