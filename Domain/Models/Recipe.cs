@@ -23,9 +23,9 @@ namespace Domain.Models
             ProduceLines = new List<ProduceLine>();
         }
 
-        public void AddProduceLine(ProduceLine produceLine)
+        public void AddProduceLine(IEnumerable<ProduceLine> produceLine)
         {
-            ProduceLines.Add(produceLine);
+            ProduceLines = produceLine.ToList();
         }
     }
 }

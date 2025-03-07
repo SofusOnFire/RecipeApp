@@ -42,7 +42,7 @@ namespace DAL
 
             foreach (var recipe in list)
             {
-                _produceLineRepository.GetAllProduceLineByRecipeID(recipe.RecipeID);
+                recipe.AddProduceLine(_produceLineRepository.GetAllProduceLineByRecipeID(recipe.RecipeID));
             }
 
             return list;

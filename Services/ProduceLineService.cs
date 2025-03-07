@@ -21,16 +21,7 @@ namespace Services
 
 		public IEnumerable<ProduceLine> GetAllRecipeProduceLinesByRecipeID(int? recipeID)
 		{
-			//IEnumerable<ProduceLine> produceLines = _produceLineRepository.GetAllProduceLineByRecipeID(recipeID);
-
-			//foreach (ProduceLine line in produceLines)
-			//{
-			//	Produce produce = _produceService.GetProduceByID(line.ProduceID);
-			//	line.SetProduce(produce);
-			//}
-
-			//return produceLines;
-			return null;
+			return _produceLineRepository.GetAllProduceLineByRecipeID(recipeID);
 		}
 	}
 }

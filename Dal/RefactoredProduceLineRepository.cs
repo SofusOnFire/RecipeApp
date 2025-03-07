@@ -45,6 +45,8 @@ namespace DAL
                 new Produce(
                     Convert.ToInt32(reader["ProduceID"]),
                     Convert.ToString(reader["ProduceName"])));
+
+                list.Add(produceLine);
             }
             _connectionString.Close();
 
