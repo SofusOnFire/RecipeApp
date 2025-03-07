@@ -37,7 +37,14 @@ namespace DAL
 
             while (reader.Read())
             {
+                var produceLine = new ProduceLine(
+                Convert.ToInt32(reader["ProduceLineID"]),
+                Convert.ToInt32(reader["RecipeID"]),
 
+                //Adds the produce directly into the contructor via a join
+                new Produce(
+                    Convert.ToInt32(reader["ProduceID"]),
+                    Convert.ToString(reader["ProduceName"])));
             }
             _connectionString.Close();
 
