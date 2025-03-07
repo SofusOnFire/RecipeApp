@@ -1,6 +1,6 @@
 ﻿@page "/"
-@inject IProduceRepository _iProduceRepository
-@inject IUserProduceService userProduceService
+@inject IProduceRepository _produceRepository // Exists to use the GetAllProduce()-method.
+@inject IUserProduceService _userProduceService // Exists to use the MoveBetweenLists()-Method.
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -64,12 +64,12 @@
 
 	protected override void OnInitialized()
 	{
-		listOfProduce = _iProduceRepository.GetAllProduce();
-		yourProduce = userProduceService.UserProduceList;
+		listOfProduce = _produceRepository.GetAllProduce();
+		yourProduce = _userProduceService.UserProduceList;
 	}
 
 	private void MoveProduceBetweenLists(Produce produce)
 	{
-		userProduceService.MoveBetweenList(produce, listOfProduce);
+		_userProduceService.MoveBetweenList(produce, listOfProduce);
 	}
 }
