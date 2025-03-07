@@ -20,7 +20,7 @@ namespace DAL
 
         public IEnumerable<Recipe> GetAllRecipesFromDatabase()
         {
-            List<Recipe> list = new List<Recipe>();
+            List<Recipe> listOfRecipes = new List<Recipe>();
 
             string query = "SELECT * FROM [Recipe]";
             var command = new SqlCommand(query, _connectionString);
@@ -36,16 +36,17 @@ namespace DAL
                 Convert.ToInt32(reader["CookTime"]),
                 Convert.ToString(reader["URL"]));
 
-                list.Add(recipe);
+                listOfRecipes.Add(recipe);
             }
             _connectionString.Close();
 
-            foreach (var recipe in list)
+            // Adds produceLines to each recipe via IProduceLineRepository
+            foreach (var recipe in listOfRecipes)
             {
                 recipe.AddProduceLine(_produceLineRepository.GetAllProduceLineByRecipeID(recipe.RecipeID));
             }
 
-            return list;
+            return listOfRecipes;
         }
     }
 }
