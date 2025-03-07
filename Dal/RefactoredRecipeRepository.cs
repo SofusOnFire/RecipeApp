@@ -40,6 +40,9 @@ namespace DAL
             }
             _connectionString.Close();
 
+            //If the Recipe count is 0 throw exeption, så vi know what is wrong
+            if (listOfRecipes.Count == 0) throw new Exception("There we no recipes to be found in database");
+
             // Adds produceLines to each recipe via IProduceLineRepository
             foreach (var recipe in listOfRecipes)
             {
