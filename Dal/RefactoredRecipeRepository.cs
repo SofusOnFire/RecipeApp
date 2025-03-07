@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    internal class RefactoredRecipeRepository : DatabaseManager, IRecipeRepository
+    public class RefactoredRecipeRepository : DatabaseManager, IRecipeRepository
     {
         private readonly IProduceLineRepository _produceLineRepository;
 

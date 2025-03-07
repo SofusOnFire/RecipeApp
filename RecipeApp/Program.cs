@@ -2,7 +2,6 @@ using Services;
 using Domain.Interfaces;
 using RecipeApp.Components;
 using DAL;
-using DAL.OldRepositories;
 
 namespace RecipeApp
 {
@@ -16,8 +15,8 @@ namespace RecipeApp
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddBlazorBootstrap();
-            builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
-            builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepository>();
+            builder.Services.AddSingleton<IRecipeRepository, RefactoredRecipeRepository>();
+            builder.Services.AddSingleton<IProduceLineRepository, RefactoredProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
             builder.Services.AddSingleton<IProduceService, ProduceService>();
             builder.Services.AddSingleton<IRecipeService, RecipeService>();

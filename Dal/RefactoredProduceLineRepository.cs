@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    internal class RefactoredProduceLineRepository : DatabaseManager, IProduceLineRepository
+    public class RefactoredProduceLineRepository : DatabaseManager, IProduceLineRepository
     {
         private readonly IProduceRepository _produceRepository;
 
