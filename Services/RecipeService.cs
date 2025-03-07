@@ -13,14 +13,12 @@ namespace Services
 		private readonly IUserProduceService _userProduceService; // DI for FindRecipe method.
 		private readonly IProduceLineService _produceLineService; // DI for GetAllRecipeProduceLinesByRecipeID
 		private readonly IRecipeRepository _recipeRepository; // DI for GetAllRecipeFromDataBase
-		private readonly IProduceRepository _produceRepository;
 
-		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService, IRecipeRepository recipeRepository, IProduceRepository produceRepository)
+		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService, IRecipeRepository recipeRepository)
 		{
 			_userProduceService = userProduceService;
 			_produceLineService = produceLineService;
 			_recipeRepository = recipeRepository;
-			_produceRepository = produceRepository;
 		}
 
 		public IEnumerable<Recipe> GetAllRecipesFromDatabase()

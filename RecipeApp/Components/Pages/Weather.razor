@@ -2,62 +2,110 @@
 @inject IRecipeService _iRecipeService
 @rendermode InteractiveServer
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>Opskrifter</PageTitle>
 
 <h1>Opskrifter</h1>
 
-<div style="display: flex; flex-direction: column; gap: 10px;">
+<div class="recipe-container">
     @foreach (var recipe in listOfMatchedRecipes)
     {
         <a class="recipe-card" href="@recipe.URL">
-            <div class="recipe-card-info" style="margin-left: auto; margin-right: auto;">
-                <h1 style="font-family: Arial;">@recipe.RecipeName</h1>
-                <div style="display: flex; flex-wrap: wrap; column-gap: 8px; row-gap: 5px; align-items: flex-start;">
-                    <p class="produce" style="font-family: Arial; font-weight: 600; font-size: 16px; padding: 3px 0px 3px 0px; margin: 0;">Ingredienser:</p>
+            <div class="recipe-card-info">
+                <h1>@recipe.RecipeName</h1>
+                <div>
+                    <p class="produce">Ingredienser:</p>
+                    @if (recipe.ProduceLines != null)
                     @foreach (var produceLine in recipe.ProduceLines)
                     {
                         @if (produceLine._Produce.InStock == true)
                         {
-                            <p style="background-color: #00ab45; color: white; font-family: Arial; font-weight: 600; letter-spacing: 0.5px; border-radius: 15px; padding: 3px 9px; margin: 0; white-space: nowrap;">@produceLine._Produce.Name</p>
+                                <p style="background-color: #00ab45;">@produceLine._Produce.Name</p>
                         }
                         else
                         {
-                            <p style="background-color: #C21807; color: white; font-family: Arial; font-weight: 600; letter-spacing: 0.5px; border-radius: 15px; padding: 3px 9px; margin: 0; white-space: nowrap;">@produceLine._Produce.Name</p>
+                            <p class="stock" style="background-color: #C21807;">@produceLine._Produce.Name</p>
                         }
                     }
                 </div>
-                <h2 style="margin-top: 5px;">Tilberedningstid: @recipe.CookTime minutter</h2>
+                <h2>Tilberedningstid: @recipe.CookTime minutter</h2>
             </div>
         </a>
     }
 </div>
 
-<style>
+<style>    
+    .recipe-container{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
     .recipe-card {
-    all: unset;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    border-radius: 20px;
-    width: 80%;
-    padding: 10px;
-    height: auto;
-    display: flex;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        all: unset;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 20px;
+        width: 80%;
+        padding: 10px;
+        height: auto;
+        display: flex;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
     .recipe-card:hover {
-    transform: scale(1.02);
+        transform: scale(1.02);
+    }
+
+    .recipe-card-info {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+        .recipe-card-info h1 {
+        font-family: Arial;
+    }
+    
+    .recipe-card-info h2 {
+            margin-top: 5px;
+    }
+
+    .recipe-card-info div {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 8px;
+            row-gap: 5px;
+            align-items: flex-start;
+    }
+
+    .produce {
+        font-family: Arial;
+        font-weight: 600;
+        font-size: 16px;
+        padding: 3px 0px 3px 0px;
+        margin: 0;
+    }
+
+    .stock {
+            color: white;
+            font-family: Arial;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 15px;
+            padding: 3px 9px;
+            margin: 0;
+            white-space: nowrap;
     }
 </style>
 
 @code {
-    private List<Recipe>? listOfMatchedRecipes;
+    private List<Recipe> listOfMatchedRecipes = new List<Recipe>();
 
     protected override void OnInitialized()
     {
-        listOfMatchedRecipes = _iRecipeService.FindRecipes().ToList(); // Makes the recieved IEnumerable to manipulative list
-        
+        // Makes the recieved IEnumerable to manipulative list
+        listOfMatchedRecipes = _iRecipeService.FindRecipes().ToList();
+
         // Sorts the produce by produce in stock, from InStock to notInStock
         // Iterates through all the recieved recipes
         foreach (var recipe in listOfMatchedRecipes)
