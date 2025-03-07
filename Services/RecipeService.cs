@@ -70,28 +70,5 @@ namespace Services
 
 			return userRecipes;
 		}
-
-		public string GetRecipeProduceLines(Recipe recipe)
-		{
-            string listOfRecipeProduce = "";
-            var produceLineList = _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipe.RecipeID);
-			var produceList = _produceRepository.GetAllProduce();
-
-			foreach(var line in produceLineList)
-			{
-				if(line.RecipeID == recipe.RecipeID)
-				{
-					foreach(var produces in produceList)
-					{
-						if(line.ProduceID == produces.ProduceID)
-						{
-							listOfRecipeProduce += produces.Name + ", ";
-						}
-					}
-				}
-			}
-
-            return listOfRecipeProduce;
-        }
 	}
 }
