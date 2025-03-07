@@ -16,6 +16,6 @@ namespace Domain.Interfaces
         /// <returns></returns>
         public Produce GetProduceByID(int produceID);
 
-        public IEnumerable<Produce> GetProduceList();
+        public List<Produce> CompareAndGetProduceList(List<Produce> list);
     }
 }

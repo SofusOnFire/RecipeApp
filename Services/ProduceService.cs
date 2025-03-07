@@ -22,9 +22,28 @@ namespace Services
 			return _produceRepository.GetProduceByID(produceID);
 		}
 
-		public IEnumerable<Produce> GetProduceList()
+		public List<Produce> CompareAndGetProduceList(List<Produce> userProduces)
 		{
+			List<Produce> produceList = new List<Produce>();
 
+			List<Produce> allProduces = _produceRepository.GetAllProduce();
+
+			if (userProduces != null)
+			{
+				foreach (Produce produce in allProduces)
+				{
+					if (!userProduces.Contains(produce))
+					{
+						produceList.Add(produce);
+					}
+				}
+			}
+			else
+			{
+				produceList = allProduces;
+			}
+            
+			return produceList;
 		}
 	}
 }
