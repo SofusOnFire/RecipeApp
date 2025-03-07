@@ -24,6 +24,9 @@ namespace Domain.Models
 			InStock = false;
 		}
 
+		/// <summary>
+		/// Sets the produce to true if the users contains it
+		/// </summary>
 		public void SetStockToTrue()
 		{
 			InStock = true;
