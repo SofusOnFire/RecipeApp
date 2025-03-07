@@ -9,10 +9,10 @@ namespace DAL
 {
     public abstract class DatabaseManager
     {
-        protected const string _ConnectionString = "Data Source=localhost;Initial Catalog='RecipeDB';Integrated Security=SSPI;TrustServerCertificate=true";
+        protected const string _ConnectionString = //"Data Source=localhost;Initial Catalog='RecipeDB';Integrated Security=SSPI;TrustServerCertificate=true";
         
         //Aske Server:
-        //"Server=Djamo;Database=RecipeDatabase;Integrated Security=True;Encrypt=False";
+        "Server=Djamo;Database=RecipeDatabase;Integrated Security=True;Encrypt=False";
         
         protected static SqlConnection _connectionString = new SqlConnection(_ConnectionString);
 
