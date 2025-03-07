@@ -12,24 +12,24 @@
         <a class="recipe-card" href="@recipe.URL">
             <div class="recipe-card-info" style="margin-left: auto; margin-right: auto;">
                 <h1 style="font-family: Arial;">@recipe.RecipeName</h1>
-                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <p class="produce" style="font-family: Arial; background-color: white; padding: 3px 0px 3px 0px;">Ingredienser:</p>
+                <div style="display: flex; flex-wrap: wrap; column-gap: 8px; row-gap: 5px; align-items: flex-start;">
+                    <p class="produce" style="font-family: Arial; font-weight: 600; font-size: 16px; padding: 3px 0px 3px 0px; margin: 0;">Ingredienser:</p>
                     @foreach (var recipeLine in recipe.ProduceLines)
                     {
                         @if (recipeLine._Produce.InStock == true)
                         {
-                            <p style="background-color: #00ab45; font-family: Arial; border-radius: 15px; padding: 3px 10px 3px 10px;">@recipeLine._Produce.Name</p>
+                            <p style="background-color: #00ab45; color: white; font-family: Arial; font-weight: 600; letter-spacing: 0.5px; border-radius: 15px; padding: 3px 9px; margin: 0; white-space: nowrap;">@recipeLine._Produce.Name</p>
                         }
                     }
                     @foreach (var recipeLine in recipe.ProduceLines)
                     {
                         @if (recipeLine._Produce.InStock == false)
                         {
-                            <p style="background-color: #C21807; font-family: Arial; border-radius: 15px; padding: 3px 10px 3px 10px;">@recipeLine._Produce.Name</p>
+                            <p style="background-color: #C21807; color: white; font-family: Arial; font-weight: 600; letter-spacing: 0.5px; border-radius: 15px; padding: 3px 9px; margin: 0; white-space: nowrap;">@recipeLine._Produce.Name</p>
                         }
                     }
                 </div>
-                <h2>Tilberedningstid: @recipe.CookTime minutter</h2>
+                <h2 style="margin-top: 5px;">Tilberedningstid: @recipe.CookTime minutter</h2>
             </div>
         </a>
     }
@@ -37,14 +37,16 @@
 
 <style>
     .recipe-card {
-    all: unset;
-    cursor: pointer;
-    border: solid 1px black;
-    border-radius: 20px;
-    width: 80%;
-    padding: 10px;
-    height: auto;
-    display: flex;
+        all: unset;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        border-radius: 20px;
+        width: 80%;
+        padding: 10px;
+        height: auto;
+        display: flex;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
     .recipe-card:hover {
