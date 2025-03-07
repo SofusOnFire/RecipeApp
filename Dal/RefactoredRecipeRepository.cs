@@ -34,12 +34,16 @@ namespace DAL
                 Convert.ToInt32(reader["RecipeID"]),
                 Convert.ToString(reader["RecipeName"]),
                 Convert.ToInt32(reader["CookTime"]),
-                Convert.ToString(reader["URL"]),
-                _produceLineRepository.GetAllProduceLineByRecipeID(Convert.ToInt32(reader["RecipeID"]))); // Gets all ProduceLine for the specific Order as a IEnumable
+                Convert.ToString(reader["URL"]));
 
                 list.Add(recipe);
             }
             _connectionString.Close();
+
+            foreach (var recipe in list)
+            {
+                _produceLineRepository.GetAllProduceLineByRecipeID(recipe.RecipeID);
+            }
 
             return list;
         }

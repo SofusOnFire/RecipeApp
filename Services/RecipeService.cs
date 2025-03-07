@@ -27,12 +27,12 @@ namespace Services
 		{
 			IEnumerable<Recipe> recipes = _recipeRepository.GetAllRecipesFromDatabase();
 
-			foreach (Recipe recipe in recipes)
-			{
-				IEnumerable<ProduceLine> produceLines = _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipe.RecipeID);
+			//foreach (Recipe recipe in recipes)
+			//{
+			//	IEnumerable<ProduceLine> produceLines = _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipe.RecipeID);
 
-				recipe.SetProduceLineList(produceLines);
-			}
+			//	recipe.SetProduceLineList(produceLines);
+			//}
 
 			return recipes;
 		}
@@ -96,7 +96,7 @@ namespace Services
 				{
 					foreach(var produces in produceList)
 					{
-						if(line.ProduceID == produces.ProduceID)
+						if(line._Produce.ProduceID == produces.ProduceID)
 						{
 							listOfRecipeProduce += produces.Name + ", ";
 						}

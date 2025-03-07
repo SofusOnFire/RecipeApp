@@ -9,36 +9,36 @@ using Microsoft.Data.SqlClient;
 
 namespace DAL.OldRepositories
 {
-    public class RecipeRepository : DatabaseManager, IRecipeRepository
-    {
+    //public class RecipeRepository : DatabaseManager, IRecipeRepository
+    //{
 
-        /// <summary>
-        /// Gets all columns from all Recipes from the database with no Where clause. Returns as a List
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Recipe> GetAllRecipesFromDatabase()
-        {
-            List<Recipe> list = new List<Recipe>();
+    //    /// <summary>
+    //    /// Gets all columns from all Recipes from the database with no Where clause. Returns as a List
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public IEnumerable<Recipe> GetAllRecipesFromDatabase()
+    //    {
+    //        List<Recipe> list = new List<Recipe>();
 
-            string query = "SELECT * FROM [Recipe]";
-            var command = new SqlCommand(query, _connectionString);
+    //        string query = "SELECT * FROM [Recipe]";
+    //        var command = new SqlCommand(query, _connectionString);
 
-            _connectionString.Open();
-            SqlDataReader reader = command.ExecuteReader();
+    //        _connectionString.Open();
+    //        SqlDataReader reader = command.ExecuteReader();
 
-            while (reader.Read())
-            {
-                var recipe = new Recipe(
-                Convert.ToInt32(reader["RecipeID"]),
-                Convert.ToString(reader["RecipeName"]),
-                Convert.ToInt32(reader["CookTime"]),
-                Convert.ToString(reader["URL"]));
+    //        while (reader.Read())
+    //        {
+    //            var recipe = new Recipe(
+    //            Convert.ToInt32(reader["RecipeID"]),
+    //            Convert.ToString(reader["RecipeName"]),
+    //            Convert.ToInt32(reader["CookTime"]),
+    //            Convert.ToString(reader["URL"]));
 
-                list.Add(recipe);
-            }
-            _connectionString.Close();
+    //            list.Add(recipe);
+    //        }
+    //        _connectionString.Close();
 
-            return list;
-        }
-    }
+    //        return list;
+    //    }
+    //}
 }

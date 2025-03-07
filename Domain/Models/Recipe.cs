@@ -12,15 +12,20 @@ namespace Domain.Models
         public string? RecipeName { get; private set; }
         public int? CookTime { get; private set; }
         public string? URL { get; private set; }
-        public List<ProduceLine>? ProduceLines { get; private set; }
+        public List<ProduceLine> ProduceLines { get; private set; }
 
-        public Recipe(int? recipeID, string? name, int? cookTime, string? uRL, IEnumerable<ProduceLine> produceLines)
+        public Recipe(int? recipeID, string? name, int? cookTime, string? uRL)
         {
             RecipeID = recipeID;
             RecipeName = name;
             CookTime = cookTime;
             URL = uRL;
-            ProduceLines = produceLines.ToList();
+            ProduceLines = new List<ProduceLine>();
+        }
+
+        public void AddProduceLine(ProduceLine produceLine)
+        {
+            ProduceLines.Add(produceLine);
         }
     }
 }

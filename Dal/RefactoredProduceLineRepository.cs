@@ -22,10 +22,11 @@ namespace DAL
         {
             List<ProduceLine> list = new List<ProduceLine>();
 
-            //Does not need a Open and Close Statement, since it haven't been closed from its call IRecipeRepository
+            _connectionString.Open();
             string query =
-                "SELECT * FROM [ProduceLine] " +
-                "WHERE RecipeID = @RecipeID";
+                "SELECT PL.ProduceLineID, PL.RecipeID, PL.ProduceID, P.ProduceName from [ProduceLine] PL " +
+                "JOIN [Produce] P on PL.ProduceID = P.ProduceID " +
+                "WHERE PL.RecipeID = @RecipeID";
 
             var command = new SqlCommand(query, _connectionString);
 
@@ -36,13 +37,9 @@ namespace DAL
 
             while (reader.Read())
             {
-                var recipe = new ProduceLine(
-                Convert.ToInt32(reader["ProduceLineID"]),
-                Convert.ToInt32(reader["RecipeID"]),
-                _produceRepository.GetProduceByID(Convert.ToInt32(reader["ProduceID"]))); //Gets the produce from ProduceRepository
 
-                list.Add(recipe);
             }
+            _connectionString.Close();
 
             return list;
         }
