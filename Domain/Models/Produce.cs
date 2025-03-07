@@ -10,7 +10,7 @@ namespace Domain.Models
     {
 		public int ProduceID { get; private set; }
         public string? Name { get; private set; }
-		public bool InStock { get; set; }
+		public bool InStock { get; private set; }
 
 		public int CompareTo(Produce produce)
 		{
@@ -24,5 +24,9 @@ namespace Domain.Models
 			InStock = false;
 		}
 
+		public void SetStockToTrue()
+		{
+			InStock = true;
+		}
     }
 }

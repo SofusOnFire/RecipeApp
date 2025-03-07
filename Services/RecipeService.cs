@@ -57,7 +57,7 @@ namespace Services
 						// If the user have the produce, break and mark the produce as found
 						if (_userProduceService.UserProduceList[i].Name == produceLine._Produce.Name)
 						{
-							produceLine._Produce.InStock = true;
+							produceLine._Produce.SetStockToTrue();
 							break;
 						}
 					}
