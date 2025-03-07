@@ -21,5 +21,10 @@ namespace Services
 		{
 			return _produceRepository.GetProduceByID(produceID);
 		}
+
+		public IEnumerable<Produce> GetProduceList()
+		{
+
+		}
 	}
 }
