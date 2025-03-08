@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,36 @@ namespace Services
 			}
 
 			return userRecipes;
+		}
+
+		public List<Recipe> SortUserRecipesByProduceInStock(List<Recipe> listOfMatchedRecipes)
+		{
+			// Sorts the produce by produce in stock, from InStock to notInStock
+			// Iterates through all the recieved recipes
+			foreach (var recipe in listOfMatchedRecipes)
+			{
+				// List to store produce the user doesn't have in stock
+				List<ProduceLine> notInStockProduces = new List<ProduceLine>();
+
+				if (recipe.ProduceLines == null) // If the recipe doesn't have any produce, get the next recipe
+					continue;
+
+				// Iterates through all of the lines of the current recipe
+				for (int i = 0; i < recipe.ProduceLines.Count; i++)
+				{
+					// If the user doesn't have the produce, adds to notInStock and remove from current list
+					if (recipe.ProduceLines[i]._Produce.InStock == false)
+					{
+						notInStockProduces.Add(recipe.ProduceLines[i]);
+						recipe.ProduceLines.RemoveAt(i);
+						i--; // Stays at same iteration for the next loop
+					}
+				}
+
+				recipe.ProduceLines.AddRange(notInStockProduces); // Append notInStock to the listOfMatchedRecipes
+			}
+
+			return listOfMatchedRecipes;
 		}
 	}
 }
