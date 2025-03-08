@@ -104,7 +104,7 @@
     protected override void OnInitialized()
     {
         // Makes the recieved IEnumerable to manipulative list
-        List<Recipe> listOfMatchedRecipes = _recipeService.FindRecipes().ToList();
+        listOfMatchedRecipes = _recipeService.FindRecipes().ToList();
 
         // Sorts the list by users produce in stock
         listOfMatchedRecipes = _recipeService.SortUserRecipesByProduceInStock(listOfMatchedRecipes);
