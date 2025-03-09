@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IUserProduceService userProduceService
+@inject IProduceRepository _iProduceRepository
 @inject IProduceService _iProduceService
 @rendermode InteractiveServer
 
@@ -59,10 +60,9 @@
 
 @code {
 
-
-
 	List<Produce>? listOfProduce;
 	List<Produce>? yourProduce;
+
 
 	protected override void OnInitialized()
 	{
