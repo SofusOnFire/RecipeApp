@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,14 +14,12 @@ namespace Services
 		private readonly IUserProduceService _userProduceService; // DI for FindRecipe method.
 		private readonly IProduceLineService _produceLineService; // DI for GetAllRecipeProduceLinesByRecipeID
 		private readonly IRecipeRepository _recipeRepository; // DI for GetAllRecipeFromDataBase
-		private readonly IProduceRepository _produceRepository;
 
-		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService, IRecipeRepository recipeRepository, IProduceRepository produceRepository)
+		public RecipeService(IUserProduceService userProduceService, IProduceLineService produceLineService, IRecipeRepository recipeRepository)
 		{
 			_userProduceService = userProduceService;
 			_produceLineService = produceLineService;
 			_recipeRepository = recipeRepository;
-			_produceRepository = produceRepository;
 		}
 
 		public IEnumerable<Recipe> GetAllRecipesFromDatabase()
@@ -40,13 +39,11 @@ namespace Services
 		public IEnumerable<Recipe> FindRecipes()
 		{
 			IEnumerable<Recipe> recipes = GetAllRecipesFromDatabase();
-			List<Recipe> matchedRecipes = new List<Recipe>();
+			List<Recipe> userRecipes = new List<Recipe>();
 
 			// Iterates through all recipes in the database
 			foreach (Recipe recipe in recipes)
 			{
-				bool AllRecipeMatches = true; // Assumes the user have all needed produce
-
 				if (recipe.ProduceLines == null) // If the recipe doesn't have any produce, get the next recipe
 					continue;
 
@@ -56,55 +53,51 @@ namespace Services
 					if (produceLine._Produce.Name == null) // Checks that the produce isn't null
 						continue;
 
-					bool foundMatch = false; // Assumes the user doesn't have the produce
-
-					foreach (Produce userProduce in _userProduceService.UserProduceList)
+					for (int i = 0; i < _userProduceService.UserProduceList.Count; i++)
 					{
 						// If the user have the produce, break and mark the produce as found
-						if (userProduce.Name == produceLine._Produce.Name)
+						if (_userProduceService.UserProduceList[i].Name == produceLine._Produce.Name)
 						{
-							foundMatch = true;
+							produceLine._Produce.SetStockToTrue();
 							break;
 						}
 					}
-
-					if (foundMatch == false) // If the user doesn't have a produce, break and mark the recipe as non-fulfilled
-					{
-						AllRecipeMatches = false;
-						break;
-					}
 				}
 
-				if (AllRecipeMatches == true) // Adds the recipe to the succesful matched list, if every produce is available
-				{
-					matchedRecipes.Add(recipe);
-				}
+				userRecipes.Add(recipe);
 			}
 
-			return matchedRecipes;
+			return userRecipes;
 		}
 
-		public string GetRecipeProduceLines(Recipe recipe)
+		public List<Recipe> SortUserRecipesByProduceInStock(List<Recipe> listOfMatchedRecipes)
 		{
-            string listOfRecipeProduce = "";
-            var produceLineList = _produceLineService.GetAllRecipeProduceLinesByRecipeID(recipe.RecipeID);
-			var produceList = _produceRepository.GetAllProduce();
-
-			foreach(var line in produceLineList)
+			// Sorts the produce by produce in stock, from InStock to notInStock
+			// Iterates through all the recieved recipes
+			foreach (var recipe in listOfMatchedRecipes)
 			{
-				if(line.RecipeID == recipe.RecipeID)
+				// List to store produce the user doesn't have in stock
+				List<ProduceLine> notInStockProduces = new List<ProduceLine>();
+
+				if (recipe.ProduceLines == null) // If the recipe doesn't have any produce, get the next recipe
+					continue;
+
+				// Iterates through all of the lines of the current recipe
+				for (int i = 0; i < recipe.ProduceLines.Count; i++)
 				{
-					foreach(var produces in produceList)
+					// If the user doesn't have the produce, adds to notInStock and remove from current list
+					if (recipe.ProduceLines[i]._Produce.InStock == false)
 					{
-						if(line.ProduceID == produces.ProduceID)
-						{
-							listOfRecipeProduce += produces.Name + ", ";
-						}
+						notInStockProduces.Add(recipe.ProduceLines[i]);
+						recipe.ProduceLines.RemoveAt(i);
+						i--; // Stays at same iteration for the next loop
 					}
 				}
+
+				recipe.ProduceLines.AddRange(notInStockProduces); // Append notInStock to the listOfMatchedRecipes
 			}
 
-            return listOfRecipeProduce;
-        }
+			return listOfMatchedRecipes;
+		}
 	}
 }

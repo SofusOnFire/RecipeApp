@@ -21,7 +21,12 @@ namespace Domain.Interfaces
 		/// <returns></returns>
 		public IEnumerable<Recipe> FindRecipes();
 
-		public string GetRecipeProduceLines(Recipe recipe);
+		/// <summary>
+		/// Sorts the recipes by produce in stock by the user
+		/// </summary>
+		/// <param name="listOfMatchedRecipes"></param>
+		/// <returns></returns>
+		public List<Recipe> SortUserRecipesByProduceInStock(List<Recipe> listOfMatchedRecipes);
 
-    }
+	}
 }
