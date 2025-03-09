@@ -13,10 +13,10 @@ namespace Domain.Interfaces
     public interface IUserProduceService
     {
         // Created in UserProduceService; added here because it is needed by other classes/interfaces.
-        public List<Produce> UserProduceList { get; }
+        public List<Produce> TheUsersPersonalProduce { get; }
         
         // Used for the add/remove functionality between the user's personal list of produce and the ALL produce list.
-        public void MoveBetweenList(Produce produce, List<Produce> listOfProduce);
+        public void MoveProduceBetweenLists(Produce produce, List<Produce> listOfProduce);
 
 	}
 }
