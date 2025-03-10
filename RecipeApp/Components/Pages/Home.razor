@@ -67,11 +67,17 @@
 	protected override void OnInitialized()
 	{
 		yourProduce = userProduceService.UserProduceList;
+		listOfProduce = _iProduceRepository.GetAllProduce();
+	}
+
+	private void HandleChange(){
+		yourProduce = userProduceService.UserProduceList;
 		listOfProduce = _iProduceService.CompareAndGetProduceList(yourProduce);
 	}
 
 	private void MoveProduceBetweenLists(Produce produce)
 	{
 		userProduceService.MoveBetweenList(produce, listOfProduce);
+		this.HandleChange();
 	}
 }
