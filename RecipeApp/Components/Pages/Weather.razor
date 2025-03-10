@@ -1,60 +1,112 @@
 ﻿@page "/weather"
-@inject IRecipeService _iRecipeService
+@inject IRecipeService _recipeService
 @rendermode InteractiveServer
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>Opskrifter</PageTitle>
 
 <h1>Opskrifter</h1>
 
-<p>Hvilke slags opskrifter vil du se?</p>
-
-<button type="button" id="allRecipes" @onclick="ShowAllRecipes">Alle opskrifter</button>
-<button type="button" id="userProduceRecipes" @onclick="ShowUserProduceRecipes">Opskrifter jeg kan lave</button>
-
-<div hidden=@hideRecipeList id="recipeList">
-    <ul>
-        @foreach (var recipe in listOfRecipes)
-        {
-            <li><Tooltip Title="@GetRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilberedningstid: @recipe.CookTime minutter</a></Tooltip></li>
-        }
-    </ul>
+<div class="recipe-container">
+    @foreach (var recipe in listOfMatchedRecipes)
+    {
+        <a class="recipe-card" href="@recipe.URL">
+            <div class="recipe-card-info">
+                <h1>@recipe.RecipeName</h1>
+                <div>
+                    <p class="produce">Ingredienser:</p>
+                    @if (recipe.ProduceLines != null)
+                        @foreach (var produceLine in recipe.ProduceLines)
+                        {
+                            @if (produceLine._Produce.InStock == true)
+                            {
+                                <p class="stock" style="background-color: #00ab45;">@produceLine._Produce.Name</p>
+                            }
+                            else
+                            {
+                                <p class="stock" style="background-color: #C21807;">@produceLine._Produce.Name</p>
+                            }
+                        }
+                </div>
+                <h2>Tilberedningstid: @recipe.CookTime minutter</h2>
+            </div>
+        </a>
+    }
 </div>
 
-<div hidden=@hideMatchedRecipeList id="matchedRecipeList">
-    <ul>
-        @foreach (var recipe in listOfMatchedRecipes)
-        {
-            <li><Tooltip Title="@GetRecipeProduces(recipe)" Placement="TooltipPlacement.Top"><a href="@recipe.URL">@recipe.RecipeName | tilberedningstid: @recipe.CookTime minutter</a></Tooltip></li>
-        }
-    </ul>
-</div>
+<style>    
+    .recipe-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+
+    .recipe-card {
+    all: unset;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px;
+    height: auto;
+    display: flex;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .recipe-card:hover {
+    transform: scale(1.02);
+    }
+
+    .recipe-card-info {
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .recipe-card-info h1 {
+    font-family: Arial;
+    }
+
+    .recipe-card-info h2 {
+    margin-top: 5px;
+    }
+
+    .recipe-card-info div {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    row-gap: 5px;
+    align-items: flex-start;
+    }
+
+    .produce {
+    font-family: Arial;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 3px 0px 3px 0px;
+    margin: 0;
+    }
+
+    .stock {
+    color: white;
+    font-family: Arial;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: 15px;
+    padding: 3px 9px;
+    margin: 0;
+    white-space: nowrap;
+    }
+</style>
 
 @code {
-
-    private IEnumerable<Recipe> listOfRecipes;
-    private IEnumerable<Recipe> listOfMatchedRecipes;
-
-    bool hideRecipeList = true;
-    bool hideMatchedRecipeList = true;
+    private List<Recipe> listOfMatchedRecipes = new List<Recipe>();
 
     protected override void OnInitialized()
     {
-        listOfRecipes = _iRecipeService.GetAllRecipesFromDatabase();
-        listOfMatchedRecipes = _iRecipeService.FindRecipes();
-    }
+        // Makes the recieved IEnumerable to manipulative list
+        listOfMatchedRecipes = _recipeService.FindRecipes().ToList();
 
-    private void ShowAllRecipes(){
-        hideRecipeList = !hideRecipeList;
-        hideMatchedRecipeList = true;
+        // Sorts the list by users produce in stock
+        listOfMatchedRecipes = _recipeService.SortUserRecipesByProduceInStock(listOfMatchedRecipes);
     }
-
-    private void ShowUserProduceRecipes(){
-        hideMatchedRecipeList = !hideMatchedRecipeList;
-        hideRecipeList = true;
-    }
-
-    private string GetRecipeProduces(Recipe recipe){
-        return _iRecipeService.GetRecipeProduceLines(recipe);
-    }
-
 }
