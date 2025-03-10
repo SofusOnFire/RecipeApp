@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,20 +10,31 @@ namespace DAL
 {
     public abstract class DatabaseManager
     {
-        protected const string _ConnectionString = "Data Source=localhost;Initial Catalog='RecipeDB';Integrated Security=SSPI;TrustServerCertificate=true";
-        
-        //Aske Server:
-        //"Server=Djamo;Database=RecipeDatabase;Integrated Security=True;Encrypt=False";
-        
-        protected static SqlConnection _connectionString = new SqlConnection(_ConnectionString);
+        protected static string _ConnectionString;
 
+		protected static SqlConnection _connectionString = new SqlConnection(_ConnectionString);
 
-        /// <summary>
-        /// Opens, Execute and Close, NonQueries. Returns the number of rows affected by this SQL
-        /// </summary>
-        /// <param name="command"></param>
-        protected static int ExecuteNonQuery(SqlCommand command)
+        private static string GetConnectionString()
         {
+			string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+			string fullName = System.IO.Path.Combine(desktopPath, "RecipeAppConnectionString");
+			using (StreamReader steamReader = new StreamReader(fullName))
+			{
+				return steamReader.ReadToEnd();
+			}
+		}
+
+
+
+		/// <summary>
+		/// Opens, Execute and Close, NonQueries. Returns the number of rows affected by this SQL
+		/// </summary>
+		/// <param name="command"></param>
+		protected static int ExecuteNonQuery(SqlCommand command)
+        {
+            if (_ConnectionString == null) GetConnectionString();
+        
+
             int numberOfRowsAffected = 0;
             _connectionString.Open();
             numberOfRowsAffected = command.ExecuteNonQuery();
@@ -37,7 +49,9 @@ namespace DAL
         /// <returns></returns>
         protected static int ExecuteScalar(SqlCommand command)
         {
-            int id = 0;
+			if (_ConnectionString == null) GetConnectionString();
+
+			int id = 0;
             _connectionString.Open();
             id = (int)command.ExecuteScalar();
             _connectionString.Close();
