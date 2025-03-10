@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DAL
 {
@@ -12,16 +13,16 @@ namespace DAL
     {
         protected static string _ConnectionString;
 
-		protected static SqlConnection _connectionString = new SqlConnection(_ConnectionString);
+		protected SqlConnection _connectionString = new SqlConnection(_ConnectionString);
 
-        private static string GetConnectionString()
+
+		protected static string GetConnectionString()
         {
-			string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-			string fullName = System.IO.Path.Combine(desktopPath, "RecipeAppConnectionString");
-			using (StreamReader steamReader = new StreamReader(fullName))
-			{
-				return steamReader.ReadToEnd();
-			}
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string fullName = Path.Combine(desktopPath, "RecipeAppConnectionString");
+            //return File.ReadAllText(fullName);
+            File.WriteAllText(fullName, "Data Source = mssql4.unoeuro.com, 1433; Database = foxtrox_dk_db_recipeapp; Integrated Security = false; User ID = foxtrox_dk; Password = A4EHeFypwfnx5h93crmB");
+            return File.ReadAllText(fullName);
 		}
 
 
@@ -30,7 +31,7 @@ namespace DAL
 		/// Opens, Execute and Close, NonQueries. Returns the number of rows affected by this SQL
 		/// </summary>
 		/// <param name="command"></param>
-		protected static int ExecuteNonQuery(SqlCommand command)
+		protected int ExecuteNonQuery(SqlCommand command)
         {
             if (_ConnectionString == null) GetConnectionString();
         
@@ -47,7 +48,7 @@ namespace DAL
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        protected static int ExecuteScalar(SqlCommand command)
+        protected int ExecuteScalar(SqlCommand command)
         {
 			if (_ConnectionString == null) GetConnectionString();
 

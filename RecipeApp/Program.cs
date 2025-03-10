@@ -2,6 +2,7 @@ using Services;
 using Domain.Interfaces;
 using RecipeApp.Components;
 using DAL;
+using Domain.Models;
 
 namespace RecipeApp
 {
@@ -19,6 +20,7 @@ namespace RecipeApp
             builder.Services.AddSingleton<IRecipeRepository, RefactoredRecipeRepository>();
             builder.Services.AddSingleton<IProduceLineRepository, RefactoredProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
+            builder.Services.AddSingleton(typeof(Repository<>), typeof(RepoT<>));
 
             // All out BLL interfaces
             builder.Services.AddSingleton<IProduceService, ProduceService>();

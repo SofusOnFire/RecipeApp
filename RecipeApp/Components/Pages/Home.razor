@@ -1,6 +1,9 @@
 ﻿@page "/"
 @inject IProduceRepository _iProduceRepository
 @inject IUserProduceService userProduceService
+@inject Repository<Recipe> _repo
+@inject Repository<string> _stringRepo
+@inject Repository<Produce> _produceRepo
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -64,8 +67,11 @@
 
 	protected override void OnInitialized()
 	{
-		listOfProduce = _iProduceRepository.GetAllProduce();
-		yourProduce = userProduceService.UserProduceList;
+		_stringRepo.Add("1");
+		_repo.Add(new Recipe(1, "1", 1, "1"));
+		_repo.
+		// listOfProduce = _iProduceRepository.GetAllProduce();
+		// yourProduce = userProduceService.UserProduceList;
 	}
 
 	private void MoveProduceBetweenLists(Produce produce)

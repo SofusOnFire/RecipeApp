@@ -11,7 +11,12 @@ namespace DAL
 {
     public class ProduceRepository : DatabaseManager, IProduceRepository
     {
-        public Produce GetProduceByID(int produceID)
+		public ProduceRepository()
+		{
+			if (_ConnectionString == null) _ConnectionString = GetConnectionString();
+		}
+
+		public Produce GetProduceByID(int produceID)
         {
 			List<Produce> produces = new List<Produce>();
 			
@@ -43,7 +48,8 @@ namespace DAL
 		public List<Produce> GetAllProduce()
 		{
 			List<Produce> list = new List<Produce>();
-            _connectionString.Open();
+
+            this._connectionString.Open();
 
 			string query =
 				"SELECT * FROM [Produce]";
@@ -61,7 +67,7 @@ namespace DAL
 				list.Add(produce);
             }
 
-            _connectionString.Close();
+            this._connectionString.Close();
 
             return list;
         }
