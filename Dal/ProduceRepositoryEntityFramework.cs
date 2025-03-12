@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Interfaces;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-	internal class ProduceRepositoryEntityFramework : IProduceRepository
+	public class ProduceRepositoryEntityFramework : IProduceRepository
 	{
 		private readonly DbcontextEntityFramework _dbcontext = new DbcontextEntityFramework();
 

@@ -19,8 +19,7 @@ namespace RecipeApp
             // All our DAL interfaces
             builder.Services.AddSingleton<IRecipeRepository, RefactoredRecipeRepository>();
             builder.Services.AddSingleton<IProduceLineRepository, RefactoredProduceLineRepository>();
-			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
-            builder.Services.AddSingleton(typeof(Repository<>), typeof(RepoT<>));
+			builder.Services.AddSingleton<IProduceRepository, ProduceRepositoryEntityFramework>();
 
             // All out BLL interfaces
             builder.Services.AddSingleton<IProduceService, ProduceService>();

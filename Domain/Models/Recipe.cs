@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,20 +13,20 @@ namespace Domain.Models
         public string? RecipeName { get; private set; }
         public int? CookTime { get; private set; }
         public string? URL { get; private set; }
-        public List<ProduceLine> ProduceLines { get; private set; }
+        public List<ProduceLine> ProduceLines { get; private set; } = new List<ProduceLine>();
 
-        public Recipe(int? recipeID, string? name, int? cookTime, string? uRL)
+
+        public Recipe(int? recipeID, string? recipeName, int? cookTime, string? uRL)
         {
             RecipeID = recipeID;
-            RecipeName = name;
+            RecipeName = recipeName;
             CookTime = cookTime;
             URL = uRL;
-            ProduceLines = new List<ProduceLine>();
         }
 
         public void AddProduceLine(IEnumerable<ProduceLine> produceLine)
         {
-            ProduceLines = produceLine.ToList();
+            //ProduceLines = produceLine.ToList();
         }
     }
 }

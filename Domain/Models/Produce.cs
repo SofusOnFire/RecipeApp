@@ -9,17 +9,18 @@ namespace Domain.Models
     public class Produce : IComparable<Produce>
     {
 		public int ProduceID { get; private set; }
-        public string? Name { get; private set; }
+        public string? ProduceName { get; private set; }
 
+		private Produce() { }
 		public int CompareTo(Produce produce)
 		{
 			if (produce == null) return 1;
-			return Name.CompareTo(produce.Name);
+			return ProduceName.CompareTo(produce.ProduceName);
 		}
 		public Produce(int produceID, string? name) 
 		{
 			ProduceID = produceID;
-			Name = name;
+			ProduceName = name;
 		}
 
     }

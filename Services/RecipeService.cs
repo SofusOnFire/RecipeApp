@@ -53,7 +53,7 @@ namespace Services
 				// Iterates through all producelines in the current recipe
 				foreach (ProduceLine produceLine in recipe.ProduceLines)
 				{
-					if (produceLine._Produce.Name == null) // Checks that the produce isn't null
+					if (produceLine.Produce.ProduceName == null) // Checks that the produce isn't null
 						continue;
 
 					bool foundMatch = false; // Assumes the user doesn't have the produce
@@ -61,7 +61,7 @@ namespace Services
 					foreach (Produce userProduce in _userProduceService.UserProduceList)
 					{
 						// If the user have the produce, break and mark the produce as found
-						if (userProduce.Name == produceLine._Produce.Name)
+						if (userProduce.ProduceName == produceLine.Produce.ProduceName)
 						{
 							foundMatch = true;
 							break;
@@ -96,9 +96,9 @@ namespace Services
 				{
 					foreach(var produces in produceList)
 					{
-						if(line._Produce.ProduceID == produces.ProduceID)
+						if(line.Produce.ProduceID == produces.ProduceID)
 						{
-							listOfRecipeProduce += produces.Name + ", ";
+							listOfRecipeProduce += produces.ProduceName + ", ";
 						}
 					}
 				}

@@ -1,9 +1,6 @@
 ﻿@page "/"
 @inject IProduceRepository _iProduceRepository
 @inject IUserProduceService userProduceService
-@inject Repository<Recipe> _repo
-@inject Repository<string> _stringRepo
-@inject Repository<Produce> _produceRepo
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -15,7 +12,7 @@
 			@foreach (var produce in yourProduce)
 			{
 				<li style="display: flex; justify-content: space-between; align-items: center;" @onclick="() => MoveProduceBetweenLists(produce)">
-					@produce.Name
+					@produce.ProduceName
 					<img src="/img/trashcan.svg" />
 				</li>
 			}
@@ -26,7 +23,7 @@
 		<ul>
 			@foreach (var produce in listOfProduce)
 			{
-				<li @onclick=" () => MoveProduceBetweenLists(produce)">@produce.Name</li>
+				<li @onclick=" () => MoveProduceBetweenLists(produce)">@produce.ProduceName</li>
 			}
 		</ul>
 	</div>
@@ -67,11 +64,8 @@
 
 	protected override void OnInitialized()
 	{
-		_stringRepo.Add("1");
-		_repo.Add(new Recipe(1, "1", 1, "1"));
-		_repo.
-		// listOfProduce = _iProduceRepository.GetAllProduce();
-		// yourProduce = userProduceService.UserProduceList;
+		listOfProduce = _iProduceRepository.GetAllProduce();
+		yourProduce = userProduceService.UserProduceList;
 	}
 
 	private void MoveProduceBetweenLists(Produce produce)
