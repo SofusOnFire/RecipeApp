@@ -6,8 +6,7 @@
 		public int RecipeID { get; private set; }
 		public int ProduceID { get; private set; }
 
-		// ✅ Navigation properties
-		public Produce Produce { get; }  // Ensure EF Core recognizes this
+		public Produce Produce { get; }  
 		public Recipe Recipe { get; }
 
 

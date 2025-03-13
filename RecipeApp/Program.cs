@@ -3,6 +3,7 @@ using Domain.Interfaces;
 using RecipeApp.Components;
 using DAL;
 using Domain.Models;
+using DAL.OldRepositories;
 
 namespace RecipeApp
 {
@@ -17,7 +18,7 @@ namespace RecipeApp
                 .AddInteractiveServerComponents();
             builder.Services.AddBlazorBootstrap();
             // All our DAL interfaces
-            builder.Services.AddSingleton<IRecipeRepository, RefactoredRecipeRepository>();
+            builder.Services.AddSingleton<IRecipeRepository, RecipeEntityFramework>();
             builder.Services.AddSingleton<IProduceLineRepository, RefactoredProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepositoryEntityFramework>();
 

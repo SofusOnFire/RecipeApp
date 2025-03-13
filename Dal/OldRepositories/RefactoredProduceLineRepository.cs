@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.OldRepositories
 {
     public class RefactoredProduceLineRepository : DatabaseManager, IProduceLineRepository
     {
@@ -37,16 +37,16 @@ namespace DAL
 
             while (reader.Read())
             {
-                //var produceLine = new ProduceLine(
-                //Convert.ToInt32(reader["ProduceLineID"]),
-                //Convert.ToInt32(reader["RecipeID"]),
+                var produceLine = new ProduceLine(
+                Convert.ToInt32(reader["ProduceLineID"]),
+                Convert.ToInt32(reader["RecipeID"]),
 
-                ////Adds the produce directly into the contructor via a join
-                //new Produce(
-                //    Convert.ToInt32(reader["ProduceID"]),
-                //    Convert.ToString(reader["ProduceName"])));
+                //Adds the produce directly into the contructor via a join
+                new Produce(
+                    Convert.ToInt32(reader["ProduceID"]),
+                    Convert.ToString(reader["ProduceName"])));
 
-                //list.Add(produceLine);
+                list.Add(produceLine);
             }
             _connectionString.Close();
 
