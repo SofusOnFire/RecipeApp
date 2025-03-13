@@ -11,7 +11,7 @@ namespace DAL.OldRepositories
 {
     public abstract class DatabaseManager
     {
-        protected string _ConnectionString;
+        protected static string _ConnectionString;
 
 		protected SqlConnection _connectionString = new SqlConnection(_ConnectionString);
 

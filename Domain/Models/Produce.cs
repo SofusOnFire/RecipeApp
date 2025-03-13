@@ -23,9 +23,5 @@ namespace Domain.Models
 			ProduceID = produceID;
 			ProduceName = produceName;
 		}
-
-		public Produce()
-		{
-		}
 	}
 }
