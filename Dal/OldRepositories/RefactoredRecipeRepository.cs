@@ -1,5 +1,4 @@
-﻿using DAL.OldRepositories;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Data.SqlClient;
 using System;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DAL.OldRepositories
 {
     public class RefactoredRecipeRepository : DatabaseManager, IRecipeRepository
     {

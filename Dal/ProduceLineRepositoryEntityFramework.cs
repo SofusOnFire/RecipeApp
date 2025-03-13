@@ -9,16 +9,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-	public class RecipeEntityFramework : IRecipeRepository
+	public class ProduceLineRepositoryEntityFramework : IProduceLineRepository
 	{
 		private readonly DbcontextEntityFramework _dbcontext = new DbcontextEntityFramework();
 
-		public IEnumerable<Recipe> GetAllRecipesFromDatabase()
+		public IEnumerable<ProduceLine> GetAllProduceLineByRecipeID(int? recipeID)
 		{
-			return _dbcontext.Recipes.
-				Include(r => r.ProduceLines).
-				ThenInclude(Pl => Pl.Produce).
-				ToList();
+			return _dbcontext.ProduceLines.Include(x => x.Recipe).Include(p => p.Produce).Where(pl => pl.RecipeID == recipeID).ToList();
 		}
 	}
 }
