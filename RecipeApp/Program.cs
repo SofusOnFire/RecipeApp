@@ -19,7 +19,7 @@ namespace RecipeApp
             builder.Services.AddBlazorBootstrap();
             // All our DAL interfaces
             builder.Services.AddSingleton<IRecipeRepository, RecipeEntityFramework>();
-            builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepositoryEntityFramework>();
+            builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepositoryEntityFramework>();
 
             // All out BLL interfaces

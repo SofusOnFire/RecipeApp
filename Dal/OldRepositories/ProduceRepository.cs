@@ -11,11 +11,6 @@ namespace DAL.OldRepositories
 {
     public class ProduceRepository : DatabaseManager, IProduceRepository
     {
-        public ProduceRepository()
-        {
-            if (_ConnectionString == null) _ConnectionString = GetConnectionString();
-        }
-
         public Produce GetProduceByID(int produceID)
         {
             List<Produce> produces = new List<Produce>();

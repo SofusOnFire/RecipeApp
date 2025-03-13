@@ -15,7 +15,11 @@ namespace DAL
 
 		public IEnumerable<ProduceLine> GetAllProduceLineByRecipeID(int? recipeID)
 		{
-			return _dbcontext.ProduceLines.Include(x => x.Recipe).Include(p => p.Produce).Where(pl => pl.RecipeID == recipeID).ToList();
+			return _dbcontext.ProduceLines
+				.Include(pl => pl.Recipe)
+				.Include(pl => pl.Produce)
+				.Where(pl => pl.RecipeID == recipeID)
+				.ToList();
 		}
 	}
 }
