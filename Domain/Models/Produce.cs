@@ -11,17 +11,21 @@ namespace Domain.Models
 		public int ProduceID { get; private set; }
         public string? ProduceName { get; private set; }
 
-		private Produce() { }
+		public List<ProduceLine> ProduceLines { get; } = new List<ProduceLine>();
+
 		public int CompareTo(Produce produce)
 		{
 			if (produce == null) return 1;
 			return ProduceName.CompareTo(produce.ProduceName);
 		}
-		public Produce(int produceID, string? name) 
+		public Produce(int produceID, string? produceName) 
 		{
 			ProduceID = produceID;
-			ProduceName = name;
+			ProduceName = produceName;
 		}
 
-    }
+		public Produce()
+		{
+		}
+	}
 }

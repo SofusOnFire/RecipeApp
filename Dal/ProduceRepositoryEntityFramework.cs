@@ -15,7 +15,10 @@ namespace DAL
 
 		public List<Produce> GetAllProduce()
 		{
-			return _dbcontext.Produces.ToList();
+			return _dbcontext.Produces
+				.Include(p => p.ProduceLines)  
+				.ThenInclude(pl => pl.Recipe)  
+				.ToList();
 		}
 
 		public Produce GetProduceByID(int produceID)

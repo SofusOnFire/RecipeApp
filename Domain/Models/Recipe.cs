@@ -13,7 +13,7 @@ namespace Domain.Models
         public string? RecipeName { get; private set; }
         public int? CookTime { get; private set; }
         public string? URL { get; private set; }
-        public List<ProduceLine> ProduceLines { get; private set; } = new List<ProduceLine>();
+        public List<ProduceLine> ProduceLines { get; } = new List<ProduceLine>();
 
 
         public Recipe(int? recipeID, string? recipeName, int? cookTime, string? uRL)

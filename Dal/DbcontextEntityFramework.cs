@@ -32,14 +32,14 @@ namespace DAL
 			modelBuilder.Entity<Recipe>().ToTable("Recipe");
 			modelBuilder.Entity<ProduceLine>().ToTable("ProduceLine");
 
-			// ProduceLine - Produce Relationship
+			// ✅ Define the foreign key relationship for Produce
 			modelBuilder.Entity<ProduceLine>()
 				.HasOne(pl => pl.Produce)
-				.WithMany()
+				.WithMany(p => p.ProduceLines)
 				.HasForeignKey(pl => pl.ProduceID)
 				.OnDelete(DeleteBehavior.Restrict);
 
-			// ProduceLine - Recipe Relationship
+			// ✅ Define the foreign key relationship for Recipe
 			modelBuilder.Entity<ProduceLine>()
 				.HasOne(pl => pl.Recipe)
 				.WithMany(r => r.ProduceLines)
