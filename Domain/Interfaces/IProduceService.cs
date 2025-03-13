@@ -15,5 +15,7 @@ namespace Domain.Interfaces
         /// <param name="produceID"></param>
         /// <returns></returns>
         public Produce GetProduceByID(int produceID);
+
+        public List<Produce> CompareAndGetProduceList(List<Produce> list);
     }
 }

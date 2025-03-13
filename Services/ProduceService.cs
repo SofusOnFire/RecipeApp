@@ -21,5 +21,39 @@ namespace Services
 		{
 			return _produceRepository.GetProduceByID(produceID);
 		}
+
+		public List<Produce> CompareAndGetProduceList(List<Produce> userProduces)
+		{
+			List<Produce> produceList = new List<Produce>();
+
+			List<Produce> allProduces = _produceRepository.GetAllProduce();
+
+			if (userProduces.Count != 0)
+			{
+				foreach (Produce produce in allProduces)
+				{
+					bool doesExist = false;
+					for (int i = 0; i < userProduces.Count; i++)
+					{
+						if (userProduces[i].Name == produce.Name)
+						{
+							doesExist = true;
+							break;
+						}
+					}
+
+					if (!doesExist)
+					{
+						produceList.Add(produce);
+					}
+				}
+			}
+			else
+			{
+				produceList = allProduces;
+			}
+            
+			return produceList;
+		}
 	}
 }
