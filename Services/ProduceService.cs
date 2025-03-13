@@ -32,7 +32,17 @@ namespace Services
 			{
 				foreach (Produce produce in allProduces)
 				{
-					if (!userProduces.Contains(produce))
+					bool doesExist = false;
+					for (int i = 0; i < userProduces.Count; i++)
+					{
+						if (userProduces[i].Name == produce.Name)
+						{
+							doesExist = true;
+							break;
+						}
+					}
+
+					if (!doesExist)
 					{
 						produceList.Add(produce);
 					}
