@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IProduceService
-    {
-        /// <summary>
-        /// Gets the produce by produceID
-        /// </summary>
-        /// <param name="produceID"></param>
-        /// <returns></returns>
-        public Produce GetProduceByID(int produceID);
-    }
+	public interface IProduceService
+	{
+		/// <summary>
+		/// Gets the produce by produceID
+		/// </summary>
+		/// <param name="produceID"></param>
+		/// <returns></returns>
+		public Produce GetProduceByID(int produceID);
+
+		public List<Produce> CompareAndGetProduceList(List<Produce> list);
+
+		public List<Produce> GetAllProduce();
+	}
 }
