@@ -11,20 +11,28 @@ namespace Services
 	public class UserProduceService : IUserProduceService
 	{
 		public List<Produce> UserProduceList { get; private set; } = new List<Produce>();
-		
-		public void MoveBetweenList(Produce produce, List<Produce> listOfProduce)
+		public List<Produce> AllNotTakenProduces { get; private set; }
+		private readonly IProduceService _produceService;
+
+		public UserProduceService(IProduceService produceService)
 		{
-			if (listOfProduce != null && listOfProduce.Contains(produce))
+			_produceService = produceService;
+			AllNotTakenProduces = _produceService.GetAllProduce();
+		}
+
+		public void MoveBetweenList(Produce produce)
+		{
+			if (AllNotTakenProduces != null && AllNotTakenProduces.Contains(produce))
 			{
-				listOfProduce.Remove(produce);
+				AllNotTakenProduces.Remove(produce);
 				UserProduceList.Add(produce);
 				UserProduceList.Sort();
 			}
 			else if (UserProduceList.Contains(produce))
 			{
 				UserProduceList.Remove(produce);
-				listOfProduce.Add(produce);
-				listOfProduce.Sort();
+				AllNotTakenProduces.Add(produce);
+				AllNotTakenProduces.Sort();
 			}
 		}
 	}
