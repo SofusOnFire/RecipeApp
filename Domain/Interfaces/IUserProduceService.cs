@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IUserProduceService
-    {
-        public List<Produce> UserProduceList { get; }
+	public interface IUserProduceService
+	{
+		public List<Produce> UserProduceList { get; }
+		public List<Produce> AllNotTakenProduces { get; }
 
-        public void MoveBetweenList(Produce produce, List<Produce> listOfProduce);
+		public void MoveBetweenList(Produce produce);
 
 	}
 }
