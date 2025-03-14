@@ -1,6 +1,7 @@
 ﻿@page "/"
-@inject IProduceRepository _iProduceRepository
 @inject IUserProduceService userProduceService
+@inject IProduceRepository _iProduceRepository
+@inject IProduceService _iProduceService
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -31,30 +32,30 @@
 
 <style>
 	.lists-container {
-	display: flex;
-	grid-template-columns: 1fr 1fr;
-	gap: 10px;
+		display: flex;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
 	}
 
-	.lists-container div {
-	flex: 1;
-	border: 1px solid #ccc;
-	padding: 10px;
-	border-radius: 5px;
-	background-color: #f9f9f9;
-	}
+		.lists-container div {
+			flex: 1;
+			border: 1px solid #ccc;
+			padding: 10px;
+			border-radius: 5px;
+			background-color: #f9f9f9;
+		}
 
 	li {
-	cursor: pointer;
-	padding: 5px;
-	list-style: none;
+		cursor: pointer;
+		padding: 5px;
+		list-style: none;
 	}
 
-	li:hover {
-		background-color: #ddd;
-		transform: scale(1.02);
-		border-radius: 10px;
-	}
+		li:hover {
+			background-color: #ddd;
+			transform: scale(1.02);
+			border-radius: 10px;
+		}
 </style>
 
 @code {
@@ -62,14 +63,16 @@
 	List<Produce>? listOfProduce;
 	List<Produce>? yourProduce;
 
+
 	protected override void OnInitialized()
 	{
-		listOfProduce = _iProduceRepository.GetAllProduce();
 		yourProduce = userProduceService.UserProduceList;
+		//listOfProduce = _iProduceService.CompareAndGetProduceList(yourProduce);
+		listOfProduce = userProduceService.AllNotTakenProduces;
 	}
 
 	private void MoveProduceBetweenLists(Produce produce)
 	{
-		userProduceService.MoveBetweenList(produce, listOfProduce);
+		userProduceService.MoveBetweenList(produce);
 	}
 }
