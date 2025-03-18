@@ -41,17 +41,6 @@ namespace Domain.Models
 		}
 
 		/// <summary>
-		/// Sets the Amount of each Produce the user has. It checks if input is <0. Throw exeption if thats the case
-		/// </summary>
-		/// <param name="userAmount"></param>
-		/// <exception cref="ArgumentOutOfRangeException"></exception>
-		public void SetUserAmount(int userAmount)
-		{
-			if (userAmount < 0) throw new ArgumentOutOfRangeException();
-			UserAmount = userAmount;
-		}
-
-		/// <summary>
 		/// Simple set doesn't validate at this point. Used to set Unit to Produce in Dal
 		/// </summary>
 		/// <param name="unit"></param>
