@@ -15,7 +15,7 @@
 					<input type="number" class="input" @bind="@produce.UserAmount" @bind:event="oninput" @onchange="(e) => ClampUserAmount(produce)" />
 					@produce.Unit.UnitName :
 					@produce.Name
-					<img src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
+					<img style="margin-left: auto;" src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
 				</li>
 			}
 		</ul>
@@ -94,8 +94,13 @@
 		userProduceService.MoveBetweenList(produce, listOfProduce);
 	}
 
+	/// <summary>
+	/// Sets the UserAmount to between 0 and 1000. No matter what the user writest
+	/// </summary>
+	/// <param name="produce"></param>
 	private void ClampUserAmount(Produce produce)
 	{
 		produce.UserAmount = Math.Clamp(produce.UserAmount, 0, 1000);
+		if (produce.UserAmount == 0) MoveProduceBetweenLists(produce);
 	}
 }

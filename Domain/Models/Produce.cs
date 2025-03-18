@@ -21,7 +21,7 @@ namespace Domain.Models
 			Name = name;
 			UserAmount = 0;
 			UnitID = unitID;
-			UserAmount = 0;
+			UserAmount = 1;
 		}
 
 		/// <summary>
@@ -34,7 +34,7 @@ namespace Domain.Models
 		{
 			if (comparedProduce.Name == Name)
 			{
-				if (recipeAmountOfIngredient == 0 || recipeAmountOfIngredient == null) InStockStatus = "red";
+				if (comparedProduce.UserAmount == 0 || recipeAmountOfIngredient == null) InStockStatus = "red";
 				if (recipeAmountOfIngredient <= comparedProduce.UserAmount) InStockStatus = "green";
 				if (recipeAmountOfIngredient > comparedProduce.UserAmount) InStockStatus = "yellow";
 
@@ -63,14 +63,7 @@ namespace Domain.Models
 
 		public int CompareTo(Produce? other)
 		{
-
 			return Name.CompareTo(other.Name);
-			//int otherNameValue = Convert.ToInt32(other.Name);
-			//int thisNameValue = Convert.ToInt32(this.Name);
-
-			//if (otherNameValue == 0 || otherNameValue < thisNameValue) return 1;
-			//if (otherNameValue == thisNameValue) return 0;
-			//return -1;
 		}
 	}
 }
