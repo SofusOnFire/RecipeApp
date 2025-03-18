@@ -51,7 +51,7 @@ namespace Domain.Models
 
 				if (ProduceLines[i]._Produce.InStockStatus == "green") greenStockProduces.Add(ProduceLines[i]);
 				else if (ProduceLines[i]._Produce.InStockStatus == "yellow") yellowStockProduces.Add(ProduceLines[i]);
-                else redStockProduces.Add(ProduceLines[i]);
+                else redStockProduces.Add(ProduceLines[i]); 
 			}
 
             // Concat all 3 lists, so that green is first then yellow then red

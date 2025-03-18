@@ -58,7 +58,6 @@ namespace Services
 						// If the user have the produce, break and mark the produce as found
 						produceLine._Produce.SetStockStatus(_userProduceService.UserProduceList[i], produceLine.Amount);
 						if (produceLine._Produce.InStockStatus != null) break;
-
 					}
 				}
 

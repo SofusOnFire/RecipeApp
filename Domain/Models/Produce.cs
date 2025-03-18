@@ -19,7 +19,6 @@ namespace Domain.Models
 		{
 			ProduceID = produceID;
 			Name = name;
-			UserAmount = 0;
 			UnitID = unitID;
 			UserAmount = 1;
 		}
