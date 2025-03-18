@@ -12,5 +12,12 @@ namespace Domain.Interfaces
         public Produce GetProduceByID(int produceID);
 
         public List<Produce> GetAllProduce();
+
+		/// <summary>
+		/// Creates produce in database
+		/// </summary>
+		/// <param name="produce"></param>
+		/// <returns>bool-value by checking if the produce already is stored in DB</returns>
+		public bool CreateProduce(string produceName);
     }
 }

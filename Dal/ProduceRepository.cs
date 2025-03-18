@@ -64,5 +64,42 @@ namespace DAL
 
             return list;
         }
-    }
+
+		public bool CreateProduce(string produceName)
+		{
+			_connectionString.Open();
+
+			// Query to check if the produce already is in DB
+			string queryCheck =
+				"SELECT COUNT(*) FROM [Produce] " +
+				"WHERE ProduceName = @Check";
+
+			var checkCommand = new SqlCommand(queryCheck, _connectionString);
+
+			checkCommand.Parameters.AddWithValue("@Check", produceName);
+
+			// Fallback value is 0 if returned (ExecuteScalar) value is null
+			int existingCount = (int)(checkCommand.ExecuteScalar() ?? 0);
+
+			if (existingCount > 0) // If hit return and dont add it to DB
+			{
+				return false;
+			}
+			else
+			{
+				// Add to DB
+				string insertQuery =
+					"INSERT INTO [Produce] (ProduceName) " +
+					"VALUES (@Input)";
+
+				var insertCommand = new SqlCommand(insertQuery, _connectionString);
+
+				insertCommand.Parameters.AddWithValue("@Input", produceName);
+
+				insertCommand.ExecuteScalar();
+
+				return true;
+			}
+		}
+	}
 }

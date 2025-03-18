@@ -21,5 +21,19 @@ namespace Services
 		{
 			return _produceRepository.GetProduceByID(produceID);
 		}
+
+		public string CreateProduce(string produce)
+		{
+			bool produceCreated = _produceRepository.CreateProduce(produce);
+
+			string outcome = "Den indtastede ingrediens findes allerede i databasen";
+
+			if (produceCreated)
+			{
+				outcome = "Ingrediens tilføjet til databasen";
+			}
+
+			return outcome;
+		}
 	}
 }
