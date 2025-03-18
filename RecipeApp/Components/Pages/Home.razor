@@ -11,9 +11,9 @@
 		<ul>
 			@foreach (var produce in yourProduce)
 			{
-				<li style="display: flex; justify-content: space-between; align-items: center;" @onclick="() => MoveProduceBetweenLists(produce)">
+				<li style="display: flex; justify-content: space-between; align-items: center;">
 					@produce.Name
-					<img src="/img/trashcan.svg" />
+					<img src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
 				</li>
 			}
 		</ul>
