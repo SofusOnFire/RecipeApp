@@ -1,6 +1,63 @@
 ﻿@page "/adminproduce"
-<h3>AdminProduce</h3>
+@rendermode InteractiveServer
+
+<PageTitle>Admin: Produce</PageTitle>
+
+<h3>Admin: Produce</h3>
+
+<div>
+    <p class="produce-label">Navn på ingrediens:</p>
+    <input class="produce-textfield" type="text" id="produce-name" name="produce-name"
+           placeholder="Eks: Gulerod" pattern="[A-Åa-å]"
+           title="Der må kun bruges bogstaver" required />
+    <button class="produce-button" @onclick="BigFirstLetter">Opret</button>
+</div>
+
+<style>
+    .produce-label {
+        margin-bottom: 0;
+        font-family: Arial;
+        font-size: 16px;
+    }
+
+    .produce-textfield {
+        background-color: #e0e0e0;
+        border: medium;
+        border-radius: 5px;
+        font-family: Arial;
+        font-size: 16px;
+        padding: 3px 0px 3px 4px;
+        width: 250px;
+        margin: 2px;
+    }
+
+    .produce-button {
+        background-color: #81c784;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        font-family: Arial;
+        font-size: 14px;
+        display: inline-block;
+        border-radius: 5px;
+        padding: 5px 15px 5px 15px;
+        margin-left: 20px;
+        transition-duration: 0.2s;
+        border: 2px solid #81c784;
+    }
+
+        .produce-button:hover {
+            background-color: white;
+        }
+
+        .produce-button:active {
+            background-color: lightgrey;
+        }
+</style>
 
 @code {
+    private void BigFirstLetter()
+    {
 
+    }
 }
