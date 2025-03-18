@@ -10,6 +10,8 @@ namespace Domain.Interfaces
 {
     public interface IAdminCreateRecipeService
     {
+        public List<Produce> AllProduceWhenAdminCreateRecipe { get; }
+        public List<Produce> SelectedProduceWhenAdminCreateRecipe { get; }
         public void AddRemoveProduceToNewRecipe(Produce produce);
     }
 }

@@ -30,33 +30,35 @@
 				<DropdownToggleButton>Tilføj ingredienser...</DropdownToggleButton>
 				<DropdownMenu class="produce-dropdown">
 					@foreach (var produce in listOfProduce){
-						<DropdownItem>@produce.Name</DropdownItem>
+						<DropdownItem @onclick="() => AddRemoveProduce(produce)">@produce.Name</DropdownItem>
 					}
 				</DropdownMenu>
 			</Dropdown>
 		</div>
 		<div>
-
+			@foreach (var produce in addedProduces){
+				<Button Color="ButtonColor.Primary" Outline="true" @onclick="() => AddRemoveProduce(produce)"> @produce.Name </Button>
+			}
 		</div>
 	</div>
 </div>
 
 <style>
 	.lists-container {
-		display: flex;
-		grid-template-columns: 1fr 1fr;
-		gap: 10px;
+	display: flex;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
 	}
 
 	.lists-container div {
-		flex: 1;
-		padding: 10px;
-		border-radius: 5px;
+	flex: 1;
+	padding: 10px;
+	border-radius: 5px;
 	}
 
 	.produce-dropdown {
-		max-height: 175px;
-		overflow-y: scroll;
+	max-height: 175px;
+	overflow-y: scroll;
 	}
 </style>
 
@@ -66,9 +68,15 @@
 	private string? tbRecipeCookTime = null;
 
 	List<Produce>? listOfProduce;
+	List<Produce>? addedProduces;
 
 	protected override void OnInitialized()
 	{
 		listOfProduce = _iProduceRepository.GetAllProduce();
+		addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
+	}
+
+	private void AddRemoveProduce(Produce produce){
+		_iAdminCreateRecipeService.AddRemoveProduceToNewRecipe(produce);
 	}
 }
