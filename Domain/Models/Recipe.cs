@@ -28,5 +28,17 @@ namespace Domain.Models
             var list = produceLines.ToList<ProduceLine>();
             ProduceLines = list;
         }
+        public bool ValidateRecipeName(string adminInput)
+        {
+            adminInput.ToCharArray();
+            if (adminInput.Length < 3)
+            {
+                return ""
+            }
+        }
+        public void ValidateCookTime()
+        {
+
+        }
     }
 }
