@@ -56,11 +56,9 @@ namespace Services
 					for (int i = 0; i < _userProduceService.UserProduceList.Count; i++)
 					{
 						// If the user have the produce, break and mark the produce as found
-						if (_userProduceService.UserProduceList[i].Name == produceLine._Produce.Name)
-						{
-							produceLine._Produce.SetStockToTrue();
-							break;
-						}
+						produceLine._Produce.SetStockStatus(_userProduceService.UserProduceList[i]);
+						if (produceLine._Produce.InStockStatus != null) break;
+
 					}
 				}
 

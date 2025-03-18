@@ -10,7 +10,7 @@ namespace Domain.Models
     {
 		public int ProduceID { get; private set; }
         public string? Name { get; private set; }
-		public string InStockStatus { get; private set; }
+		public string? InStockStatus { get; private set; }
         public int UnitID { get; private set; }
         public Unit? Unit { get; private set; }
 		public int UserAmount { get; private set; }
@@ -19,7 +19,6 @@ namespace Domain.Models
 		{
 			ProduceID = produceID;
 			Name = name;
-			InStockStatus = "red";
 			UserAmount = 0;
 			UnitID = unitID;
 		}
@@ -27,7 +26,7 @@ namespace Domain.Models
 		/// <summary>
 		/// Sets the produce to true if the users contains it
 		/// </summary>
-		public void SetStockToTrue()
+		public void SetStockStatus(Produce comparedProduce)
 		{
 			InStockStatus = "green";
 		}
