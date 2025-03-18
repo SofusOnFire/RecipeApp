@@ -12,7 +12,7 @@
 			@foreach (var produce in yourProduce)
 			{
 				<li style="display: flex; justify-content: align-items: center;">
-					<input type="number" class="input" @bind="@produce.UserAmount" @bind:event="oninput" />
+					<input type="number" class="input" @bind="@produce.UserAmount" @bind:event="oninput" @onchange="(e) => ClampUserAmount(produce)" />
 					@produce.Unit.UnitName :
 					@produce.Name
 					<img src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
@@ -34,7 +34,7 @@
 <style>
 	.input {
 		border: 2px solid transparent;
-		width: 3em;
+		width: 5em;
 		height: 1.5em;
 		padding-left: 0.8em;
 		outline: none;
@@ -94,8 +94,8 @@
 		userProduceService.MoveBetweenList(produce, listOfProduce);
 	}
 
-	// private void UpdateUserAmountOfProduce(Produce produce, int amount)
-	// {
-	// 	produce.SetUserAmount(amount);
-	// }
+	private void ClampUserAmount(Produce produce)
+	{
+		produce.UserAmount = Math.Clamp(produce.UserAmount, 0, 1000);
+	}
 }
