@@ -34,7 +34,7 @@ namespace Domain.Models
 			if (comparedProduce.Name == Name)
 			{
 				if (recipeAmountOfIngredient == 0 || recipeAmountOfIngredient == null) InStockStatus = "red";
-				if (recipeAmountOfIngredient < UserAmount) InStockStatus = "green";
+				if (recipeAmountOfIngredient <= UserAmount) InStockStatus = "green";
 				if (recipeAmountOfIngredient > UserAmount) InStockStatus = "yellow";
 
 			}
