@@ -12,6 +12,9 @@ namespace Domain.Interfaces
     {
         public List<Produce> AllProduceWhenAdminCreateRecipe { get; }
         public List<Produce> SelectedProduceWhenAdminCreateRecipe { get; }
-        public void AddRemoveProduceToNewRecipe(Produce produce);
+        //public void AddRemoveProduceToNewRecipe(Produce produce);
+
+        public void AddProduceToNewRecipe(Produce produce);
+        public void RemoveProduceFromNewRecipe(Produce produce);
     }
 }

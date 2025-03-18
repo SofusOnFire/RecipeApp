@@ -30,14 +30,14 @@
 				<DropdownToggleButton>Tilføj ingredienser...</DropdownToggleButton>
 				<DropdownMenu class="produce-dropdown">
 					@foreach (var produce in listOfProduce){
-						<DropdownItem @onclick="() => AddRemoveProduce(produce)">@produce.Name</DropdownItem>
+						<DropdownItem @onclick="() => AddProduce(produce)">@produce.Name</DropdownItem>
 					}
 				</DropdownMenu>
 			</Dropdown>
 		</div>
 		<div>
 			@foreach (var produce in addedProduces){
-				<Button Color="ButtonColor.Primary" Outline="true" @onclick="() => AddRemoveProduce(produce)"> @produce.Name </Button>
+				<Button Color="ButtonColor.Primary" Outline="true" @onclick="() => RemoveProduce(produce)"> @produce.Name </Button>
 			}
 		</div>
 	</div>
@@ -72,11 +72,20 @@
 
 	protected override void OnInitialized()
 	{
-		listOfProduce = _iProduceRepository.GetAllProduce();
+		listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
 		addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
 	}
 
-	private void AddRemoveProduce(Produce produce){
-		_iAdminCreateRecipeService.AddRemoveProduceToNewRecipe(produce);
+	private void AddProduce(Produce produce){
+		_iAdminCreateRecipeService.AddProduceToNewRecipe(produce);
+		listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
+		addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
+	}
+
+	private void RemoveProduce(Produce produce)
+	{
+		_iAdminCreateRecipeService.RemoveProduceFromNewRecipe(produce);
+		listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
+		addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
 	}
 }
