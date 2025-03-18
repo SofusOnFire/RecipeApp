@@ -1,23 +1,71 @@
 ﻿@page "/addrecipe"
+@inject IAdminCreateRecipeService _iAdminCreateRecipeService
+@inject IProduceRepository _iProduceRepository
 @rendermode InteractiveServer
 
 <h3>Tilføj ny opskrift</h3>
 
-<div>
-	<p>Navn på opskrift</p>
-	<input type="text" id="recipeName" name="recipeName"/>
+<div class="lists-container">
+	<div>
+		<h5>Navn på opskrift</h5>
+		<div class="mb-auto">
+			<TextInput @bind-Value= "@tbRecipeName" />
+		</div>
 
-	<p>Opskriftens URL</p>
-	<input type="text" id="recipeUrl" name="recipeUrl"/>
+		<h5>Opskriftens URL</h5>
+		<div>
+			<TextInput @bind-Value = "@tbRecipeURL" />
+		</div>
 
-	<p>Tilberedningstid</p>
-	<input type="text" id="recipeCookTime" name="recipeCookTime"/>
+		<h5>Tilberedningstid</h5>
+		<div>
+			<TextInput @bind-Value = "@tbRecipeCookTime" />
+		</div>
+	</div>
+
+	<div>
+		<h5>Ingredienser</h5>
+		<div>
+			<Dropdown Color="DropdownColor.Secondary">
+				<DropdownToggleButton>Tilføj ingredienser...</DropdownToggleButton>
+				<DropdownMenu class="produce-dropdown">
+					@foreach (var produce in listOfProduce){
+						<DropdownItem>@produce.Name</DropdownItem>
+					}
+				</DropdownMenu>
+			</Dropdown>
+		</div>
+	</div>
 </div>
 
-<div>
-	<p>Ingredienser</p>
-</div>
+<style>
+	.lists-container {
+		display: flex;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
+	}
+
+	.lists-container div {
+		flex: 1;
+		padding: 10px;
+		border-radius: 5px;
+	}
+
+	.produce-dropdown {
+		max-height: 175px;
+		overflow-y: scroll;
+	}
+</style>
 
 @code {
+	private string? tbRecipeName = null;
+	private string? tbRecipeURL = null;
+	private string? tbRecipeCookTime = null;
 
+	List<Produce>? listOfProduce;
+
+	protected override void OnInitialized()
+	{
+		listOfProduce = _iProduceRepository.GetAllProduce();
+	}
 }
