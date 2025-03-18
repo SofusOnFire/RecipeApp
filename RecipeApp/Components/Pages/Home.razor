@@ -11,7 +11,9 @@
 		<ul>
 			@foreach (var produce in yourProduce)
 			{
-				<li style="display: flex; justify-content: space-between; align-items: center;">
+				<li style="display: flex; justify-content: align-items: center;">
+					<input type="number" class="input" @bind="@produce.UserAmount" />
+					@produce.Unit.UnitName :
 					@produce.Name
 					<img src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
 				</li>
@@ -30,6 +32,25 @@
 </div>
 
 <style>
+	.input {
+		border: 2px solid transparent;
+		width: 3em;
+		height: 1.5em;
+		padding-left: 0.8em;
+		outline: none;
+		overflow: hidden;
+		background-color: #F3F3F3;
+		border-radius: 10px;
+		transition: all 0.5s;
+	}
+
+	.input:hover,
+	.input:focus {
+		border: 2px solid #4A9DEC;
+		box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+		background-color: white;
+	}
+
 	.lists-container {
 	display: flex;
 	grid-template-columns: 1fr 1fr;
@@ -71,5 +92,10 @@
 	private void MoveProduceBetweenLists(Produce produce)
 	{
 		userProduceService.MoveBetweenList(produce, listOfProduce);
+	}
+
+	private void UpdateUserAmountOfProduce(Produce produce, int amount)
+	{
+		produce.SetUserAmount(amount);
 	}
 }

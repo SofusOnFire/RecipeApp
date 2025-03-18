@@ -13,7 +13,7 @@ namespace Domain.Models
 		public string? InStockStatus { get; private set; }
         public int UnitID { get; private set; }
         public Unit? Unit { get; private set; }
-		public int UserAmount { get; private set; }
+		public int UserAmount { get;  set; }
 
 		public Produce(int produceID, string? name, int unitID) 
 		{
@@ -21,6 +21,7 @@ namespace Domain.Models
 			Name = name;
 			UserAmount = 0;
 			UnitID = unitID;
+			UserAmount = 0;
 		}
 
 		/// <summary>
