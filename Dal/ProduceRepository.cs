@@ -40,8 +40,11 @@ namespace DAL
 				produce = new Produce(
 				Convert.ToInt32(reader["ProduceID"]),
 				Convert.ToString(reader["ProduceName"]),
-				_unitRepository.GetUnitByUnitID(Convert.ToInt32(reader["UnitID"])));
+				Convert.ToInt32(reader["UnitID"]));
 			}
+
+			// Sets the Unit, if produce != null
+			if (produce != null) produce.SetUnit(_unitRepository.GetUnitByUnitID(produce.UnitID));
 
 			_connectionString.Close();
 
@@ -65,12 +68,19 @@ namespace DAL
                 var produce = new Produce(
                 Convert.ToInt32(reader["ProduceID"]),
                 Convert.ToString(reader["ProduceName"]),
-				_unitRepository.GetUnitByUnitID(Convert.ToInt32(reader["UnitID"])));
+				Convert.ToInt32(reader["UnitID"]));
 
 				list.Add(produce);
             }
 
             _connectionString.Close();
+
+			// Sets the Unit for each Produce
+			foreach (var produce in list)
+			{
+				produce.SetUnit(_unitRepository.GetUnitByUnitID(produce.UnitID));
+			}
+
 
             return list;
         }

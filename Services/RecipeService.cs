@@ -86,7 +86,7 @@ namespace Services
 				for (int i = 0; i < recipe.ProduceLines.Count; i++)
 				{
 					// If the user doesn't have the produce, adds to notInStock and remove from current list
-					if (recipe.ProduceLines[i]._Produce.InStock == false)
+					if (recipe.ProduceLines[i]._Produce.InStockStatus == "red")
 					{
 						notInStockProduces.Add(recipe.ProduceLines[i]);
 						recipe.ProduceLines.RemoveAt(i);

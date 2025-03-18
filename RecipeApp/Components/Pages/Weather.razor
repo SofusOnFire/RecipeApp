@@ -17,7 +17,7 @@
                     @if (recipe.ProduceLines != null)
                         @foreach (var produceLine in recipe.ProduceLines)
                         {
-                            @if (produceLine._Produce.InStock == true)
+                            @if (produceLine._Produce.InStockStatus == "red")
                             {
                                 <p class="stock" style="background-color: #00ab45;">@produceLine._Produce.Name</p>
                             }
