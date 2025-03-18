@@ -11,16 +11,18 @@ namespace Domain.Models
 		public int ProduceID { get; private set; }
         public string? Name { get; private set; }
 		public bool InStock { get; private set; }
+		public Unit Unit { get; private set; }
 
 		public int CompareTo(Produce produce)
 		{
 			if (produce == null) return 1;
 			return Name.CompareTo(produce.Name);
 		}
-		public Produce(int produceID, string? name) 
+		public Produce(int produceID, string? name, Unit unit) 
 		{
 			ProduceID = produceID;
 			Name = name;
+			Unit = unit;
 			InStock = false;
 		}
 
