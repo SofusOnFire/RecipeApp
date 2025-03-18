@@ -1,17 +1,22 @@
 ﻿@page "/adminproduce"
+@inject IAdminProduceService _adminProduceService
 @rendermode InteractiveServer
 
 <PageTitle>Admin: Produce</PageTitle>
 
 <h3>Admin: Produce</h3>
 
-<div>
+<form>
     <p class="produce-label">Navn på ingrediens:</p>
-    <input class="produce-textfield" type="text" id="produce-name" name="produce-name"
-           placeholder="Eks: Gulerod" pattern="[A-Åa-å]"
+    <input @bind="ProduceInput" class="produce-textfield" type="text" name="produce-name"
+           placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå]+"
            title="Der må kun bruges bogstaver" required />
-    <button class="produce-button" @onclick="BigFirstLetter">Opret</button>
-</div>
+    <button class="produce-button" @onclick="CreateProduce">Opret</button>
+    @if (showResult)
+    {
+        <p class="produce-create-message">@ProduceMessage</p>
+    }
+</form>
 
 <style>
     .produce-label {
@@ -29,6 +34,7 @@
         padding: 3px 0px 3px 4px;
         width: 250px;
         margin: 2px;
+        margin-left: 0px;
     }
 
     .produce-button {
@@ -40,7 +46,7 @@
         font-size: 14px;
         display: inline-block;
         border-radius: 5px;
-        padding: 5px 15px 5px 15px;
+        padding: 3px 15px 3px 15px;
         margin-left: 20px;
         transition-duration: 0.2s;
         border: 2px solid #81c784;
@@ -53,11 +59,23 @@
         .produce-button:active {
             background-color: lightgrey;
         }
+
+    .produce-create-message {
+        font-family: Arial;
+        font-size: 16px;
+    }
 </style>
 
 @code {
-    private void BigFirstLetter()
-    {
+    private string ProduceInput { get; set; }
 
+    private bool showResult = false;
+
+    private string ProduceMessage { get; set; }
+
+    private void CreateProduce()
+    {
+        ProduceMessage = _adminProduceService.CreateProduce(ProduceInput);
+        showResult = true;
     }
 }
