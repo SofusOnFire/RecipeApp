@@ -6,17 +6,17 @@
 
 <h3>Admin: Produce</h3>
 
-<form>
+<EditForm Model="@this" OnValidSubmit="CreateProduce">
     <p class="produce-label">Navn på ingrediens:</p>
     <input @bind="ProduceInput" class="produce-textfield" type="text" name="produce-name"
            placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå]+"
            title="Der må kun bruges bogstaver" required />
-    <button class="produce-button" @onclick="CreateProduce">Opret</button>
-    @if (showResult)
+    <button class="produce-button">Opret</button>
+    @if (showResult == true)
     {
         <p class="produce-create-message">@ProduceMessage</p>
     }
-</form>
+</EditForm>
 
 <style>
     .produce-label {
