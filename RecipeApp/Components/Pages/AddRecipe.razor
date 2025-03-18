@@ -9,7 +9,7 @@
 	<div>
 		<h5>Navn på opskrift</h5>
 		<div class="mb-auto">
-			<TextInput @bind-Value= "@tbRecipeName" />
+			<TextInput @bind-Value="@tbRecipeName" />
 		</div>
 
 		<h5>Opskriftens URL</h5>
@@ -42,6 +42,9 @@
 		</div>
 	</div>
 </div>
+<div class="center-button">
+	<Button Color="ButtonColor.Success">Tilføj opskrift</Button>
+</div>
 
 <style>
 	.lists-container {
@@ -59,6 +62,10 @@
 	.produce-dropdown {
 	max-height: 175px;
 	overflow-y: scroll;
+	}
+
+	.center-button {
+		text-align: center;
 	}
 </style>
 
@@ -88,4 +95,10 @@
 		listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
 		addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
 	}
+
+	// private void AddRemoveProduce(Produce produce){
+	// 	_iAdminCreateRecipeService.AddRemoveProduceToNewRecipe(produce);
+	// 	listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
+	// 	addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
+	// }
 }

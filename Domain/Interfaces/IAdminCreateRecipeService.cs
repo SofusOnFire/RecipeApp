@@ -16,5 +16,6 @@ namespace Domain.Interfaces
 
         public void AddProduceToNewRecipe(Produce produce);
         public void RemoveProduceFromNewRecipe(Produce produce);
+        public string ValidateURL(string url);
     }
 }
