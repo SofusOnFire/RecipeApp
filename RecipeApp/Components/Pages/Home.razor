@@ -12,7 +12,7 @@
 			@foreach (var produce in yourProduce)
 			{
 				<li style="display: flex; justify-content: align-items: center;">
-					<input type="number" class="input" @bind="@produce.UserAmount" />
+					<input type="number" class="input" @bind="@produce.UserAmount" @bind:event="oninput" />
 					@produce.Unit.UnitName :
 					@produce.Name
 					<img src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
@@ -94,8 +94,8 @@
 		userProduceService.MoveBetweenList(produce, listOfProduce);
 	}
 
-	private void UpdateUserAmountOfProduce(Produce produce, int amount)
-	{
-		produce.SetUserAmount(amount);
-	}
+	// private void UpdateUserAmountOfProduce(Produce produce, int amount)
+	// {
+	// 	produce.SetUserAmount(amount);
+	// }
 }
