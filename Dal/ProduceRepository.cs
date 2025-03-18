@@ -11,9 +11,16 @@ namespace DAL
 {
     public class ProduceRepository : DatabaseManager, IProduceRepository
     {
-        public Produce GetProduceByID(int produceID)
+		private readonly IUnitRepositry _unitRepository;
+
+		public ProduceRepository(IUnitRepositry unitRepository)
+		{
+			_unitRepository = unitRepository;
+		}
+
+		public Produce GetProduceByID(int produceID)
         {
-			Produce produce = new Produce(0, "Ingrediens ikke fundet");
+			Produce? produce = null;
 			
 			_connectionString.Open();
 
@@ -32,11 +39,13 @@ namespace DAL
 			{
 				produce = new Produce(
 				Convert.ToInt32(reader["ProduceID"]),
-				Convert.ToString(reader["ProduceName"]));
+				Convert.ToString(reader["ProduceName"]),
+				_unitRepository.GetUnitByUnitID(Convert.ToInt32(reader["UnitID"])));
 			}
 
 			_connectionString.Close();
 
+			if (produce == null) throw new NullReferenceException();
 			return produce;
 		}
 		public List<Produce> GetAllProduce()
@@ -55,7 +64,8 @@ namespace DAL
             {
                 var produce = new Produce(
                 Convert.ToInt32(reader["ProduceID"]),
-                Convert.ToString(reader["ProduceName"]));
+                Convert.ToString(reader["ProduceName"]),
+				_unitRepository.GetUnitByUnitID(Convert.ToInt32(reader["UnitID"])));
 
 				list.Add(produce);
             }

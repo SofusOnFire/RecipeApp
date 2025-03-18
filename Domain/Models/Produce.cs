@@ -30,5 +30,11 @@ namespace Domain.Models
 		{
 			InStockStatus = "green";
 		}
+
+		public void SetUserAmount(int userAmount)
+		{
+			if (userAmount < 0) throw new ArgumentOutOfRangeException();
+			UserAmount = userAmount;
+		}
     }
 }
