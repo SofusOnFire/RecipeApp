@@ -84,6 +84,7 @@ namespace DAL
 			if (existingCount > 0) // If hit return and dont add it to DB
 			{
 				_connectionString.Close();
+
 				return false;
 			}
 			else
@@ -100,6 +101,7 @@ namespace DAL
 				insertCommand.ExecuteScalar();
 
 				_connectionString.Close();
+
 				return true;
 			}
 		}
