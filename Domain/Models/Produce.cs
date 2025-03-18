@@ -24,11 +24,20 @@ namespace Domain.Models
 		}
 
 		/// <summary>
-		/// Sets the produce to true if the users contains it
+		/// Checks if the 2 Produces has the name.
+		/// Then its set the status. If RecipeAmountOfIngredient is null or 0, set it as red (the color of text for UI). 
+		/// If RecipeAmountOfIngredient is less than UserAmount set as green (Means User has the Amount of Produce needed for Recipe).
+		/// If RecipeAmountOfIngredient is Greater than UserAmount set as yellow (Means User does not have enough of the Prodce needed for Recipe). 
 		/// </summary>
-		public void SetStockStatus(Produce comparedProduce)
+		public void SetStockStatus(Produce comparedProduce, int? recipeAmountOfIngredient)
 		{
-			InStockStatus = "green";
+			if (comparedProduce.Name == Name)
+			{
+				if (recipeAmountOfIngredient == 0 || recipeAmountOfIngredient == null) InStockStatus = "red";
+				if (recipeAmountOfIngredient < UserAmount) InStockStatus = "green";
+				if (recipeAmountOfIngredient > UserAmount) InStockStatus = "yellow";
+
+			}
 		}
 
 		/// <summary>
