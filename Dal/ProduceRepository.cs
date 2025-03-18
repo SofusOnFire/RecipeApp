@@ -43,12 +43,13 @@ namespace DAL
 				Convert.ToInt32(reader["UnitID"]));
 			}
 
-			// Sets the Unit, if produce != null
-			if (produce != null) produce.SetUnit(_unitRepository.GetUnitByUnitID(produce.UnitID));
-
 			_connectionString.Close();
 
 			if (produce == null) throw new NullReferenceException();
+
+			// Sets the Unit
+			produce.SetUnit(_unitRepository.GetUnitByUnitID(produce.UnitID));
+
 			return produce;
 		}
 		public List<Produce> GetAllProduce()

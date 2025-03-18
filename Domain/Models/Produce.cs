@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Produce
+    public class Produce : IComparable<Produce>
     {
 		public int ProduceID { get; private set; }
         public string? Name { get; private set; }
@@ -59,5 +59,17 @@ namespace Domain.Models
 		{
 			Unit = unit;
 		}
-    }
+
+		public int CompareTo(Produce? other)
+		{
+
+			return Name.CompareTo(other.Name);
+			//int otherNameValue = Convert.ToInt32(other.Name);
+			//int thisNameValue = Convert.ToInt32(this.Name);
+
+			//if (otherNameValue == 0 || otherNameValue < thisNameValue) return 1;
+			//if (otherNameValue == thisNameValue) return 0;
+			//return -1;
+		}
+	}
 }
