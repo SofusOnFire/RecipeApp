@@ -12,9 +12,10 @@
 			@foreach (var produce in yourProduce)
 			{
 				<li style="display: flex; justify-content: align-items: center;">
+					<pre>@produce.Name.PadRight(30)</pre>
+
 					<input type="number" class="input" @bind="@produce.UserAmount" @bind:event="oninput" @onchange="(e) => ClampUserAmount(produce)" />
-					@produce.Unit.UnitName :
-					@produce.Name
+					@produce.Unit.UnitName
 					<img style="margin-left: auto;" src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
 				</li>
 			}
@@ -101,6 +102,6 @@
 	private void ClampUserAmount(Produce produce)
 	{
 		produce.UserAmount = Math.Clamp(produce.UserAmount, 0, 1000);
-		if (produce.UserAmount == 0) MoveProduceBetweenLists(produce);
+		if (produce.UserAmount == 0) MoveProduceBetweenLists(produce); // If the value is 0. Remove it from list
 	}
 }
