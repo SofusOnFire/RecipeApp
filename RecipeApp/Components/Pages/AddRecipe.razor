@@ -14,7 +14,7 @@
 
 		<h5>Opskriftens URL</h5>
 		<div>
-			<TextInput @bind-Value = "@tbRecipeURL" />
+			<TextInput @onfocusout=" () => ValidateURL(tbRecipeURL)" @bind-Value= "@tbRecipeURL" />
 		</div>
 
 		<h5>Tilberedningstid</h5>
@@ -42,7 +42,7 @@
 		</div>
 	</div>
 </div>
-<div class="center-button">
+<div class="align-items-center">
 	<Button Color="ButtonColor.Success">Tilføj opskrift</Button>
 </div>
 
@@ -62,10 +62,6 @@
 	.produce-dropdown {
 	max-height: 175px;
 	overflow-y: scroll;
-	}
-
-	.center-button {
-		text-align: center;
 	}
 </style>
 
@@ -94,6 +90,19 @@
 		_iAdminCreateRecipeService.RemoveProduceFromNewRecipe(produce);
 		listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
 		addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
+	}
+
+	private void ValidateURL(string tbRecipeURL){
+		if (_iAdminCreateRecipeService.ValidateURL(tbRecipeURL) == "exists"){
+			// error message
+		}
+		else if (_iAdminCreateRecipeService.ValidateURL(tbRecipeURL) == "invalid" || _iAdminCreateRecipeService.ValidateURL(tbRecipeURL) == "empty")
+		{
+			// error message
+		}
+		else {
+			// enable other textboxes
+		}
 	}
 
 	// private void AddRemoveProduce(Produce produce){
