@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Produce : IComparable<Produce>
+    public class Produce
     {
 		public int ProduceID { get; private set; }
         public string? Name { get; private set; }
-		public bool InStock { get; private set; }
+		public string InStockStatus { get; private set; }
 		public Unit Unit { get; private set; }
+		public int UserAmount { get; private set; }
 
-		public int CompareTo(Produce produce)
-		{
-			if (produce == null) return 1;
-			return Name.CompareTo(produce.Name);
-		}
 		public Produce(int produceID, string? name, Unit unit) 
 		{
 			ProduceID = produceID;
 			Name = name;
 			Unit = unit;
-			InStock = false;
+			InStockStatus = "red";
+			UserAmount = 0;
 		}
 
 		/// <summary>
@@ -31,7 +28,7 @@ namespace Domain.Models
 		/// </summary>
 		public void SetStockToTrue()
 		{
-			InStock = true;
+			InStockStatus = "green";
 		}
     }
 }
