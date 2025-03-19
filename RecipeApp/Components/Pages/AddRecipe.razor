@@ -19,7 +19,8 @@
 
 		<h5>Tilberedningstid i minutter</h5>
 		<div>
-			<NumberInput TValue="int?" Disabled="@tbDisabled" @bind-Value = "@tbRecipeCookTime" />
+			<NumberInput TValue="int?" Disabled="@tbDisabled" EnableMinMax="true" Min="15" Max="600" @bind-Value = "@tbRecipeCookTime" />
+			<span class="form-text">Indtast et tal mellem 15 og 600</span>
 		</div>
 	</div>
 
