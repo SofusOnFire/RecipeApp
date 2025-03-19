@@ -9,24 +9,24 @@
 	<div>
 		<h5>Navn på opskrift</h5>
 		<div class="mb-auto">
-			<TextInput @bind-Value="@tbRecipeName" />
+			<TextInput Disabled="@tbDisabled" @bind-Value="@tbRecipeName" />
 		</div>
 
 		<h5>Opskriftens URL</h5>
 		<div>
-			<TextInput @onfocusout=" () => ValidateURL(tbRecipeURL)" @bind-Value= "@tbRecipeURL" />
+			<TextInput @onfocusout=" () => ValidateURL(tbRecipeURL)" Placeholder="Indtast først opskriftens URL." @bind-Value= "@tbRecipeURL" />
 		</div>
 
-		<h5>Tilberedningstid</h5>
+		<h5>Tilberedningstid i minutter</h5>
 		<div>
-			<TextInput @bind-Value = "@tbRecipeCookTime" />
+			<NumberInput TValue="int?" Disabled="@tbDisabled" @bind-Value = "@tbRecipeCookTime" />
 		</div>
 	</div>
 
 	<div>
 		<h5>Ingredienser</h5>
 		<div>
-			<Dropdown Color="DropdownColor.Secondary">
+			<Dropdown Disabled="@tbDisabled" Color="DropdownColor.Secondary">
 				<DropdownToggleButton>Tilføj ingredienser...</DropdownToggleButton>
 				<DropdownMenu class="produce-dropdown">
 					@foreach (var produce in listOfProduce){
@@ -42,8 +42,20 @@
 		</div>
 	</div>
 </div>
-<div class="align-items-center">
-	<Button Color="ButtonColor.Success">Tilføj opskrift</Button>
+<div class="center-items">
+	@if(alertMessage == "exists"){
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Denne opskrift findes allerede i databasen!</Alert>
+	}
+	@if(alertMessage == "empty"){
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Indtast venligst opskriftens URL!</Alert>
+	}
+	@if(alertMessage == "invalid"){
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Denne URL er ugyldig!</Alert>
+	}
+	@if(alertMessage == "valid"){
+		<Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Denne URL er gyldig!</Alert>
+	}
+	<Button Disabled="@tbDisabled" Color="ButtonColor.Success">Tilføj opskrift</Button>
 </div>
 
 <style>
@@ -63,12 +75,21 @@
 	max-height: 175px;
 	overflow-y: scroll;
 	}
+
+	.center-items {
+	text-align: center;
+	}
 </style>
 
 @code {
 	private string? tbRecipeName = null;
 	private string? tbRecipeURL = null;
-	private string? tbRecipeCookTime = null;
+	private int? tbRecipeCookTime = null;
+	private string? alertMessage = null;
+	private bool tbDisabled = true;
+
+	private void Enable() => tbDisabled = false;
+	private void Disable() => tbDisabled = true;
 
 	List<Produce>? listOfProduce;
 	List<Produce>? addedProduces;
@@ -93,15 +114,9 @@
 	}
 
 	private void ValidateURL(string tbRecipeURL){
-		if (_iAdminCreateRecipeService.ValidateURL(tbRecipeURL) == "exists"){
-			// error message
-		}
-		else if (_iAdminCreateRecipeService.ValidateURL(tbRecipeURL) == "invalid" || _iAdminCreateRecipeService.ValidateURL(tbRecipeURL) == "empty")
-		{
-			// error message
-		}
-		else {
-			// enable other textboxes
+		alertMessage = _iAdminCreateRecipeService.ValidateURL(tbRecipeURL);
+		if (alertMessage == "valid"){
+			tbDisabled = false;
 		}
 	}
 

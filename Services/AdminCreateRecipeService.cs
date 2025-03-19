@@ -92,7 +92,7 @@ namespace Services
                 return "empty";
             }
 
-            else if (!url.StartsWith("www.") || !url.StartsWith("https://") || !url.StartsWith("http://"))
+            else if (!url.StartsWith("www.") && !url.StartsWith("https://") && !url.StartsWith("http://"))
             {
                 return "invalid";
             }
