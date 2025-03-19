@@ -12,6 +12,7 @@ namespace Services
     {
         public List<Produce> AllProduceWhenAdminCreateRecipe { get; private set; } = new List<Produce>();
         public List<Produce> SelectedProduceWhenAdminCreateRecipe { get; private set; } = new List<Produce>();
+        public List<int> GetCookTimes { get; private set; } = new List<int>();
 
         private readonly IRecipeRepository _recipeRepository;
         private readonly IProduceRepository _produceRepository; // Exists to use the GetAllProduce-method to retrieve all produce from DB.
@@ -28,6 +29,8 @@ namespace Services
             _produceRepository = produceRepository;
             AllProduceWhenAdminCreateRecipe = _produceRepository.GetAllProduce();
             _recipeRepository = recipeRepository;
+            GetCookTimes.AddRange(new List<int>{15, 30, 45, 60, 75, 90, 115, 120, 150,
+            180, 210, 240, 300, 360, 420, 480, 540, 600});
         }
 
         //public void AddRemoveProduceToNewRecipe(Produce produce)
@@ -140,19 +143,19 @@ namespace Services
             }
         }
 
-        public string ValidateCookTime(int adminCookTimeInput)
-        {
-            int[] validNumbers = { 15, 30, 45, 60, 75, 90, 115, 120, 150,
-                                   180, 210, 240, 300, 360, 420, 480, 540, 600 };
+        //public string ValidateCookTime(int adminCookTimeInput)
+        //{
+        //    int[] validNumbers = { 15, 30, 45, 60, 75, 90, 115, 120, 150,
+        //                           180, 210, 240, 300, 360, 420, 480, 540, 600 };
 
-            if (!validNumbers.Contains(adminCookTimeInput))
-            {
-                return "invalid";
-            }
-            else
-            {
-                return "valid";
-            }
-        }
+        //    if (!validNumbers.Contains(adminCookTimeInput))
+        //    {
+        //        return "invalid";
+        //    }
+        //    else
+        //    {
+        //        return "valid";
+        //    }
+        //}
     }
 }

@@ -9,7 +9,7 @@
 	<div>
 		<h5>Navn på opskrift</h5>
 		<div class="mb-auto">
-			<TextInput Disabled="@tbDisabled" @bind-Value="@tbRecipeName" />
+			<TextInput Disabled="@recipeDisabled" @onfocusout=" () => ValidateName(tbRecipeName)" @bind-Value="@tbRecipeName" />
 		</div>
 
 		<h5>Opskriftens URL</h5>
@@ -19,8 +19,17 @@
 
 		<h5>Tilberedningstid i minutter</h5>
 		<div>
-			<NumberInput TValue="int?" Disabled="@tbDisabled" EnableMinMax="true" Min="15" Max="600" @bind-Value = "@tbRecipeCookTime" />
-			<span class="form-text">Indtast et tal mellem 15 og 600</span>
+			@* <NumberInput TValue="int?" Disabled="@tbDisabled" EnableMinMax="true" Min="15" Max="600" @bind-Value = "@tbRecipeCookTime" />
+			<span class="form-text">Indtast et tal mellem 15 og 600</span> *@
+			<Dropdown Disabled="@tbDisabled" Color="DropdownColor.Secondary">
+				<DropdownToggleButton>Angiv tilberedningstid...</DropdownToggleButton>
+				<DropdownMenu class="dropdown-scroll">
+					@foreach (var minutes in cookTimeMinutes)
+					{
+						<DropdownItem>@minutes</DropdownItem>
+					}
+				</DropdownMenu>
+			</Dropdown>
 		</div>
 	</div>
 
@@ -29,7 +38,7 @@
 		<div>
 			<Dropdown Disabled="@tbDisabled" Color="DropdownColor.Secondary">
 				<DropdownToggleButton>Tilføj ingredienser...</DropdownToggleButton>
-				<DropdownMenu class="produce-dropdown">
+				<DropdownMenu class="dropdown-scroll">
 					@foreach (var produce in listOfProduce){
 						<DropdownItem @onclick="() => AddProduce(produce)">@produce.Name</DropdownItem>
 					}
@@ -56,6 +65,12 @@
 	@if(alertMessage == "urlValid"){
 		<Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Denne URL er gyldig!</Alert>
 	}
+	@if(alertMessage == "valid"){
+		<Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Opskriftens navn er gyldig!</Alert>
+	}
+	@if(alertMessage == "invalid"){
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Dette navn er ugyldigt!</Alert>
+	}
 	<Button Disabled="@tbDisabled" Color="ButtonColor.Success">Tilføj opskrift</Button>
 </div>
 
@@ -72,7 +87,7 @@
 	border-radius: 5px;
 	}
 
-	.produce-dropdown {
+	.dropdown-scroll {
 	max-height: 175px;
 	overflow-y: scroll;
 	}
@@ -88,17 +103,22 @@
 	private int? tbRecipeCookTime = null;
 	private string? alertMessage = null;
 	private bool tbDisabled = true;
+	private bool recipeDisabled = true;
 
 	private void Enable() => tbDisabled = false;
+	private void Enable(int i) => recipeDisabled = false;
 	private void Disable() => tbDisabled = true;
+	private void Disable(int i) => recipeDisabled = true;
 
 	List<Produce>? listOfProduce;
 	List<Produce>? addedProduces;
+	List<int>? cookTimeMinutes;
 
 	protected override void OnInitialized()
 	{
 		listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
 		addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
+		cookTimeMinutes = _iAdminCreateRecipeService.GetCookTimes;
 	}
 
 	private void AddProduce(Produce produce){
@@ -117,10 +137,23 @@
 	private void ValidateURL(string tbRecipeURL){
 		alertMessage = _iAdminCreateRecipeService.ValidateURL(tbRecipeURL);
 		if (alertMessage == "urlValid"){
-			tbDisabled = false;
+			recipeDisabled = false;
 		}
 		if (alertMessage == "urlExists" || alertMessage == "urlInvalid" || alertMessage == "urlEmpty"){
 			tbDisabled = true;
+			recipeDisabled = true;
+		}
+	}
+
+	private void ValidateName(string nameInput){
+		alertMessage = _iAdminCreateRecipeService.ValidateRecipeName(nameInput);
+		if (alertMessage == "invalid"){
+			recipeDisabled = false;
+			tbDisabled = true;
+		}
+		if (alertMessage == "valid"){
+			recipeDisabled = false;
+			tbDisabled = false;
 		}
 	}
 

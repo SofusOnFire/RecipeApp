@@ -13,9 +13,10 @@ namespace Domain.Interfaces
         public List<Produce> AllProduceWhenAdminCreateRecipe { get; }
         public List<Produce> SelectedProduceWhenAdminCreateRecipe { get; }
         //public void AddRemoveProduceToNewRecipe(Produce produce);
-
+        public List<int> GetCookTimes { get; }
         public void AddProduceToNewRecipe(Produce produce);
         public void RemoveProduceFromNewRecipe(Produce produce);
         public string ValidateURL(string url);
+        public string ValidateRecipeName(string adminNameInput);
     }
 }
