@@ -85,7 +85,7 @@ namespace DAL
 			{
 				_connectionString.Close();
 
-				return false;
+				return true;
 			}
 			else
 			{
@@ -102,7 +102,7 @@ namespace DAL
 
 				_connectionString.Close();
 
-				return true;
+				return false;
 			}
 		}
 	}

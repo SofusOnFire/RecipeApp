@@ -17,33 +17,11 @@ namespace Services
 			_produceRepository = produceRepository;
 		}
 
-		public string CreateProduce(string produceName)
+		public bool CreateProduce(string produceName)
 		{
-            StringBuilder formattedName = new StringBuilder();
-            foreach (char c in produceName)
-            {
-                if (c == produceName[0])
-                {
-					formattedName.Append(char.ToUpper(c));
-                }
-                else
-                {
-					formattedName.Append(char.ToLower(c));
-                }
-            }
+            bool alreadyCreated = _produceRepository.CreateProduce(produceName);
 
-            produceName = formattedName.ToString();
-
-            bool isCreated = _produceRepository.CreateProduce(produceName);
-
-			string outcome = $"{produceName} findes allerede i databasen";
-
-			if (isCreated == true)
-			{
-				outcome = $"{produceName} tilføjet til databasen";
-			}
-
-			return outcome;
+			return alreadyCreated;
 		}
 	}
 }

@@ -2,19 +2,23 @@
 @inject IAdminProduceService _adminProduceService
 @rendermode InteractiveServer
 
-<PageTitle>Admin: Produce</PageTitle>
+<PageTitle>Opret ingrediens</PageTitle>
 
-<h3>Admin: Produce</h3>
+<h3>Opret ingrediens</h3>
 
 <EditForm Model="@this" OnValidSubmit="CreateProduce">
     <p class="produce-label">Navn på ingrediens:</p>
     <input @bind="ProduceInput" class="produce-textfield" type="text" name="produce-name"
-    placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå]+"
+    placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
     title="Der må kun bruges bogstaver" required />
     <button class="produce-button">Opret</button>
-    @if (showResult == true)
+    @if (showResult == true && AlreadyCreated == false)
     {
-        <p class="produce-create-message">@ProduceMessage</p>
+        <Alert Color="AlertColor.Success">@ProduceInput tilføjet til databasen</Alert>
+    }
+    else if (showResult == true && AlreadyCreated == true)
+    {
+        <Alert Color="AlertColor.Danger">@ProduceInput findes allerede i databasen</Alert>
     }
 </EditForm>
 
@@ -73,9 +77,27 @@
 
     private string ProduceMessage { get; set; }
 
+    private bool AlreadyCreated { get; set; }
+
     private async Task CreateProduce()
     {
-        ProduceMessage = _adminProduceService.CreateProduce(ProduceInput);
+        StringBuilder formattedName = new StringBuilder();
+        for (int i = 0; i < ProduceInput.Length; i++)
+        {
+            if (i == 0)
+            {
+                formattedName.Append(char.ToUpper(ProduceInput[i]));
+            }
+            else
+            {
+                formattedName.Append(char.ToLower(ProduceInput[i]));
+            }
+        }
+
+        ProduceInput = formattedName.ToString();
+
+        AlreadyCreated = _adminProduceService.CreateProduce(ProduceInput);
+
         showResult = true;
         await Task.Delay(3000);
         showResult = false;
