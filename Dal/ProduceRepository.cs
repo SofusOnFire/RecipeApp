@@ -71,7 +71,7 @@ namespace DAL
 
 			// Query to check if the produce already is in DB
 			string queryCheck =
-				"SELECT COUNT(*) FROM [Produce] " +
+				"SELECT * FROM [Produce] " +
 				"WHERE ProduceName = @Check";
 
 			var checkCommand = new SqlCommand(queryCheck, _connectionString);

@@ -82,6 +82,8 @@
     private async Task CreateProduce()
     {
         StringBuilder formattedName = new StringBuilder();
+
+        // Formats the inputted string to match names in DB
         for (int i = 0; i < ProduceInput.Length; i++)
         {
             if (i == 0)
@@ -98,8 +100,8 @@
 
         AlreadyCreated = _adminProduceService.CreateProduce(ProduceInput);
 
-        showResult = true;
-        await Task.Delay(3000);
+        showResult = true; // Shows pop-up
+        await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
         showResult = false;
         ProduceInput = string.Empty;
     }
