@@ -89,12 +89,12 @@ namespace Services
 
             if (string.IsNullOrEmpty(url))
             {
-                return "empty";
+                return "urlEmpty";
             }
 
             else if (!url.StartsWith("www.") && !url.StartsWith("https://") && !url.StartsWith("http://"))
             {
-                return "invalid";
+                return "urlInvalid";
             }
 
             else if (!string.IsNullOrEmpty(url))
@@ -111,16 +111,16 @@ namespace Services
                 }
                 if (exists)
                 {
-                    return "exists";
+                    return "urlExists";
                 }
                 else
                 {
-                    return "valid";
+                    return "urlValid";
                 }
             }
             else
             {
-                return "valid";
+                return "urlValid";
             }
         }
     }

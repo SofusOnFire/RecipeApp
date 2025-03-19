@@ -44,16 +44,16 @@
 	</div>
 </div>
 <div class="center-items">
-	@if(alertMessage == "exists"){
+	@if(alertMessage == "urlExists"){
 		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Denne opskrift findes allerede i databasen!</Alert>
 	}
-	@if(alertMessage == "empty"){
+	@if(alertMessage == "urlEmpty"){
 		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Indtast venligst opskriftens URL!</Alert>
 	}
-	@if(alertMessage == "invalid"){
+	@if(alertMessage == "urlInvalid"){
 		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Denne URL er ugyldig!</Alert>
 	}
-	@if(alertMessage == "valid"){
+	@if(alertMessage == "urlValid"){
 		<Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Denne URL er gyldig!</Alert>
 	}
 	<Button Disabled="@tbDisabled" Color="ButtonColor.Success">Tilføj opskrift</Button>
@@ -116,8 +116,11 @@
 
 	private void ValidateURL(string tbRecipeURL){
 		alertMessage = _iAdminCreateRecipeService.ValidateURL(tbRecipeURL);
-		if (alertMessage == "valid"){
+		if (alertMessage == "urlValid"){
 			tbDisabled = false;
+		}
+		if (alertMessage == "urlExists" || alertMessage == "urlInvalid" || alertMessage == "urlEmpty"){
+			tbDisabled = true;
 		}
 	}
 
