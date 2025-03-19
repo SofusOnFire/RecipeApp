@@ -18,32 +18,34 @@ namespace Test
 		}
 
 		[TestMethod]
-		[DataRow("Bladselleri", "Ingrediens tilføjet til databasen")]
-		public void CreateProduce_ShouldReturnSuccessMessage_WhenProduceIsCreated(string input, string expected)
+		[DataRow("Bladselleri", true)]
+		[DataRow("Mango", true)]
+		public void CreateProduce_ShouldReturnSuccessMessage_WhenProduceIsCreated(string input, bool expected)
 		{
 			// Arrange
 			_mockProduceRepository
 				.Setup(repository => repository.CreateProduce(input))
-				.Returns(true); // Fortæller at metoden skal returner true
+				.Returns(true); // Simulere at der returneres true
 
 			// Act
-			string result = _adminProduceService.CreateProduce(input);
+			bool result = _adminProduceService.CreateProduce(input);
 
 			// Assert
 			Assert.AreEqual(expected, result);
 		}
 
 		[TestMethod]
-		[DataRow("Bladselleri", "Den indtastede ingrediens findes allerede i databasen")]
-		public void CreateProduce_ShouldReturnErrorMessage_WhenProduceAlreadyExists(string input, string expected)
+		[DataRow("Himalaya salt", false)]
+		[DataRow("Tangcaviar", false)]
+		public void CreateProduce_ShouldReturnErrorMessage_WhenProduceAlreadyExists(string input, bool expected)
 		{
 			// Arrange
 			_mockProduceRepository
 				.Setup(repository => repository.CreateProduce(input))
-				.Returns(false); // Fortæller at metoden skal returner false
+				.Returns(false); // Simulere at der returneres false
 
 			// Act
-			string result = _adminProduceService.CreateProduce(input);
+			bool result = _adminProduceService.CreateProduce(input);
 
 			// Assert
 			Assert.AreEqual(expected, result);
