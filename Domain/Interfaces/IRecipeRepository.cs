@@ -10,5 +10,6 @@ namespace Domain.Interfaces
     public interface IRecipeRepository
     {
         public IEnumerable<Recipe> GetAllRecipesFromDatabase();
+        public int AdminAddRecipeToDB(string recipeName, int cookTime, string uRL, List<Produce> produces);
     }
 }
