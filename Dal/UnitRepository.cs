@@ -40,5 +40,31 @@ namespace DAL
 			if (unit == null) throw new NullReferenceException();
 			return unit;
 		}
+
+		public IEnumerable<Unit> GetAllUnits()
+		{
+			List<Unit> list = new List<Unit>();
+			_connectionString.Open();
+
+			string query =
+				"SELECT * FROM [Unit]";
+
+			var command = new SqlCommand(query, _connectionString);
+
+			SqlDataReader reader = command.ExecuteReader();
+
+			while (reader.Read())
+			{
+				var unit = new Unit(
+				Convert.ToInt32(reader["UnitID"]),
+				Convert.ToString(reader["UnitName"]));
+
+				list.Add(unit);
+			}
+
+			_connectionString.Close();
+
+			return list;
+		}
 	}
 }

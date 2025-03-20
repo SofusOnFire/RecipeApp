@@ -10,5 +10,6 @@ namespace Domain.Interfaces
 	public interface IUnitRepositry
 	{
 		public Unit GetUnitByUnitID(int unitID);
+		public IEnumerable<Unit> GetAllUnits();
 	}
 }
