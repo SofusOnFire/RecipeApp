@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Interfaces;
@@ -13,7 +14,7 @@ namespace Services
         public List<Produce> AllProduceWhenAdminCreateRecipe { get; private set; } = new List<Produce>();
         public List<Produce> SelectedProduceWhenAdminCreateRecipe { get; private set; } = new List<Produce>();
         public List<int> GetCookTimes { get; private set; } = new List<int>();
-
+        private readonly IProduceLineRepository _produceLineRepository;
         private readonly IRecipeRepository _recipeRepository;
         private readonly IProduceRepository _produceRepository; // Exists to use the GetAllProduce-method to retrieve all produce from DB.
         /// <summary>
@@ -24,40 +25,22 @@ namespace Services
         /// <param name="listOfProduce"></param>
         /// 
 
-        public AdminCreateRecipeService(IProduceRepository produceRepository, IRecipeRepository recipeRepository)
+        public AdminCreateRecipeService(IProduceRepository produceRepository, IRecipeRepository recipeRepository, IProduceLineRepository produceLineRepository)
         {
             _produceRepository = produceRepository;
             AllProduceWhenAdminCreateRecipe = _produceRepository.GetAllProduce();
             _recipeRepository = recipeRepository;
             GetCookTimes.AddRange(new List<int>{15, 30, 45, 60, 75, 90, 115, 120, 150,
             180, 210, 240, 300, 360, 420, 480, 540, 600});
+            _produceLineRepository = produceLineRepository;
+            _produceLineRepository = produceLineRepository;
+
         }
 
-        //public void AddRemoveProduceToNewRecipe(Produce produce)
-        //{
-        //    AllProduceWhenAdminCreateRecipe = _produceRepository.GetAllProduce();
-
-        //    if (AllProduceWhenAdminCreateRecipe != null)
-        //    {
-        //        foreach (var prod in AllProduceWhenAdminCreateRecipe)
-        //        {
-        //            if (prod == produce)
-        //            {
-
-        //                AllProduceWhenAdminCreateRecipe.Remove(produce);
-        //            }
-        //        }
-        //        SelectedProduceWhenAdminCreateRecipe.Add(produce);
-        //        SelectedProduceWhenAdminCreateRecipe.Sort();
-        //    }
-
-        //    else if (SelectedProduceWhenAdminCreateRecipe != null)
-        //    {
-        //        SelectedProduceWhenAdminCreateRecipe.Remove(produce);
-        //        AllProduceWhenAdminCreateRecipe.Add(produce);
-        //        AllProduceWhenAdminCreateRecipe.Sort();
-        //    }
-        //}
+        public List<Produce> GetAllProduces()
+        {
+            return _produceRepository.GetAllProduce();
+        }
 
         public void AddProduceToNewRecipe(Produce produce)
         {
@@ -143,19 +126,11 @@ namespace Services
             }
         }
 
-        //public string ValidateCookTime(int adminCookTimeInput)
-        //{
-        //    int[] validNumbers = { 15, 30, 45, 60, 75, 90, 115, 120, 150,
-        //                           180, 210, 240, 300, 360, 420, 480, 540, 600 };
-
-        //    if (!validNumbers.Contains(adminCookTimeInput))
-        //    {
-        //        return "invalid";
-        //    }
-        //    else
-        //    {
-        //        return "valid";
-        //    }
-        //}
+        public bool AddRecipe(string recipeName, int cookTime, string uRL, List<Produce> produceList)
+        {
+            int recipeID = _recipeRepository.AdminAddRecipeToDB(recipeName, cookTime, uRL);
+            _produceLineRepository.AddProduceLines(produceList, recipeID);
+            return true;
+        }
     }
 }

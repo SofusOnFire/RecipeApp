@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Interfaces;
@@ -39,6 +40,21 @@ namespace DAL
             _connectionString.Close();
 
             return list;
+        }
+
+        public void AddProduceLines(List<Produce> produces, int recipeID)
+        {
+            _connectionString.Open();
+            foreach (var produce in produces)
+            {
+                string createProduceLine = "INSERT INTO [ProduceLine] (RecipeID, ProduceID) " +
+                                      "VALUES (@RecipeID, @ProduceID)";
+
+                var command = new SqlCommand(createProduceLine, _connectionString);
+
+                command.Parameters.AddWithValue("@RecipeID", recipeID);
+                command.Parameters.AddWithValue("@ProduceID", produce.ProduceID);
+            }
         }
     }
 }

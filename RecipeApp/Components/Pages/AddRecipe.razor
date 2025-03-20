@@ -23,11 +23,11 @@
 			@* <NumberInput TValue="int?" Disabled="@tbDisabled" EnableMinMax="true" Min="15" Max="600" @bind-Value = "@tbRecipeCookTime" />
 			<span class="form-text">Indtast et tal mellem 15 og 600</span> *@
 			<Dropdown Disabled="@tbDisabled" Color="DropdownColor.Secondary">
-				<DropdownToggleButton>Angiv tilberedningstid...</DropdownToggleButton>
+				<DropdownToggleButton>@tbRecipeCookTime</DropdownToggleButton>
 				<DropdownMenu class="dropdown-scroll">
 					@foreach (var minutes in cookTimeMinutes)
 					{
-						<DropdownItem>@minutes</DropdownItem>
+						<DropdownItem @onclick="() => CookTimeSelection(minutes)">@minutes</DropdownItem>
 					}
 				</DropdownMenu>
 			</Dropdown>
@@ -72,7 +72,18 @@
 	@if(alertMessage == "invalid"){
 		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Dette navn er ugyldigt!</Alert>
 	}
-	<Button Disabled="@tbDisabled" Color="ButtonColor.Success">Tilføj opskrift</Button>
+	@if (alertMessage == "noProduces")
+	{
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Du skal tilføje ingredienser først!</Alert>
+	}
+	@if (alertMessage == "noCookTime")
+	{
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Du skal angive tilberedningsminutter først!</Alert>
+	}
+	@if(alertMessage == "recipeAdded"){
+		<Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Opskriften er tilføjet!</Alert>
+	}
+	<Button Disabled="@tbDisabled" Color="ButtonColor.Success" @onclick="() => AdminAddRecipe(tbRecipeName, tbRecipeCookTime, tbRecipeURL, addedProduces)">Tilføj opskrift</Button>
 </div>
 
 <style>
@@ -99,9 +110,10 @@
 </style>
 
 @code {
+
 	private string? tbRecipeName = null;
 	private string? tbRecipeURL = null;
-	private int? tbRecipeCookTime = null;
+	private string? tbRecipeCookTime = "Angiv tilberedningstid...";
 	private string? alertMessage = null;
 	private bool tbDisabled = true;
 	private bool recipeDisabled = true;
@@ -164,11 +176,40 @@
 		}
 	}
 
-	private async Task AdminCreateRecipe(string recipeName, int cookTime, string uRL, List<Produce> produces)
-	{
-		var newRecipe = new Recipe
-			
+	private void CookTimeSelection(int minutes){
+		tbRecipeCookTime = minutes.ToString();
 	}
+
+	private void AdminAddRecipe(string recipeName, string cookTime, string uRL, List<Produce> produceList){
+		if (addedProduces.Count <= 0)
+		{
+			alertMessage = "noProduces";
+		}
+		else if (tbRecipeCookTime == "Angiv tilberedningstid...")
+		{
+			alertMessage = "noCookTime";
+		}
+		else
+		{
+			int intCookTime = Convert.ToInt32(cookTime);
+			bool creationSuccess = _iAdminCreateRecipeService.AddRecipe(recipeName, intCookTime, uRL, produceList);
+			if (creationSuccess)
+			{
+				alertMessage = "recipeAdded";
+				tbRecipeName = null;
+				tbRecipeURL = null;
+				tbRecipeCookTime = "Angiv tilberedningstid...";
+				bool tbDisabled = true;
+				bool recipeDisabled = true;
+			}
+		}
+	}
+
+	// private async Task AdminCreateRecipe(string recipeName, int cookTime, string uRL, List<Produce> produces)
+	// {
+	// 	var newRecipe = new Recipe
+			
+	// }
 
 	// private void AddRemoveProduce(Produce produce){
 	// 	_iAdminCreateRecipeService.AddRemoveProduceToNewRecipe(produce);

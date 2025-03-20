@@ -40,10 +40,10 @@ namespace DAL
 
             return list;
         }
-        public int AdminAddRecipeToDB(string recipeName, int cookTime, string uRL, List<Produce> produces)
+        public int AdminAddRecipeToDB(string recipeName, int cookTime, string uRL)
         {
-            string createRecipe = "INSERT INTO [Recipe] (RecipeName, CookTime, URL)" +
-                                  "OUTPUT INSERTED.RecipeID" +
+            string createRecipe = "INSERT INTO [Recipe] (RecipeName, CookTime, URL) " +
+                                  "OUTPUT INSERTED.RecipeID " +
                                   "VALUES (@RecipeName, @CookTime, @URL)";
 
             var command = new SqlCommand(createRecipe, _connectionString);
