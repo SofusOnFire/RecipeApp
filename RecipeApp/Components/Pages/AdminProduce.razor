@@ -79,6 +79,13 @@
 
     private bool _alreadyCreated = false;
 
+    private List<Domain.Models.Unit>? _alUnits;
+
+    protected override void OnInitialized()
+    {
+        
+    }
+
     private async Task CreateProduce()
     {
         StringBuilder formattedName = new StringBuilder();
