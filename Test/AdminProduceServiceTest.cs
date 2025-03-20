@@ -36,7 +36,7 @@ namespace Test
 
 		[TestMethod]
 		[DataRow("Himalaya salt", false)]
-		[DataRow("Tangcaviar", false)]
+		[DataRow(null, false)]
 		public void CreateProduce_ShouldReturnErrorMessage_WhenProduceAlreadyExists(string input, bool expected)
 		{
 			// Arrange
