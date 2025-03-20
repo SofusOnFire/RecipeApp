@@ -71,13 +71,13 @@
 </style>
 
 @code {
-    private string ProduceInput { get; set; }
+    private string? ProduceInput { get; set; }
 
     private bool showResult = false;
 
-    private string ProduceMessage { get; set; }
+    private string? ProduceMessage { get; set; }
 
-    private bool AlreadyCreated { get; set; }
+    private bool AlreadyCreated { get; set; } = false;
 
     private async Task CreateProduce()
     {
