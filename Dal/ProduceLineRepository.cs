@@ -44,16 +44,17 @@ namespace DAL
 
         public void AddProduceLines(List<Produce> produces, int recipeID)
         {
-            _connectionString.Open();
             foreach (var produce in produces)
             {
                 string createProduceLine = "INSERT INTO [ProduceLine] (RecipeID, ProduceID) " +
+                                      "OUTPUT INSERTED.ProduceLineID " +
                                       "VALUES (@RecipeID, @ProduceID)";
 
                 var command = new SqlCommand(createProduceLine, _connectionString);
 
                 command.Parameters.AddWithValue("@RecipeID", recipeID);
                 command.Parameters.AddWithValue("@ProduceID", produce.ProduceID);
+                int produceLineID = DatabaseManager.ExecuteScalar(command);
             }
         }
     }
