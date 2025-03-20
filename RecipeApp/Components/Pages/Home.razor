@@ -1,6 +1,7 @@
 ﻿@page "/"
-@inject IProduceRepository _iProduceRepository
 @inject IUserProduceService userProduceService
+@inject IProduceRepository _iProduceRepository
+@inject IProduceService _iProduceService
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -73,9 +74,9 @@
 	}
 
 	li:hover {
-		background-color: #ddd;
-		transform: scale(1.02);
-		border-radius: 10px;
+	background-color: #ddd;
+	transform: scale(1.02);
+	border-radius: 10px;
 	}
 </style>
 
@@ -84,10 +85,11 @@
 	List<Produce>? listOfProduce;
 	List<Produce>? yourProduce;
 
+
 	protected override void OnInitialized()
 	{
-		listOfProduce = _iProduceRepository.GetAllProduce();
 		yourProduce = userProduceService.UserProduceList;
+		listOfProduce = _iProduceService.CompareAndGetProduceList(yourProduce);
 	}
 
 	private void MoveProduceBetweenLists(Produce produce)
