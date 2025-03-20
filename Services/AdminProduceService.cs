@@ -17,9 +17,9 @@ namespace Services
 			_produceRepository = produceRepository;
 		}
 
-		public bool CreateProduce(string produceName)
+		public bool CreateProduce(string produceName, int unitID)
 		{
-            bool alreadyCreated = _produceRepository.CreateProduce(produceName);
+            bool alreadyCreated = _produceRepository.CreateProduce(produceName, unitID);
 
 			return alreadyCreated;
 		}

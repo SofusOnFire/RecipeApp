@@ -13,6 +13,6 @@ namespace Domain.Interfaces
 		/// </summary>
 		/// <param name="produce"></param>
 		/// <returns>string by checking if the produce already is stored in DB (if it exists = false)</returns>
-		public bool CreateProduce(string produceName);
+		public bool CreateProduce(string produceName, int unitID);
 	}
 }
