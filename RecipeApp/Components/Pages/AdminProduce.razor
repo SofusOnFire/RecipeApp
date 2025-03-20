@@ -1,5 +1,6 @@
 ﻿@page "/adminproduce"
 @inject IAdminProduceService _adminProduceService
+@inject IUnitService _unitService
 @rendermode InteractiveServer
 
 <PageTitle>Opret ingrediens</PageTitle>
@@ -11,6 +12,16 @@
     <input @bind="_produceInput" class="produce-textfield" type="text" name="produce-name"
     placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
     title="Der må kun bruges bogstaver" required />
+
+    <br />
+    <p class="produce-label">Navn på Unit:</p>
+    <select @bind="_produceInputUnit" class="selectUnit">
+        @foreach (var unit in _alUnits)
+        {
+            <option value="@unit.UnitID">@unit.UnitName</option>
+        }
+    </select>
+
     <button class="produce-button">Opret</button>
     @if (showResult == true && _alreadyCreated == false)
     {
@@ -27,6 +38,19 @@
     margin-bottom: 0;
     font-family: Arial;
     font-size: 16px;
+    }
+
+    .selectUnit {
+    background-color: #e0e0e0;
+    border: medium;
+    border-radius: 5px;
+    font-family: Arial;
+    font-size: 16px;
+    padding: 3px 0px 3px 4px;
+    width: 150px;
+    margin: 2px;
+    margin-left: 0px;
+    height: 30px;
     }
 
     .produce-textfield {
@@ -73,6 +97,8 @@
 @code {
     private string? _produceInput;
 
+    private int _produceInputUnit;
+
     private bool showResult = false;
 
     private string? _produceMessage;
@@ -83,7 +109,7 @@
 
     protected override void OnInitialized()
     {
-        
+        _alUnits = _unitService.GetAllUnits().ToList();
     }
 
     private async Task CreateProduce()
@@ -111,7 +137,7 @@
 
         _produceInput = formattedName.ToString();
 
-        _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
+        _alreadyCreated = _adminProduceService.CreateProduce(_produceInput, _produceInputUnit);
 
         showResult = true; // Shows pop-up
         await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
