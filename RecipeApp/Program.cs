@@ -28,6 +28,7 @@ namespace RecipeApp
             builder.Services.AddSingleton<IUserProduceService, UserProduceService>();
             builder.Services.AddSingleton<IProduceLineService, ProduceLineService>();
 			builder.Services.AddSingleton<IAdminProduceService, AdminProduceService>();
+            builder.Services.AddSingleton<IUnitService, UnitService>();
 
 			var app = builder.Build();
 
