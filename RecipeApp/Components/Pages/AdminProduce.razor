@@ -83,6 +83,12 @@
     {
         StringBuilder formattedName = new StringBuilder();
 
+        // Null protection for _produceInput
+        if(_produceInput == null)
+        {
+            _produceInput = string.Empty;
+        }
+
         // Formats the inputted string to match names in DB
         for (int i = 0; i < _produceInput.Length; i++)
         {
