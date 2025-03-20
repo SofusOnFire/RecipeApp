@@ -86,7 +86,7 @@ namespace DAL
             return list;
         }
 
-		public bool CreateProduce(string produceName)
+		public bool CreateProduce(string produceName, int unitID)
 		{
 			_connectionString.Open();
 
@@ -112,12 +112,13 @@ namespace DAL
 			{
 				// Add to DB
 				string insertQuery =
-					"INSERT INTO [Produce] (ProduceName) " +
-					"VALUES (@InputProduceName)";
+					"INSERT INTO [Produce] (ProduceName, UnitID) " +
+					"VALUES (@InputProduceName, @UnitID)";
 
 				var insertCommand = new SqlCommand(insertQuery, _connectionString);
 
 				insertCommand.Parameters.AddWithValue("@InputProduceName", produceName);
+				insertCommand.Parameters.AddWithValue("@UnitID", unitID);
 
 				insertCommand.ExecuteScalar();
 
