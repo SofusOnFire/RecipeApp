@@ -10,7 +10,7 @@ namespace Services
 {
     public class AdminProduceService : IAdminProduceService
     {
-		IProduceRepository _produceRepository;
+		private readonly IProduceRepository _produceRepository;
 
 		public AdminProduceService(IProduceRepository produceRepository)
 		{
