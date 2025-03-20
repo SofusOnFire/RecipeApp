@@ -8,17 +8,17 @@
 
 <EditForm Model="@this" OnValidSubmit="CreateProduce">
     <p class="produce-label">Navn på ingrediens:</p>
-    <input @bind="ProduceInput" class="produce-textfield" type="text" name="produce-name"
+    <input @bind="_produceInput" class="produce-textfield" type="text" name="produce-name"
     placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
     title="Der må kun bruges bogstaver" required />
     <button class="produce-button">Opret</button>
-    @if (showResult == true && AlreadyCreated == false)
+    @if (showResult == true && _alreadyCreated == false)
     {
-        <Alert Color="AlertColor.Success">@ProduceInput tilføjet til databasen</Alert>
+        <Alert Color="AlertColor.Success">@_produceInput tilføjet til databasen</Alert>
     }
-    else if (showResult == true && AlreadyCreated == true)
+    else if (showResult == true && _alreadyCreated == true)
     {
-        <Alert Color="AlertColor.Danger">@ProduceInput findes allerede i databasen</Alert>
+        <Alert Color="AlertColor.Danger">@_produceInput findes allerede i databasen</Alert>
     }
 </EditForm>
 
@@ -71,38 +71,38 @@
 </style>
 
 @code {
-    private string? ProduceInput { get; set; }
+    private string? _produceInput;
 
     private bool showResult = false;
 
-    private string? ProduceMessage { get; set; }
+    private string? _produceMessage;
 
-    private bool AlreadyCreated { get; set; } = false;
+    private bool _alreadyCreated = false;
 
     private async Task CreateProduce()
     {
         StringBuilder formattedName = new StringBuilder();
 
         // Formats the inputted string to match names in DB
-        for (int i = 0; i < ProduceInput.Length; i++)
+        for (int i = 0; i < _produceInput.Length; i++)
         {
             if (i == 0)
             {
-                formattedName.Append(char.ToUpper(ProduceInput[i]));
+                formattedName.Append(char.ToUpper(_produceInput[i]));
             }
             else
             {
-                formattedName.Append(char.ToLower(ProduceInput[i]));
+                formattedName.Append(char.ToLower(_produceInput[i]));
             }
         }
 
-        ProduceInput = formattedName.ToString();
+        _produceInput = formattedName.ToString();
 
-        AlreadyCreated = _adminProduceService.CreateProduce(ProduceInput);
+        _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
 
         showResult = true; // Shows pop-up
         await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
         showResult = false;
-        ProduceInput = string.Empty;
+        _produceInput = string.Empty;
     }
 }
