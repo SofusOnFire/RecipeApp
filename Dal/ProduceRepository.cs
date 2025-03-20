@@ -72,11 +72,11 @@ namespace DAL
 			// Query to check if the produce already is in DB
 			string queryCheck =
 				"SELECT * FROM [Produce] " +
-				"WHERE ProduceName = @Check";
+				"WHERE ProduceName = @ProduceName";
 
 			var checkCommand = new SqlCommand(queryCheck, _connectionString);
 
-			checkCommand.Parameters.AddWithValue("@Check", produceName);
+			checkCommand.Parameters.AddWithValue("@ProduceName", produceName);
 
 			// Fallback value is 0 if returned (ExecuteScalar) value is null
 			int existingCount = (int)(checkCommand.ExecuteScalar() ?? 0);
@@ -92,11 +92,11 @@ namespace DAL
 				// Add to DB
 				string insertQuery =
 					"INSERT INTO [Produce] (ProduceName) " +
-					"VALUES (@Input)";
+					"VALUES (@InputProduceName)";
 
 				var insertCommand = new SqlCommand(insertQuery, _connectionString);
 
-				insertCommand.Parameters.AddWithValue("@Input", produceName);
+				insertCommand.Parameters.AddWithValue("@InputProduceName", produceName);
 
 				insertCommand.ExecuteScalar();
 
