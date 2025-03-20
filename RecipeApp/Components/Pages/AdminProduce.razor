@@ -1,0 +1,114 @@
+﻿@page "/adminproduce"
+@inject IAdminProduceService _adminProduceService
+@rendermode InteractiveServer
+
+<PageTitle>Opret ingrediens</PageTitle>
+
+<h3>Opret ingrediens</h3>
+
+<EditForm Model="@this" OnValidSubmit="CreateProduce">
+    <p class="produce-label">Navn på ingrediens:</p>
+    <input @bind="_produceInput" class="produce-textfield" type="text" name="produce-name"
+    placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
+    title="Der må kun bruges bogstaver" required />
+    <button class="produce-button">Opret</button>
+    @if (showResult == true && _alreadyCreated == false)
+    {
+        <Alert Color="AlertColor.Success">@_produceInput tilføjet til databasen</Alert>
+    }
+    else if (showResult == true && _alreadyCreated == true)
+    {
+        <Alert Color="AlertColor.Danger">@_produceInput findes allerede i databasen</Alert>
+    }
+</EditForm>
+
+<style>
+    .produce-label {
+    margin-bottom: 0;
+    font-family: Arial;
+    font-size: 16px;
+    }
+
+    .produce-textfield {
+    background-color: #e0e0e0;
+    border: medium;
+    border-radius: 5px;
+    font-family: Arial;
+    font-size: 16px;
+    padding: 3px 0px 3px 4px;
+    width: 250px;
+    margin: 2px;
+    margin-left: 0px;
+    }
+
+    .produce-button {
+    background-color: #81c784;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    font-family: Arial;
+    font-size: 14px;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 3px 15px 3px 15px;
+    margin-left: 20px;
+    transition-duration: 0.2s;
+    border: 2px solid #81c784;
+    }
+
+    .produce-button:hover {
+    background-color: white;
+    }
+
+    .produce-button:active {
+    background-color: lightgrey;
+    }
+
+    .produce-create-message {
+    font-family: Arial;
+    font-size: 16px;
+    }
+</style>
+
+@code {
+    private string? _produceInput;
+
+    private bool showResult = false;
+
+    private string? _produceMessage;
+
+    private bool _alreadyCreated = false;
+
+    private async Task CreateProduce()
+    {
+        StringBuilder formattedName = new StringBuilder();
+
+        // Null protection for _produceInput
+        if(_produceInput == null)
+        {
+            _produceInput = string.Empty;
+        }
+
+        // Formats the inputted string to match names in DB
+        for (int i = 0; i < _produceInput.Length; i++)
+        {
+            if (i == 0)
+            {
+                formattedName.Append(char.ToUpper(_produceInput[i]));
+            }
+            else
+            {
+                formattedName.Append(char.ToLower(_produceInput[i]));
+            }
+        }
+
+        _produceInput = formattedName.ToString();
+
+        _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
+
+        showResult = true; // Shows pop-up
+        await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
+        showResult = false;
+        _produceInput = string.Empty;
+    }
+}
