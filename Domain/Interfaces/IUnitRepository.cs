@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-	public interface IUnitRepositry
+	public interface IUnitRepository
 	{
 		/// <summary>
 		/// Retrieves a unit based on the provided unit ID.

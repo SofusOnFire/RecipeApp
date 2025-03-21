@@ -11,9 +11,9 @@ namespace DAL
 {
     public class ProduceRepository : DatabaseManager, IProduceRepository
     {
-		private readonly IUnitRepositry _unitRepository;
+		private readonly IUnitRepository _unitRepository;
 
-		public ProduceRepository(IUnitRepositry unitRepository)
+		public ProduceRepository(IUnitRepository unitRepository)
 		{
 			_unitRepository = unitRepository;
 		}

@@ -10,9 +10,9 @@ namespace Services
 {
 	public class UnitService : IUnitService
 	{
-		private readonly IUnitRepositry _unitRepositry;
+		private readonly IUnitRepository _unitRepositry;
 
-		public UnitService(IUnitRepositry unitRepositry)
+		public UnitService(IUnitRepository unitRepositry)
 		{
 			_unitRepositry = unitRepositry;
 		}

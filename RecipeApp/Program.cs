@@ -20,7 +20,7 @@ namespace RecipeApp
             builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
             builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
-            builder.Services.AddSingleton<IUnitRepositry, UnitRepository>();
+            builder.Services.AddSingleton<IUnitRepository, UnitRepository>();
 
             //Bll services
             builder.Services.AddSingleton<IProduceService, ProduceService>();

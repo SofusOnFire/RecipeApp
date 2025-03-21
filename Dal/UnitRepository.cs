@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-	public class UnitRepository : DatabaseManager, IUnitRepositry
+	public class UnitRepository : DatabaseManager, IUnitRepository
 	{
 		public Unit GetUnitByUnitID(int unitID)
 		{
