@@ -16,7 +16,7 @@
     <br />
     <p class="produce-label">Navn på Unit:</p>
     <select @bind="_produceInputUnit" class="selectUnit">
-        @foreach (var unit in _alUnits)
+        @foreach (var unit in _allUnits)
         {
             <option value="@unit.UnitID">@unit.UnitName</option>
         }
@@ -105,11 +105,11 @@
 
     private bool _alreadyCreated = false;
 
-    private List<Domain.Models.Unit>? _alUnits;
+    private List<Domain.Models.Unit>? _allUnits;
 
     protected override void OnInitialized()
     {
-        _alUnits = _unitService.GetAllUnits().ToList();
+        _allUnits = _unitService.GetAllUnits().ToList();
     }
 
     private async Task CreateProduce()
