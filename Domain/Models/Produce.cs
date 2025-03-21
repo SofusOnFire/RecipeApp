@@ -37,13 +37,13 @@ namespace Domain.Models
 				{
 					InStockStatus = "red";
 				}
-				else if (recipeAmountOfIngredient <= comparedProduce.UserAmount)
-				{
-					InStockStatus = "green";
-				}
-				else // recipeAmountOfIngredient > comparedProduce.UserAmount
+				else if (recipeAmountOfIngredient > comparedProduce.UserAmount)
 				{
 					InStockStatus = "yellow";
+				}
+				else // recipeAmountOfIngredient <= comparedProduce.UserAmount
+				{
+					InStockStatus = "green";
 				}
 
 			}
