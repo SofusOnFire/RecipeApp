@@ -31,11 +31,20 @@ namespace Domain.Models
 		/// </summary>
 		public void SetStockStatus(Produce comparedProduce, int? recipeAmountOfIngredient)
 		{
-			if (comparedProduce.Name == Name)
+			if (comparedProduce.Name == Name || Name != null)
 			{
-				if (comparedProduce.UserAmount == 0 || recipeAmountOfIngredient == null) InStockStatus = "red";
-				if (recipeAmountOfIngredient <= comparedProduce.UserAmount) InStockStatus = "green";
-				if (recipeAmountOfIngredient > comparedProduce.UserAmount) InStockStatus = "yellow";
+				if (comparedProduce.UserAmount == 0 || recipeAmountOfIngredient == null)
+				{
+					InStockStatus = "red";
+				}
+				else if (recipeAmountOfIngredient <= comparedProduce.UserAmount)
+				{
+					InStockStatus = "green";
+				}
+				else // recipeAmountOfIngredient > comparedProduce.UserAmount
+				{
+					InStockStatus = "yellow";
+				}
 
 			}
 		}
