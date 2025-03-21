@@ -17,11 +17,15 @@
                     @if (recipe.ProduceLines != null)
                         @foreach (var produceLine in recipe.ProduceLines)
                         {
-                            @if (produceLine._Produce.InStock == true)
+                            @if (produceLine._Produce.InStockStatus == "green")
                             {
                                 <p class="stock" style="background-color: #00ab45;">@produceLine._Produce.Name</p>
                             }
-                            else
+                            else if (produceLine._Produce.InStockStatus =="yellow")
+                            {
+                                <p class="stock" style="background-color: #FFCA4B;">@produceLine._Produce.Name</p>
+                            }
+                            else //produceline._Produce.InStockStatus == "red"
                             {
                                 <p class="stock" style="background-color: #C21807;">@produceLine._Produce.Name</p>
                             }
@@ -34,6 +38,7 @@
 </div>
 
 <style>    
+
     .recipe-container{
     display: flex;
     flex-direction: column;

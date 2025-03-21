@@ -12,9 +12,12 @@
 		<ul>
 			@foreach (var produce in yourProduce)
 			{
-				<li style="display: flex; justify-content: space-between; align-items: center;" @onclick="() => MoveProduceBetweenLists(produce)">
-					@produce.Name
-					<img src="/img/trashcan.svg" />
+				<li style="display: flex; justify-content: align-items: center;">
+					<pre>@produce.Name.PadRight(30)</pre>
+
+					<input type="number" class="input" @bind="@produce.UserAmount" @bind:event="oninput" @onchange="(e) => ClampUserAmount(produce)" />
+					@produce.Unit.UnitName
+					<img style="margin-left: auto;" src="/img/trashcan.svg" @onclick="() => MoveProduceBetweenLists(produce)" />
 				</li>
 			}
 		</ul>
@@ -31,6 +34,25 @@
 </div>
 
 <style>
+	.input {
+		border: 2px solid transparent;
+		width: 5em;
+		height: 1.5em;
+		padding-left: 0.8em;
+		outline: none;
+		overflow: hidden;
+		background-color: #F3F3F3;
+		border-radius: 10px;
+		transition: all 0.5s;
+	}
+
+	.input:hover,
+	.input:focus {
+		border: 2px solid #4A9DEC;
+		box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+		background-color: white;
+	}
+
 	.lists-container {
 	display: flex;
 	grid-template-columns: 1fr 1fr;
@@ -73,5 +95,15 @@
 	private void MoveProduceBetweenLists(Produce produce)
 	{
 		userProduceService.MoveBetweenList(produce, listOfProduce);
+	}
+
+	/// <summary>
+	/// Sets the UserAmount to between 0 and 1000. No matter what the user writest
+	/// </summary>
+	/// <param name="produce"></param>
+	private void ClampUserAmount(Produce produce)
+	{
+		produce.UserAmount = Math.Clamp(produce.UserAmount, 0, 1000);
+		if (produce.UserAmount == 0) MoveProduceBetweenLists(produce); // If the value is 0. Remove it from list
 	}
 }
