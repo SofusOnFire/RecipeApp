@@ -86,6 +86,9 @@
 	@if(alertMessage == "recipeAdded"){
 		<Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Opskriften er tilføjet!</Alert>
 	}
+	@if(alertMessage == "error"){
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Der opstod en fejl.</Alert>
+	}
 	<Button Disabled="@tbDisabled" Color="ButtonColor.Success" @onclick="() => AdminAddRecipe(tbRecipeName, tbRecipeCookTime, tbRecipeURL, addedProduces)">Tilføj opskrift</Button>
 </div>
 
@@ -130,11 +133,11 @@
 	List<Produce>? addedProduces;
 	List<int>? cookTimeMinutes;
 
-	//AdminCreateRecipe
-	private string RecipeNameInput { get; set; }
-	private int CookTimeInput { get; set; }
-	private string URLinput { get; set; }
-	//private Recipe newRecipe = new Recipe(RecipeNameInput, CookTimeInput, URLinput);
+	// //AdminCreateRecipe
+	// private string RecipeNameInput { get; set; }
+	// private int CookTimeInput { get; set; }
+	// private string URLinput { get; set; }
+	// //private Recipe newRecipe = new Recipe(RecipeNameInput, CookTimeInput, URLinput);
 
 	protected override void OnInitialized()
 	{
@@ -205,6 +208,9 @@
 				tbDisabled = true;
 				recipeDisabled = true;
 				_iAdminCreateRecipeService.ClearAddedProduces();
+			}
+			else if (!creationSuccess){
+				alertMessage = "error";
 			}
 		}
 	}

@@ -2,10 +2,10 @@ using Domain.Interfaces;
 using Services;
 using Moq;
 using Domain.Models;
+using System.Net;
 
 namespace Test
 {
-
     [TestClass]
     public class AdminCreateRecipeServiceTest
     {
@@ -34,9 +34,26 @@ namespace Test
             testProduces.Add(testProduce);
 
             //Arrange
-            recipeRepositoryMock
-                    .Setup(repository => repository.AdminAddRecipeToDB(name, cookTime, url))
-                    .Returns(15);
+            adminCreateRecipeServiceMock
+                    .Setup(repository => repository.AddRecipe(name, cookTime, url, testProduces));
+
+            // Act
+            bool result = adminCreateRecipeService.AddRecipe(name, cookTime, url, testProduces);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        [DataRow(null, 15, null, false)]
+
+        public void CreateRecipe_ShouldReturnFalse_IfErrorInRecipe(string name, int cookTime, string url, bool expected)
+        {
+            List<Produce> testProduces = new List<Produce>();
+
+            //Arrange
+            adminCreateRecipeServiceMock
+                    .Setup(repository => repository.AddRecipe(name, cookTime, url, testProduces));
 
             // Act
             bool result = adminCreateRecipeService.AddRecipe(name, cookTime, url, testProduces);

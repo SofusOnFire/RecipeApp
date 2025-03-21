@@ -131,9 +131,16 @@ namespace Services
 
         public bool AddRecipe(string recipeName, int cookTime, string uRL, List<Produce> produceList)
         {
-            int recipeID = _recipeRepository.AdminAddRecipeToDB(recipeName, cookTime, uRL);
-            _produceLineRepository.AddProduceLines(produceList, recipeID);
-            return true;
+            if (!string.IsNullOrEmpty(recipeName) && uRL != null && produceList != null)
+            {
+                int recipeID = _recipeRepository.AdminAddRecipeToDB(recipeName, cookTime, uRL);
+                _produceLineRepository.AddProduceLines(produceList, recipeID);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void ClearAddedProduces()
