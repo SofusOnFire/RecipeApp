@@ -31,7 +31,7 @@ namespace Domain.Models
 		/// </summary>
 		public void SetStockStatus(Produce comparedProduce, int? recipeAmountOfIngredient)
 		{
-			if (comparedProduce.Name == Name || Name != null)
+			if (comparedProduce.Name == Name)
 			{
 				if (comparedProduce.UserAmount == 0 || recipeAmountOfIngredient == null)
 				{
