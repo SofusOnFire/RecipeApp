@@ -12,13 +12,17 @@
     placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
     title="Der må kun bruges bogstaver" required />
     <button class="produce-button">Opret</button>
-    @if (showResult == true && _alreadyCreated == false)
+    @if (_showResult == true && _alreadyCreated == false && _invalidInput == false)
     {
         <Alert Color="AlertColor.Success">@_produceInput tilføjet til databasen</Alert>
     }
-    else if (showResult == true && _alreadyCreated == true)
+    else if (_showResult == true && _alreadyCreated == true)
     {
         <Alert Color="AlertColor.Danger">@_produceInput findes allerede i databasen</Alert>
+    }
+    else if (_showResult == true && _invalidInput == true)
+    {
+        <Alert Color="AlertColor.Danger">Ugyldigt input</Alert>
     }
 </EditForm>
 
@@ -73,42 +77,45 @@
 @code {
     private string? _produceInput;
 
-    private bool showResult = false;
+    private bool _showResult = false;
 
-    private string? _produceMessage;
+    private bool _invalidInput = false;
 
     private bool _alreadyCreated = false;
 
     private async Task CreateProduce()
-    {
-        StringBuilder formattedName = new StringBuilder();
-
+    {    
         // Null protection for _produceInput
-        if(_produceInput == null)
+        if(string.IsNullOrWhiteSpace(_produceInput) == false)
         {
-            _produceInput = string.Empty;
+            StringBuilder formattedName = new StringBuilder();
+
+            // Formats the inputted string to match names in DB
+            for (int i = 0; i < _produceInput.Length; i++)
+            {
+                if (i == 0)
+                {
+                    formattedName.Append(char.ToUpper(_produceInput[i]));
+                }
+                else
+                {
+                    formattedName.Append(char.ToLower(_produceInput[i]));
+                }
+            }
+
+            _produceInput = formattedName.ToString();
+
+            _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
+        }
+        else
+        {
+            _invalidInput = true;
         }
 
-        // Formats the inputted string to match names in DB
-        for (int i = 0; i < _produceInput.Length; i++)
-        {
-            if (i == 0)
-            {
-                formattedName.Append(char.ToUpper(_produceInput[i]));
-            }
-            else
-            {
-                formattedName.Append(char.ToLower(_produceInput[i]));
-            }
-        }
-
-        _produceInput = formattedName.ToString();
-
-        _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
-
-        showResult = true; // Shows pop-up
+        _showResult = true; // Shows pop-up
         await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
-        showResult = false;
+        _showResult = false;
         _produceInput = string.Empty;
+        
     }
 }
