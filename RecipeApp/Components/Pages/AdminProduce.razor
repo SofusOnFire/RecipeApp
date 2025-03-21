@@ -126,16 +126,14 @@
             // Formats the inputs first letter to upper and remaining to lower
             _produceInput = char.ToUpper(_produceInput[0]) + _produceInput.Substring(1).ToLower();
 
-            _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
+            _alreadyCreated = _adminProduceService.CreateProduce(_produceInput, _produceInputUnit);
         }
         else
         {
             _invalidInput = true;
         }
 
-        _alreadyCreated = _adminProduceService.CreateProduce(_produceInput, _produceInputUnit);
-
-        showResult = true; // Shows pop-up
+        _showResult = true; // Shows pop-up
         await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
         _showResult = false;
         _produceInput = string.Empty;
