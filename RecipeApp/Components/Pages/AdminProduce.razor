@@ -93,7 +93,6 @@
             // Formats the inputs first letter to upper and remaining to lower
             _produceInput = char.ToUpper(_produceInput[0]) + _produceInput.Substring(1).ToLower();
 
-
             _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
         }
         else
