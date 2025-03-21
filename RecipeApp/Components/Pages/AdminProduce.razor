@@ -10,8 +10,8 @@
 <EditForm Model="@this" OnValidSubmit="CreateProduce">
     <p class="produce-label">Navn på ingrediens:</p>
     <input @bind="_produceInput" class="produce-textfield" type="text" name="produce-name"
-    placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
-    title="Der må kun bruges bogstaver" required />
+           placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
+           title="Der må kun bruges bogstaver" required />
 
     <br />
     <p class="produce-label">Navn på Unit:</p>
@@ -23,78 +23,81 @@
     </select>
 
     <button class="produce-button">Opret</button>
-    @if (_showResult == true && _alreadyCreated == false && _invalidInput == false)
+    @if (_showResult == true)
     {
-        <Alert Color="AlertColor.Success">@_produceInput tilføjet til databasen</Alert>
-    }
-    else if (_showResult == true && _alreadyCreated == true)
-    {
-        <Alert Color="AlertColor.Danger">@_produceInput findes allerede i databasen</Alert>
-    }
-    else if (_showResult == true && _invalidInput == true)
-    {
-        <Alert Color="AlertColor.Danger">Ugyldigt input</Alert>
+        @if (_alreadyCreated == false && _invalidInput == false)
+        {
+            <Alert Color="AlertColor.Success">@_produceInput tilføjet til databasen</Alert>
+        }
+        else if (_alreadyCreated == true)
+        {
+            <Alert Color="AlertColor.Danger">@_produceInput findes allerede i databasen</Alert>
+        }
+        else if (_invalidInput == true)
+        {
+            <Alert Color="AlertColor.Danger">Ugyldigt input</Alert>
+        }
     }
 </EditForm>
 
 <style>
     .produce-label {
-    margin-bottom: 0;
-    font-family: Arial;
-    font-size: 16px;
+        margin-bottom: 0;
+        font-family: Arial;
+        font-size: 16px;
     }
 
     .selectUnit {
-    background-color: #e0e0e0;
-    border: medium;
-    border-radius: 5px;
-    font-family: Arial;
-    font-size: 16px;
-    padding: 3px 0px 3px 4px;
-    width: 150px;
-    margin: 2px;
-    margin-left: 0px;
-    height: 30px;
+        background-color: #e0e0e0;
+        border: medium;
+        border-radius: 5px;
+        font-family: Arial;
+        font-size: 16px;
+        padding: 3px 0px 3px 4px;
+        width: 150px;
+        margin: 2px;
+        margin-left: 0px;
+        height: 30px;
     }
 
     .produce-textfield {
-    background-color: #e0e0e0;
-    border: medium;
-    border-radius: 5px;
-    font-family: Arial;
-    font-size: 16px;
-    padding: 3px 0px 3px 4px;
-    width: 250px;
-    margin: 2px;
-    margin-left: 0px;
+        background-color: #e0e0e0;
+        border: medium;
+        border-radius: 5px;
+        font-family: Arial;
+        font-size: 16px;
+        padding: 3px 0px 3px 4px;
+        width: 250px;
+        margin: 2px;
+        margin-left: 0px;
     }
 
     .produce-button {
-    background-color: #81c784;
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    font-family: Arial;
-    font-size: 14px;
-    display: inline-block;
-    border-radius: 5px;
-    padding: 3px 15px 3px 15px;
-    margin-left: 20px;
-    transition-duration: 0.2s;
-    border: 2px solid #81c784;
+        background-color: #81c784;
+        border: none;
+        text-align: center;
+        text-decoration: none;
+        font-family: Arial;
+        font-size: 14px;
+        display: inline-block;
+        border-radius: 5px;
+        padding: 3px 15px 3px 15px;
+        margin-left: 20px;
+        transition-duration: 0.2s;
+        border: 2px solid #81c784;
     }
 
-    .produce-button:hover {
-    background-color: white;
-    }
+        .produce-button:hover {
+            background-color: white;
+        }
 
-    .produce-button:active {
-    background-color: lightgrey;
-    }
+        .produce-button:active {
+            background-color: lightgrey;
+        }
 
     .produce-create-message {
-    font-family: Arial;
-    font-size: 16px;
+        font-family: Arial;
+        font-size: 16px;
     }
 </style>
 
@@ -117,9 +120,9 @@
     }
 
     private async Task CreateProduce()
-    {    
+    {
         // Null protection for _produceInput
-        if(string.IsNullOrWhiteSpace(_produceInput) == false)
+        if (string.IsNullOrWhiteSpace(_produceInput) == false)
         {
             _produceInput = Regex.Replace(_produceInput.Trim(), @"\s+", " "); // Removes whitespaces before and between input
 
@@ -137,6 +140,6 @@
         await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
         _showResult = false;
         _produceInput = string.Empty;
-        
+
     }
 }
