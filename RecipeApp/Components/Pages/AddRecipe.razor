@@ -12,18 +12,18 @@
     <div>
         <h5>Navn på opskrift</h5>
         <div class="mb-auto">
-            <TextInput Disabled="@recipeDisabled" @onfocusout=" () => ValidateName(tbRecipeName)" @bind-Value="@tbRecipeName" />
+            <TextInput Disabled="@_recipeDisabled" @onfocusout=" () => ValidateName(_tbRecipeName)" @bind-Value="@_tbRecipeName" />
         </div>
 
         <h5>Opskriftens URL</h5>
         <div>
-            <TextInput @onfocusout=" () => ValidateURL(tbRecipeURL)" Placeholder="Indtast først opskriftens URL." @bind-Value="@tbRecipeURL" />
+            <TextInput @onfocusout=" () => ValidateURL(_tbRecipeURL)" Placeholder="Indtast først opskriftens URL." @bind-Value="@_tbRecipeURL" />
         </div>
 
         <h5>Tilberedningstid i minutter</h5>
         <div>
-            <Dropdown Disabled="@tbDisabled" Color="DropdownColor.Secondary">
-                <DropdownToggleButton>@tbRecipeCookTime</DropdownToggleButton>
+            <Dropdown Disabled="@_tbDisabled" Color="DropdownColor.Secondary">
+                <DropdownToggleButton>@_tbRecipeCookTime</DropdownToggleButton>
                 <DropdownMenu class="dropdown-scroll">
                     @foreach (var minutes in cookTimeMinutes)
                     {
@@ -37,13 +37,13 @@
     <div>
         <h5>Ingredienser</h5>
         <div>
-            <AutoComplete @bind-Value="selectedProduce"
+            <AutoComplete @bind-Value="_selectedProduce"
                           TItem="Produce"
                           DataProvider="ProduceDataProvider"
                           PropertyName="Name"
                           Placeholder="Tilføj ingredienser..."
                           OnChanged="(Produce produce) => AddProduce(produce)"
-                          @bind-SelectedValue="selectedProduce" />
+                          @bind-SelectedValue="_selectedProduce" />
         </div>
         <div>
             @foreach (var produce in addedProduces)
@@ -54,51 +54,51 @@
     </div>
 </div>
 <div class="center-items">
-    @if (alertMessage == "urlExists")
+    @if (_alertMessage == "urlExists")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Denne opskrift findes allerede i databasen!</Alert>
     }
-    @if (alertMessage == "urlEmpty")
+    @if (_alertMessage == "urlEmpty")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Indtast venligst opskriftens URL!</Alert>
     }
-    @if (alertMessage == "urlInvalid")
+    @if (_alertMessage == "urlInvalid")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Denne URL er ugyldig!</Alert>
     }
-    @if (alertMessage == "urlValid")
+    @if (_alertMessage == "urlValid")
     {
         <Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Denne URL er gyldig!</Alert>
     }
-    @if (alertMessage == "valid")
+    @if (_alertMessage == "valid")
     {
         <Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Opskriftens navn er gyldig!</Alert>
     }
-    @if (alertMessage == "invalid")
+    @if (_alertMessage == "invalid")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Dette navn er ugyldigt!</Alert>
     }
-    @if (alertMessage == "noName")
+    @if (_alertMessage == "noName")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Indtast venligst opskriftens navn!</Alert>
     }
-    @if (alertMessage == "noProduces")
+    @if (_alertMessage == "noProduces")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Du skal tilføje ingredienser først!</Alert>
     }
-    @if (alertMessage == "noCookTime")
+    @if (_alertMessage == "noCookTime")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Du skal angive tilberedningsminutter først!</Alert>
     }
-    @if (alertMessage == "recipeAdded")
+    @if (_alertMessage == "recipeAdded")
     {
         <Alert Color="AlertColor.Success"><Icon Name="IconName.CheckCircleFill"></Icon> Opskriften er tilføjet!</Alert>
     }
-    @if (alertMessage == "error")
+    @if (_alertMessage == "error")
     {
         <Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Der opstod en fejl.</Alert>
     }
-    <Button Disabled="@tbDisabled" Color="ButtonColor.Success" @onclick="() => AdminAddRecipe(tbRecipeName, tbRecipeCookTime, tbRecipeURL, addedProduces)">Tilføj opskrift</Button>
+    <Button Disabled="@_tbDisabled" Color="ButtonColor.Success" @onclick="() => AdminAddRecipe(_tbRecipeName, _tbRecipeCookTime, _tbRecipeURL, addedProduces)">Tilføj opskrift</Button>
 </div>
 
 <style>
@@ -126,18 +126,18 @@
 
 @code {
 
-    private string? tbRecipeName = null;
-    private string? tbRecipeURL = null;
-    private string? tbRecipeCookTime = "Angiv tilberedningstid...";
-    private string? alertMessage = null;
-    private bool tbDisabled = true;
-    private bool recipeDisabled = true;
-    private string selectedProduce;
+    private string? _tbRecipeName = null;
+    private string? _tbRecipeURL = null;
+    private string? _tbRecipeCookTime = "Angiv tilberedningstid...";
+    private string? _alertMessage = null;
+    private bool _tbDisabled = true;
+    private bool _recipeDisabled = true;
+    private string? _selectedProduce;
 
-    private void Enable() => tbDisabled = false;
-    private void Enable(int i) => recipeDisabled = false;
-    private void Disable() => tbDisabled = true;
-    private void Disable(int i) => recipeDisabled = true;
+    private void Enable() => _tbDisabled = false;
+    private void Enable(int i) => _recipeDisabled = false;
+    private void Disable() => _tbDisabled = true;
+    private void Disable(int i) => _recipeDisabled = true;
 
     List<Produce>? listOfProduce;
     List<Produce>? addedProduces;
@@ -180,47 +180,47 @@
 
     private void ValidateURL(string tbRecipeURL)
     {
-        alertMessage = _iAdminCreateRecipeService.ValidateURL(tbRecipeURL);
-        if (alertMessage == "urlValid")
+        _alertMessage = _iAdminCreateRecipeService.ValidateURL(tbRecipeURL);
+        if (_alertMessage == "urlValid")
         {
-            recipeDisabled = false;
+            _recipeDisabled = false;
         }
-        if (alertMessage == "urlExists" || alertMessage == "urlInvalid" || alertMessage == "urlEmpty")
+        if (_alertMessage == "urlExists" || _alertMessage == "urlInvalid" || _alertMessage == "urlEmpty")
         {
-            tbDisabled = true;
-            recipeDisabled = true;
+            _tbDisabled = true;
+            _recipeDisabled = true;
         }
     }
 
     private void ValidateName(string nameInput)
     {
-        alertMessage = _iAdminCreateRecipeService.ValidateRecipeName(nameInput);
-        if (alertMessage == "invalid")
+        _alertMessage = _iAdminCreateRecipeService.ValidateRecipeName(nameInput);
+        if (_alertMessage == "invalid")
         {
-            recipeDisabled = false;
-            tbDisabled = true;
+            _recipeDisabled = false;
+            _tbDisabled = true;
         }
-        if (alertMessage == "valid")
+        if (_alertMessage == "valid")
         {
-            recipeDisabled = false;
-            tbDisabled = false;
+            _recipeDisabled = false;
+            _tbDisabled = false;
         }
     }
 
     private void CookTimeSelection(int minutes)
     {
-        tbRecipeCookTime = minutes.ToString();
+        _tbRecipeCookTime = minutes.ToString();
     }
 
     private void AdminAddRecipe(string recipeName, string cookTime, string uRL, List<Produce> produceList)
     {
         if (addedProduces.Count <= 0)
         {
-            alertMessage = "noProduces";
+            _alertMessage = "noProduces";
         }
-        else if (tbRecipeCookTime == "Angiv tilberedningstid...")
+        else if (_tbRecipeCookTime == "Angiv tilberedningstid...")
         {
-            alertMessage = "noCookTime";
+            _alertMessage = "noCookTime";
         }
         else
         {
@@ -228,17 +228,17 @@
             bool creationSuccess = _iAdminCreateRecipeService.AddRecipe(recipeName, intCookTime, uRL, produceList);
             if (creationSuccess)
             {
-                alertMessage = "recipeAdded";
-                tbRecipeName = null;
-                tbRecipeURL = null;
-                tbRecipeCookTime = "Angiv tilberedningstid...";
-                tbDisabled = true;
-                recipeDisabled = true;
+                _alertMessage = "recipeAdded";
+                _tbRecipeName = null;
+                _tbRecipeURL = null;
+                _tbRecipeCookTime = "Angiv tilberedningstid...";
+                _tbDisabled = true;
+                _recipeDisabled = true;
                 _iAdminCreateRecipeService.ClearAddedProduces();
             }
             else if (!creationSuccess)
             {
-                alertMessage = "error";
+                _alertMessage = "error";
             }
         }
     }
