@@ -88,22 +88,11 @@
         // Null protection for _produceInput
         if(string.IsNullOrWhiteSpace(_produceInput) == false)
         {
-            StringBuilder formattedName = new StringBuilder();
+            _produceInput = Regex.Replace(_produceInput.Trim(), @"\s+", " "); // Removes whitespaces before and between input
 
-            // Formats the inputted string to match names in DB
-            for (int i = 0; i < _produceInput.Length; i++)
-            {
-                if (i == 0)
-                {
-                    formattedName.Append(char.ToUpper(_produceInput[i]));
-                }
-                else
-                {
-                    formattedName.Append(char.ToLower(_produceInput[i]));
-                }
-            }
+            // Formats the inputs first letter to upper and remaining to lower
+            _produceInput = char.ToUpper(_produceInput[0]) + _produceInput.Substring(1).ToLower();
 
-            _produceInput = formattedName.ToString();
 
             _alreadyCreated = _adminProduceService.CreateProduce(_produceInput);
         }
