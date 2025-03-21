@@ -15,14 +15,20 @@ namespace RecipeApp
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddBlazorBootstrap();
+
+            //Dal services
             builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
             builder.Services.AddSingleton<IProduceLineRepository, ProduceLineRepository>();
 			builder.Services.AddSingleton<IProduceRepository, ProduceRepository>();
+            builder.Services.AddSingleton<IUnitRepository, UnitRepository>();
+
+            //Bll services
             builder.Services.AddSingleton<IProduceService, ProduceService>();
             builder.Services.AddSingleton<IRecipeService, RecipeService>();
             builder.Services.AddSingleton<IUserProduceService, UserProduceService>();
             builder.Services.AddSingleton<IProduceLineService, ProduceLineService>();
 			builder.Services.AddSingleton<IAdminProduceService, AdminProduceService>();
+            builder.Services.AddSingleton<IUnitService, UnitService>();
 
 			var app = builder.Build();
 

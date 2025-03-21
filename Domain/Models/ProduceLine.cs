@@ -11,13 +11,15 @@ namespace Domain.Models
         public int ProduceLineID { get; private set; }
         public int RecipeID { get; private set; }
         public int ProduceID { get; private set; }
+        public int Amount { get; private set; }
         public Produce _Produce { get; private set; }
 
-        public ProduceLine(int produceLineID, int recipeID, int produceID)
+        public ProduceLine(int produceLineID, int recipeID, int produceID, int amount)
         {
             ProduceLineID = produceLineID;
             RecipeID = recipeID;
             ProduceID = produceID;
+            Amount = amount;
         }
 
         public void SetProduce(Produce produce)

@@ -32,7 +32,8 @@ namespace DAL
                 var recipe = new ProduceLine(
                 Convert.ToInt32(reader["ProduceLineID"]),
                 Convert.ToInt32(reader["RecipeID"]),
-                Convert.ToInt32(reader["ProduceID"]));
+                Convert.ToInt32(reader["ProduceID"]),
+                Convert.ToInt32(reader["Amount"]));
 
                 list.Add(recipe);
             }

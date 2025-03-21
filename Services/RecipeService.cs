@@ -56,11 +56,8 @@ namespace Services
 					for (int i = 0; i < _userProduceService.UserProduceList.Count; i++)
 					{
 						// If the user have the produce, break and mark the produce as found
-						if (_userProduceService.UserProduceList[i].Name == produceLine._Produce.Name)
-						{
-							produceLine._Produce.SetStockToTrue();
-							break;
-						}
+						produceLine._Produce.SetStockStatus(_userProduceService.UserProduceList[i], produceLine.Amount);
+						if (produceLine._Produce.InStockStatus != null) break;
 					}
 				}
 
@@ -76,25 +73,7 @@ namespace Services
 			// Iterates through all the recieved recipes
 			foreach (var recipe in listOfMatchedRecipes)
 			{
-				// List to store produce the user doesn't have in stock
-				List<ProduceLine> notInStockProduces = new List<ProduceLine>();
-
-				if (recipe.ProduceLines == null) // If the recipe doesn't have any produce, get the next recipe
-					continue;
-
-				// Iterates through all of the lines of the current recipe
-				for (int i = 0; i < recipe.ProduceLines.Count; i++)
-				{
-					// If the user doesn't have the produce, adds to notInStock and remove from current list
-					if (recipe.ProduceLines[i]._Produce.InStock == false)
-					{
-						notInStockProduces.Add(recipe.ProduceLines[i]);
-						recipe.ProduceLines.RemoveAt(i);
-						i--; // Stays at same iteration for the next loop
-					}
-				}
-
-				recipe.ProduceLines.AddRange(notInStockProduces); // Append notInStock to the listOfMatchedRecipes
+				recipe.ReOrderProduceLines();
 			}
 
 			return listOfMatchedRecipes;
