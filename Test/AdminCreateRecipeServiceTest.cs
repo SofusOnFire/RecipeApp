@@ -14,6 +14,7 @@ namespace Test
         private Mock<IProduceRepository> produceRepositoryMock;
         private Mock<IProduceLineRepository> produceLineRepositoryMock;
         private IAdminCreateRecipeService adminCreateRecipeService;
+        private IRecipeRepository recipeRepository;
 
         [TestInitialize]
         public void Setup()

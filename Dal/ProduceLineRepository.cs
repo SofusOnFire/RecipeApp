@@ -33,7 +33,8 @@ namespace DAL
                 var recipe = new ProduceLine(
                 Convert.ToInt32(reader["ProduceLineID"]),
                 Convert.ToInt32(reader["RecipeID"]),
-                Convert.ToInt32(reader["ProduceID"]));
+                Convert.ToInt32(reader["ProduceID"]),
+                Convert.ToInt32(reader["Amount"]));
 
                 list.Add(recipe);
             }
@@ -46,14 +47,16 @@ namespace DAL
         {
             foreach (var produce in produces)
             {
-                string createProduceLine = "INSERT INTO [ProduceLine] (RecipeID, ProduceID) " +
+                string createProduceLine = "INSERT INTO [ProduceLine] (RecipeID, ProduceID, Amount) " +
                                       "OUTPUT INSERTED.ProduceLineID " +
-                                      "VALUES (@RecipeID, @ProduceID)";
+                                      "VALUES (@RecipeID, @ProduceID, @Amount)";
 
                 var command = new SqlCommand(createProduceLine, _connectionString);
 
                 command.Parameters.AddWithValue("@RecipeID", recipeID);
                 command.Parameters.AddWithValue("@ProduceID", produce.ProduceID);
+                // Amount is temporarily set to 0 for now.
+                command.Parameters.AddWithValue("@Amount", 0);
                 int produceLineID = DatabaseManager.ExecuteScalar(command);
             }
         }

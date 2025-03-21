@@ -111,9 +111,13 @@ namespace Services
         }
         public string ValidateRecipeName(string adminNameInput)
         {
-            if (adminNameInput == null)
+            if (adminNameInput == null || String.IsNullOrWhiteSpace(adminNameInput))
             {
                 return "noName";
+            }
+            else if (Char.IsWhiteSpace(adminNameInput[adminNameInput.Length - 1]))
+            {
+                return "invalid";
             }
             else if (adminNameInput.Length < 3)
             {
