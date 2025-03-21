@@ -4,6 +4,8 @@
 @inject IRecipeRepository _iRecipeRepository
 @rendermode InteractiveServer
 
+<PageTitle>Opret opskrift</PageTitle>
+
 <h3>Tilføj ny opskrift</h3>
 
 <div class="lists-container">
@@ -20,8 +22,6 @@
 
 		<h5>Tilberedningstid i minutter</h5>
 		<div>
-			@* <NumberInput TValue="int?" Disabled="@tbDisabled" EnableMinMax="true" Min="15" Max="600" @bind-Value = "@tbRecipeCookTime" />
-			<span class="form-text">Indtast et tal mellem 15 og 600</span> *@
 			<Dropdown Disabled="@tbDisabled" Color="DropdownColor.Secondary">
 				<DropdownToggleButton>@tbRecipeCookTime</DropdownToggleButton>
 				<DropdownMenu class="dropdown-scroll">
@@ -71,6 +71,9 @@
 	}
 	@if(alertMessage == "invalid"){
 		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Dette navn er ugyldigt!</Alert>
+	}
+	@if(alertMessage == "noName"){
+		<Alert Color="AlertColor.Danger"><Icon Name="IconName.ExclamationTriangleFill"></Icon> Indtast venligst opskriftens navn!</Alert>
 	}
 	@if (alertMessage == "noProduces")
 	{
@@ -199,21 +202,10 @@
 				tbRecipeName = null;
 				tbRecipeURL = null;
 				tbRecipeCookTime = "Angiv tilberedningstid...";
-				bool tbDisabled = true;
-				bool recipeDisabled = true;
+				tbDisabled = true;
+				recipeDisabled = true;
+				_iAdminCreateRecipeService.ClearAddedProduces();
 			}
 		}
 	}
-
-	// private async Task AdminCreateRecipe(string recipeName, int cookTime, string uRL, List<Produce> produces)
-	// {
-	// 	var newRecipe = new Recipe
-			
-	// }
-
-	// private void AddRemoveProduce(Produce produce){
-	// 	_iAdminCreateRecipeService.AddRemoveProduceToNewRecipe(produce);
-	// 	listOfProduce = _iAdminCreateRecipeService.AllProduceWhenAdminCreateRecipe;
-	// 	addedProduces = _iAdminCreateRecipeService.SelectedProduceWhenAdminCreateRecipe;
-	// }
 }

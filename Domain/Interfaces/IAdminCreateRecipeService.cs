@@ -20,6 +20,7 @@ namespace Domain.Interfaces
         public string ValidateURL(string url);
         public string ValidateRecipeName(string adminNameInput);
         public bool AddRecipe(string recipeName, int cookTime, string uRL, List<Produce> produceList);
+        public void ClearAddedProduces();
 
     }
 }

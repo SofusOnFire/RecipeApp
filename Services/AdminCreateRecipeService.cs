@@ -111,8 +111,11 @@ namespace Services
         }
         public string ValidateRecipeName(string adminNameInput)
         {
-
-            if (adminNameInput.Length < 3)
+            if (adminNameInput == null)
+            {
+                return "noName";
+            }
+            else if (adminNameInput.Length < 3)
             {
                 return "invalid";
             }
@@ -131,6 +134,11 @@ namespace Services
             int recipeID = _recipeRepository.AdminAddRecipeToDB(recipeName, cookTime, uRL);
             _produceLineRepository.AddProduceLines(produceList, recipeID);
             return true;
+        }
+
+        public void ClearAddedProduces()
+        {
+            SelectedProduceWhenAdminCreateRecipe.Clear();
         }
     }
 }
