@@ -31,7 +31,7 @@ namespace Test
         public void CreateRecipe_ShouldReturnSuccessMessage_IfRecipeCanBeSavedToDB(string name, int cookTime, string url, bool expected)
         {
             List<Produce> testProduces = new List<Produce>();
-            Produce testProduce = new Produce(50, "Avocado");
+            Produce testProduce = new Produce(50, "Avocado", 6);
             testProduces.Add(testProduce);
 
             //Arrange
