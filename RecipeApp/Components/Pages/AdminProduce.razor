@@ -1,5 +1,6 @@
 ﻿@page "/adminproduce"
 @inject IAdminProduceService _adminProduceService
+@inject IUnitService _unitService
 @rendermode InteractiveServer
 
 <PageTitle>Opret ingrediens</PageTitle>
@@ -11,6 +12,16 @@
     <input @bind="_produceInput" class="produce-textfield" type="text" name="produce-name"
     placeholder="Eks: Gulerod" pattern="[A-Za-zÆØÅæøå ]+"
     title="Der må kun bruges bogstaver" required />
+
+    <br />
+    <p class="produce-label">Navn på Unit:</p>
+    <select @bind="_produceInputUnit" class="selectUnit">
+        @foreach (var unit in _allUnits)
+        {
+            <option value="@unit.UnitID">@unit.UnitName</option>
+        }
+    </select>
+
     <button class="produce-button">Opret</button>
     @if (_showResult == true && _alreadyCreated == false && _invalidInput == false)
     {
@@ -31,6 +42,19 @@
     margin-bottom: 0;
     font-family: Arial;
     font-size: 16px;
+    }
+
+    .selectUnit {
+    background-color: #e0e0e0;
+    border: medium;
+    border-radius: 5px;
+    font-family: Arial;
+    font-size: 16px;
+    padding: 3px 0px 3px 4px;
+    width: 150px;
+    margin: 2px;
+    margin-left: 0px;
+    height: 30px;
     }
 
     .produce-textfield {
@@ -77,11 +101,20 @@
 @code {
     private string? _produceInput;
 
+    private int _produceInputUnit;
+
     private bool _showResult = false;
 
     private bool _invalidInput = false;
 
     private bool _alreadyCreated = false;
+
+    private List<Domain.Models.Unit>? _allUnits;
+
+    protected override void OnInitialized()
+    {
+        _allUnits = _unitService.GetAllUnits().ToList();
+    }
 
     private async Task CreateProduce()
     {    
@@ -100,7 +133,9 @@
             _invalidInput = true;
         }
 
-        _showResult = true; // Shows pop-up
+        _alreadyCreated = _adminProduceService.CreateProduce(_produceInput, _produceInputUnit);
+
+        showResult = true; // Shows pop-up
         await Task.Delay(3000); // Hides pop-up and resets after 3 seconds.
         _showResult = false;
         _produceInput = string.Empty;

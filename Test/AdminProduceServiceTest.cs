@@ -18,34 +18,34 @@ namespace Test
 		}
 
 		[TestMethod]
-		[DataRow("Bladselleri", true)]
-		[DataRow("Mango", true)]
-		public void CreateProduce_ShouldReturnSuccessMessage_WhenProduceIsCreated(string input, bool expected)
+		[DataRow("Bladselleri", 8 , true)]
+		[DataRow("Mango", 1 ,true)]
+		public void CreateProduce_ShouldReturnSuccessMessage_WhenProduceIsCreated(string input, int unitID, bool expected)
 		{
 			// Arrange
 			_mockProduceRepository
-				.Setup(repository => repository.CreateProduce(input))
+				.Setup(repository => repository.CreateProduce(input, unitID))
 				.Returns(true); // Simulere at der returneres true
 
 			// Act
-			bool result = _adminProduceService.CreateProduce(input);
+			bool result = _adminProduceService.CreateProduce(input, unitID);
 
 			// Assert
 			Assert.AreEqual(expected, result);
 		}
 
 		[TestMethod]
-		[DataRow("Himalaya salt", false)]
-		[DataRow(null, false)]
-		public void CreateProduce_ShouldReturnErrorMessage_WhenProduceAlreadyExists(string input, bool expected)
+		[DataRow("Himalaya salt", 2 ,false)]
+		[DataRow(null, null ,false)]
+		public void CreateProduce_ShouldReturnErrorMessage_WhenProduceAlreadyExists(string input, int unitID, bool expected)
 		{
 			// Arrange
 			_mockProduceRepository
-				.Setup(repository => repository.CreateProduce(input))
+				.Setup(repository => repository.CreateProduce(input, unitID))
 				.Returns(false); // Simulere at der returneres false
 
 			// Act
-			bool result = _adminProduceService.CreateProduce(input);
+			bool result = _adminProduceService.CreateProduce(input, unitID);
 
 			// Assert
 			Assert.AreEqual(expected, result);

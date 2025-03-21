@@ -11,9 +11,16 @@ namespace DAL
 {
     public class ProduceRepository : DatabaseManager, IProduceRepository
     {
-        public Produce GetProduceByID(int produceID)
+		private readonly IUnitRepository _unitRepository;
+
+		public ProduceRepository(IUnitRepository unitRepository)
+		{
+			_unitRepository = unitRepository;
+		}
+
+		public Produce GetProduceByID(int produceID)
         {
-			Produce produce = new Produce(0, "Ingrediens ikke fundet");
+			Produce? produce = null;
 			
 			_connectionString.Open();
 
@@ -32,10 +39,16 @@ namespace DAL
 			{
 				produce = new Produce(
 				Convert.ToInt32(reader["ProduceID"]),
-				Convert.ToString(reader["ProduceName"]));
+				Convert.ToString(reader["ProduceName"]),
+				Convert.ToInt32(reader["UnitID"]));
 			}
 
 			_connectionString.Close();
+
+			if (produce == null) throw new NullReferenceException();
+
+			// Sets the Unit
+			produce.SetUnit(_unitRepository.GetUnitByUnitID(produce.UnitID));
 
 			return produce;
 		}
@@ -55,17 +68,25 @@ namespace DAL
             {
                 var produce = new Produce(
                 Convert.ToInt32(reader["ProduceID"]),
-                Convert.ToString(reader["ProduceName"]));
+                Convert.ToString(reader["ProduceName"]),
+				Convert.ToInt32(reader["UnitID"]));
 
 				list.Add(produce);
             }
 
             _connectionString.Close();
 
+			// Sets the Unit for each Produce
+			foreach (var produce in list)
+			{
+				produce.SetUnit(_unitRepository.GetUnitByUnitID(produce.UnitID));
+			}
+
+
             return list;
         }
 
-		public bool CreateProduce(string produceName)
+		public bool CreateProduce(string produceName, int unitID)
 		{
 			_connectionString.Open();
 
@@ -91,12 +112,13 @@ namespace DAL
 			{
 				// Add to DB
 				string insertQuery =
-					"INSERT INTO [Produce] (ProduceName) " +
-					"VALUES (@InputProduceName)";
+					"INSERT INTO [Produce] (ProduceName, UnitID) " +
+					"VALUES (@InputProduceName, @UnitID)";
 
 				var insertCommand = new SqlCommand(insertQuery, _connectionString);
 
 				insertCommand.Parameters.AddWithValue("@InputProduceName", produceName);
+				insertCommand.Parameters.AddWithValue("@UnitID", unitID);
 
 				insertCommand.ExecuteScalar();
 
