@@ -55,8 +55,7 @@ namespace DAL
 
                 command.Parameters.AddWithValue("@RecipeID", recipeID);
                 command.Parameters.AddWithValue("@ProduceID", produce.ProduceID);
-                // Amount is temporarily set to 0 for now due to DB compatibility.
-                command.Parameters.AddWithValue("@Amount", 0);
+                command.Parameters.AddWithValue("@Amount", produce.RecipeAmount);
                 int produceLineID = DatabaseManager.ExecuteScalar(command);
             }
         }
