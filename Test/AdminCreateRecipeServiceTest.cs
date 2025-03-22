@@ -3,6 +3,7 @@ using Services;
 using Moq;
 using Domain.Models;
 using System.Net;
+using System.Xml.Linq;
 
 namespace Test
 {
@@ -58,6 +59,23 @@ namespace Test
 
             // Act
             bool result = adminCreateRecipeService.AddRecipe(name, cookTime, url, testProduces);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+        [TestMethod]
+        [DataRow("https://www.valdemarsro.dk/lasagne/", true)]
+        public void CreateRecipe_ShoudReturnTrue_IfRecipeAlreadyExistsInDB(string url, bool expected)
+        {
+            //Recipe testRecipe = new Recipe(1, "Lasagne", 180, "https://www.valdemarsro.dk/lasagne/");
+            List<Produce> testProduces = new List<Produce>();
+
+            //Arrange
+            adminCreateRecipeServiceMock
+                .Setup(repository => repository.AddRecipe("Lasagne", 180, "https://www.valdemarsro.dk/lasagne/", testProduces));
+
+            // Act
+            bool result = adminCreateRecipeService.AddRecipe("Lasagne", 180, "https://www.valdemarsro.dk/lasagne/", testProduces);
 
             // Assert
             Assert.AreEqual(expected, result);
