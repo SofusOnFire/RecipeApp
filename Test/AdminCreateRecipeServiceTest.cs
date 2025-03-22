@@ -67,15 +67,15 @@ namespace Test
         [DataRow("https://www.valdemarsro.dk/lasagne/", true)]
         public void CreateRecipe_ShoudReturnTrue_IfRecipeAlreadyExistsInDB(string url, bool expected)
         {
-            //Recipe testRecipe = new Recipe(1, "Lasagne", 180, "https://www.valdemarsro.dk/lasagne/");
             List<Produce> testProduces = new List<Produce>();
 
             //Arrange
             adminCreateRecipeServiceMock
-                .Setup(repository => repository.AddRecipe("Lasagne", 180, "https://www.valdemarsro.dk/lasagne/", testProduces));
+                .Setup(repository => repository.AddRecipe("Lasagne", 180, url, testProduces))
+                .Returns(expected);
 
             // Act
-            bool result = adminCreateRecipeService.AddRecipe("Lasagne", 180, "https://www.valdemarsro.dk/lasagne/", testProduces);
+            bool result = adminCreateRecipeService.AddRecipe("Lasagne", 180, url, testProduces);
 
             // Assert
             Assert.AreEqual(expected, result);
