@@ -14,6 +14,7 @@ namespace Domain.Models
         public int UnitID { get; private set; }
         public Unit? Unit { get; private set; }
 		public int UserAmount { get;  set; }
+		public int RecipeAmount { get; set; }
 
 		public Produce(int produceID, string? name, int unitID) 
 		{
@@ -21,6 +22,7 @@ namespace Domain.Models
 			Name = name;
 			UnitID = unitID;
 			UserAmount = 1;
+			RecipeAmount = 1;
 		}
 
 		/// <summary>

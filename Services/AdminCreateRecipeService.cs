@@ -62,6 +62,7 @@ namespace Services
             {
                 if (prod == produce)
                 {
+                    prod.RecipeAmount = 1;
                     SelectedProduceWhenAdminCreateRecipe.Remove(produce);
                     break;
                 }
@@ -139,6 +140,10 @@ namespace Services
             {
                 int recipeID = _recipeRepository.AdminAddRecipeToDB(recipeName, cookTime, uRL);
                 _produceLineRepository.AddProduceLines(produceList, recipeID);
+                foreach (Produce produce in produceList)
+                {
+                    produce.RecipeAmount = 1;
+                }
                 return true;
             }
             else

@@ -38,17 +38,19 @@
         <h5>Ingredienser</h5>
         <div>
             <AutoComplete @bind-Value="_selectedProduce"
-                          TItem="Produce"
-                          DataProvider="ProduceDataProvider"
-                          PropertyName="Name"
-                          Placeholder="Tilføj ingredienser..."
-                          OnChanged="(Produce produce) => AddProduce(produce)"
-                          @bind-SelectedValue="_selectedProduce" />
+            TItem="Produce"
+            DataProvider="ProduceDataProvider"
+            PropertyName="Name"
+            Placeholder="Tilføj ingredienser..."
+            OnChanged="(Produce produce) => AddProduce(produce)"
+            @bind-SelectedValue="_selectedProduce" 
+            Disabled="@_tbDisabled"/>
         </div>
         <div>
             @foreach (var produce in addedProduces)
             {
                 <Button Color="ButtonColor.Primary" Outline="true" @onclick="() => RemoveProduce(produce)"> @produce.Name </Button>
+                <NumberInput TValue="int" @bind-Value="@produce.RecipeAmount"></NumberInput>
             }
         </div>
     </div>
@@ -103,24 +105,24 @@
 
 <style>
     .lists-container {
-        display: flex;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
+    display: flex;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
     }
 
-        .lists-container div {
-            flex: 1;
-            padding: 10px;
-            border-radius: 5px;
-        }
+    .lists-container div {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    }
 
     .dropdown-scroll {
-        max-height: 175px;
-        overflow-y: scroll;
+    max-height: 175px;
+    overflow-y: scroll;
     }
 
     .center-items {
-        text-align: center;
+    text-align: center;
     }
 </style>
 
@@ -234,6 +236,7 @@
                 _tbRecipeCookTime = "Angiv tilberedningstid...";
                 _tbDisabled = true;
                 _recipeDisabled = true;
+                _selectedProduce = null;
                 _iAdminCreateRecipeService.ClearAddedProduces();
             }
             else if (!creationSuccess)
