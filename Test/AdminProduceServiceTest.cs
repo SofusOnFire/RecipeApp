@@ -20,15 +20,15 @@ namespace Test
 		[TestMethod]
 		[DataRow("Bladselleri", 8 , true)]
 		[DataRow("Mango", 1 ,true)]
-		public void CreateProduce_ShouldReturnSuccessMessage_WhenProduceIsCreated(string input, int unitID, bool expected)
+		public void CreateProduce_ShouldReturnSuccessMessage_WhenProduceIsCreated(string produceName, int unitID, bool expected)
 		{
 			// Arrange
 			_mockProduceRepository
-				.Setup(repository => repository.CreateProduce(input, unitID))
+				.Setup(repository => repository.CreateProduce(produceName, unitID))
 				.Returns(true); // Simulere at der returneres true
 
 			// Act
-			bool result = _adminProduceService.CreateProduce(input, unitID);
+			bool result = _adminProduceService.CreateProduce(produceName, unitID);
 
 			// Assert
 			Assert.AreEqual(expected, result);
