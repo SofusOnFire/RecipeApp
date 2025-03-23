@@ -165,5 +165,25 @@ namespace Test
             Assert.AreEqual(expected, result);
 
         }
+
+        [TestMethod]
+        public void AddProduceToNewRecipe_ShouldReturnTrue_WhenProduceIsAdded()
+        {
+            // Arrange
+            var allProduce = new List<Produce>();
+
+            var test1 = new Produce(1, "Bladselleri", 2);
+
+            adminCreateRecipeService.AllProduceWhenAdminCreateRecipe.Add(test1);
+            
+            //allProduce.Add(test1);
+
+            // Act
+            adminCreateRecipeService.AddProduceToNewRecipe(test1);
+
+            // Assert
+            Assert.IsTrue(adminCreateRecipeService.AllProduceWhenAdminCreateRecipe.Contains(test1));
+            //Assert.IsFalse(selectedProduce.Contains(produce));
+        }
     }
 }
