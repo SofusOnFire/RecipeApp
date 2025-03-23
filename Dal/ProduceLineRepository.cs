@@ -42,7 +42,10 @@ namespace DAL
 
             return list;
         }
-
+        /// <summary>
+        /// The foreach loop ensures that there will be created a produceline for
+        /// each produce that gets iterated.
+        /// </summary>
         public void AddProduceLines(List<Produce> produces, int recipeID)
         {
             foreach (var produce in produces)

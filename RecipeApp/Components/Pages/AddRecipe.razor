@@ -136,6 +136,7 @@
     private bool _recipeDisabled = true;
     private string? _selectedProduce;
 
+    // The Enable methods will be activated when the URL and Recipe Name textboxes are filled.
     private void Enable() => _tbDisabled = false;
     private void Enable(int i) => _recipeDisabled = false;
     private void Disable() => _tbDisabled = true;

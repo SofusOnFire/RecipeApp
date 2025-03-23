@@ -40,6 +40,9 @@ namespace DAL
 
             return list;
         }
+        /// <summary>
+        /// Adds a new recipe to the DB and returns the RecipeID as an int.
+        /// </summary>
         public int AdminAddRecipeToDB(string recipeName, int cookTime, string uRL)
         {
             string createRecipe = "INSERT INTO [Recipe] (RecipeName, CookTime, URL) " +

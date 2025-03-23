@@ -42,6 +42,11 @@ namespace Services
             return _produceRepository.GetAllProduce();
         }
 
+        /// <summary>
+        /// Iterates through all produces in the AllProduceWhenAdminCreateRecipe list,
+        /// until the loop finds a produce that matches the argument. The argument
+        /// then gets added to the SelectedProduceWhenAdminCreateRecipe list.
+        /// </summary>
         public void AddProduceToNewRecipe(Produce produce)
         {
             foreach (var prod in AllProduceWhenAdminCreateRecipe)
@@ -56,6 +61,12 @@ namespace Services
             SelectedProduceWhenAdminCreateRecipe.Sort();
         }
 
+        /// <summary>
+        /// Iterates through all produces in the SelectedProduceWhenAdminCreateRecipe list,
+        /// until the loop finds a produce that matches the argument. The produce
+        /// then gets removed from the SelectedProduceWhenAdminCreateRecipe list and
+        /// its RecipeAmount is set to 1.
+        /// </summary>
         public void RemoveProduceFromNewRecipe(Produce produce)
         {
             foreach (var prod in SelectedProduceWhenAdminCreateRecipe)
@@ -70,7 +81,10 @@ namespace Services
             AllProduceWhenAdminCreateRecipe.Add(produce);
             AllProduceWhenAdminCreateRecipe.Sort();
         }
-
+        /// <summary>
+        /// Validates the user input and checks if its a valid URL. Returns a
+        /// string that will be used to show an alert message in the UI.
+        /// </summary>
         public string ValidateURL(string url)
         {
 
@@ -110,6 +124,10 @@ namespace Services
                 return "urlValid";
             }
         }
+        /// <summary>
+        /// Validates the user input and checks if the recipe name is valid. Returns a string
+        /// that will be used to show an alert message in the UI.
+        /// </summary>
         public string ValidateRecipeName(string adminNameInput)
         {
             if (adminNameInput == null || String.IsNullOrWhiteSpace(adminNameInput))
@@ -134,6 +152,17 @@ namespace Services
             }
         }
 
+        /// <summary>
+        /// Checks if the recipe name, url and producelist aren't null. If they aren't,
+        /// the AdminAddRecipeToDB method will be called in order to insert the recipe
+        /// into the DB and return the recipe's ID, which will then be used in the
+        /// AddProduceLines method along with the producelist. Then, each produce's
+        /// RecipeAmount will be set back to 1 (standard value) and return true (will be
+        /// used for an alert message).
+        /// 
+        /// If either the recipe name, url or producelist are null, nothing will happen
+        /// and it will return false (will be used for an alert message).
+        /// </summary>
         public bool AddRecipe(string recipeName, int cookTime, string uRL, List<Produce> produceList)
         {
             if (!string.IsNullOrEmpty(recipeName) && uRL != null && produceList != null)
