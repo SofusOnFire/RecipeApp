@@ -64,7 +64,7 @@ namespace Test
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod] // AGK: Den her virker!
+        [TestMethod]
         [DataRow("", "urlEmpty")]
         public void ValidateURL_ShouldReturnTrue_IfURLStringIsEmpty(string url, string expected)
         {
@@ -82,7 +82,7 @@ namespace Test
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod] // AGK: Den her virker!
+        [TestMethod]
         [DataRow("https://www.valdemarsro.dk/lasagne/", "urlValid")]
         public void ValidateURL_ShouldReturnTrue_IfURLIsValid(string url, string expected)
         {
@@ -100,7 +100,7 @@ namespace Test
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod] // AGK: Den her virker!
+        [TestMethod]
         [DataRow("https://www.valdemarsro.dk/lasagne/", "urlExists")]
         public void CreateRecipe_ShoudReturnTrue_IfRecipeAlreadyExistsInDB(string url, string expected)
         {
@@ -122,5 +122,48 @@ namespace Test
             Assert.AreEqual(expected, result);
         }
 
+        [TestMethod]
+        [DataRow("", "noName")]     // Intet input.
+        [DataRow("   ", "noName")]  // Mellemrums input.
+        public void ValidateRecipeName_ShouldReturnTrue_IfInputActivatesNoNameError(string adminNameInput, string expected)
+        {
+            // Arrange
+
+            // Act
+            string result = adminCreateRecipeService.ValidateRecipeName(adminNameInput);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+
+        }
+        
+        [TestMethod]
+        [DataRow("ab", "invalid")]                          // For kort input.
+        [DataRow("abcdefghijklmnopqrstuvwxyz", "invalid")]  // For langt input.
+        public void ValidateRecipeName_ShouldReturnTrue_IfInputActivatesInvalidError(string adminNameInput, string expected)
+        {
+            // Arrange
+
+            // Act
+            string result = adminCreateRecipeService.ValidateRecipeName(adminNameInput);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+
+        }
+
+        [TestMethod]
+        [DataRow("GodtSolidtNavn", "valid")]
+        public void ValidateRecipeName_ShouldReturnTrue_IfInputIsValid(string adminNameInput, string expected)
+        {
+            // Arrange
+
+            // Act
+            string result = adminCreateRecipeService.ValidateRecipeName(adminNameInput);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+
+        }
     }
 }
