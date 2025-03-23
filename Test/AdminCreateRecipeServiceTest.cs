@@ -63,22 +63,51 @@ namespace Test
             // Assert
             Assert.AreEqual(expected, result);
         }
-        [TestMethod]
-        [DataRow("https://www.valdemarsro.dk/lasagne/", true)]
-        public void CreateRecipe_ShoudReturnTrue_IfRecipeAlreadyExistsInDB(string url, bool expected)
+
+        [TestMethod] // AGK: Den her virker!
+        [DataRow("", "urlEmpty")]
+        public void ValidateURL_ShouldReturnTrue_IfURLStringIsEmpty(string url, string expected)
         {
-            List<Produce> testProduces = new List<Produce>();
 
             //Arrange
-            adminCreateRecipeServiceMock
-                .Setup(repository => repository.AddRecipe("Lasagne", 180, url, testProduces))
-                .Returns(expected);
+            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase()).Returns(new List<Recipe>());
 
             // Act
-            bool result = adminCreateRecipeService.AddRecipe("Lasagne", 180, url, testProduces);
+            string result = adminCreateRecipeService.ValidateURL(url);
 
             // Assert
             Assert.AreEqual(expected, result);
         }
+
+        [TestMethod] // AGK: Den her virker!
+        [DataRow("https://www.valdemarsro.dk/lasagne/", "urlValid")]
+        public void ValidateURL_ShouldReturnTrue_IfURLIsValid(string url, string expected)
+        {
+
+            //Arrange
+            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase()).Returns(new List<Recipe>());
+
+            // Act
+           string result = adminCreateRecipeService.ValidateURL(url);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod] // AGK: Virker ikke! - Vil gerne have den til at returnere "urlExists" men får i stedet "urlValid"!?!?!?
+        [DataRow("https://www.valdemarsro.dk/lasagne/", "urlExists")]
+        public void CreateRecipe_ShoudReturnTrue_IfRecipeAlreadyExistsInDB(string url, string expected)
+        {
+
+            //Arrange
+            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase()).Returns(new List<Recipe>()); ;
+
+            // Act
+            string result = adminCreateRecipeService.ValidateURL(url);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
     }
 }
