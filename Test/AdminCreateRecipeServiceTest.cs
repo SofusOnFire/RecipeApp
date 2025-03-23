@@ -70,7 +70,10 @@ namespace Test
         {
 
             //Arrange
-            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase()).Returns(new List<Recipe>());
+            var existingRecipes = new List<Recipe>();
+
+            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase())
+                .Returns(existingRecipes);
 
             // Act
             string result = adminCreateRecipeService.ValidateURL(url);
@@ -85,7 +88,10 @@ namespace Test
         {
 
             //Arrange
-            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase()).Returns(new List<Recipe>());
+            var existingRecipes = new List<Recipe>();
+
+            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase())
+                .Returns(existingRecipes);
 
             // Act
            string result = adminCreateRecipeService.ValidateURL(url);
@@ -94,13 +100,20 @@ namespace Test
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod] // AGK: Virker ikke! - Vil gerne have den til at returnere "urlExists" men får i stedet "urlValid"!?!?!?
+        [TestMethod] // AGK: Den her virker!
         [DataRow("https://www.valdemarsro.dk/lasagne/", "urlExists")]
         public void CreateRecipe_ShoudReturnTrue_IfRecipeAlreadyExistsInDB(string url, string expected)
         {
 
             //Arrange
-            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase()).Returns(new List<Recipe>()); ;
+            var existingRecipes = new List<Recipe>();
+            
+            var recipe1 = new Recipe("Lasagne", 180, "https://www.valdemarsro.dk/lasagne/");
+            
+            existingRecipes.Add(recipe1);
+
+            recipeRepositoryMock.Setup(repository => repository.GetAllRecipesFromDatabase())
+                .Returns(existingRecipes);
 
             // Act
             string result = adminCreateRecipeService.ValidateURL(url);
