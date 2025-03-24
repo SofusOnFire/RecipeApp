@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Interfaces;
@@ -40,6 +41,26 @@ namespace DAL
             _connectionString.Close();
 
             return list;
+        }
+        /// <summary>
+        /// The foreach loop ensures that there will be created a produceline for
+        /// each produce that gets iterated.
+        /// </summary>
+        public void AddProduceLines(List<Produce> produces, int recipeID)
+        {
+            foreach (var produce in produces)
+            {
+                string createProduceLine = "INSERT INTO [ProduceLine] (RecipeID, ProduceID, Amount) " +
+                                      "OUTPUT INSERTED.ProduceLineID " +
+                                      "VALUES (@RecipeID, @ProduceID, @Amount)";
+
+                var command = new SqlCommand(createProduceLine, _connectionString);
+
+                command.Parameters.AddWithValue("@RecipeID", recipeID);
+                command.Parameters.AddWithValue("@ProduceID", produce.ProduceID);
+                command.Parameters.AddWithValue("@Amount", produce.RecipeAmount);
+                int produceLineID = DatabaseManager.ExecuteScalar(command);
+            }
         }
     }
 }

@@ -23,6 +23,13 @@ namespace Domain.Models
             ProduceLines = new List<ProduceLine>();
         }
 
+        public Recipe(string? recipeName, int? cookTime, string? uRL)
+        {
+            RecipeName = recipeName;
+            CookTime = cookTime;
+            URL = uRL;
+        }
+
         public void SetProduceLineList(IEnumerable<ProduceLine> produceLines)
         {
             var list = produceLines.ToList<ProduceLine>();

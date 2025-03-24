@@ -40,5 +40,25 @@ namespace DAL
 
             return list;
         }
+        /// <summary>
+        /// Adds a new recipe to the DB and returns the RecipeID as an int.
+        /// </summary>
+        public int AdminAddRecipeToDB(string recipeName, int cookTime, string uRL)
+        {
+            string createRecipe = "INSERT INTO [Recipe] (RecipeName, CookTime, URL) " +
+                                  "OUTPUT INSERTED.RecipeID " +
+                                  "VALUES (@RecipeName, @CookTime, @URL)";
+
+            var command = new SqlCommand(createRecipe, _connectionString);
+
+            command.Parameters.AddWithValue("@RecipeName", recipeName);
+            command.Parameters.AddWithValue("@CookTime", cookTime);
+            command.Parameters.AddWithValue("@URL", uRL);
+
+            int recipeID = DatabaseManager.ExecuteScalar(command);
+
+            return recipeID;
+
+        }
     }
 }
